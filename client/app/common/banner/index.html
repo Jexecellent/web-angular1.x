@@ -1,0 +1,39 @@
+<div vc-tabs="1" id="commBannerTabs" style="height: 100%">
+    <section class="tool" ng-show="!pageStatus.isEditing">
+        <div class="left">
+            <input type="button"  ng-click="beginEdit()" value="发布广告位" class="green_btn icon_plus" need-permission="banneradd:bizType{{bizType}}">
+        </div>
+    </section>
+    <section class="tool" ng-show="pageStatus.isEditing">
+        <div class="left">
+            <a href="#" class="icon_return red_btn" ng-click="endEdit()">返回</a>
+        </div>
+        <ul class="right">
+            <li ng-show="!hasPermission('banneradd:bizType'+moduleType)"><a href="#" class="icon_edit_1" ng-click="auditEditBanner()">提交审核</a></li>
+            <li ng-show="hasPermission('banneradd:bizType'+moduleType)"><a class="icon_release" ng-click="distEditBanner()">发布</a></li>
+            <li ng-show="opType"><a class="icon_brush red_txt" ng-click="clearEditBanner()">清空</a></li>
+        </ul>
+    </section>
+    <nav class="state" ng-show="!pageStatus.isEditing">
+        <ul class="column_3">
+            <li vc-tab-head tag="online"><a href="#">正在线上</a></li>
+            <li vc-tab-head tag="audit" ng-show="hasPermission('banneradd:bizType{{moduleType}}')"><a href="#">等待审核</a></li>
+            <li vc-tab-head tag="myaudit" ng-show="!hasPermission('banneradd:bizType{{moduleType}}')"><a href="#">我的审核</a></li>
+            <li vc-tab-head tag="offline"><a href="#">已经下线</a></li>
+            <li vc-tab-head tag="edit" no-index></li>
+        </ul>
+    </nav>
+    <div class="cnt_box cnt_Ystate mCustomScrollbar" ng-class="{'cnt_Ypaging':!pageStatus.isEditing}">
+        <!-- 正在线上 -->
+        <div vc-tab-body tag="online" ctrl="BannerListController" tpl-url="app/common/banner/pages/list.html" locals="{params:{moduleId:moduleId,status:2}}"></div>
+        <!-- 已经下线 -->
+        <div vc-tab-body tag="offline" ctrl="BannerListController" tpl-url="app/common/banner/pages/list.html" locals="{params:{moduleId:moduleId,status:1}}"></div>
+        <!-- 等待审核 -->
+        <div vc-tab-body tag="audit" ctrl="AuditController" tpl-url="app/common/audit/index.html" locals="{bizType:2,moduleType:moduleType,moduleId:moduleId,auditStatuses:'1',editTabIndex:bannerEditTabIndex}"></div>
+        <!-- 我的审核 -->
+        <div vc-tab-body tag="myaudit" ctrl="AuditController" tpl-url="app/common/audit/index.html" locals="{bizType:2,moduleType:moduleType,moduleId:moduleId,editTabIndex:bannerEditTabIndex,applyRid:$currentRid}"></div>
+        <!-- 编辑 -->
+        <div vc-tab-body tag="edit" ctrl="BannerEditController" tpl-url="app/common/banner/pages/edit.html" locals="{moduleType:moduleType,moduleId:moduleId,aid:aid}"></div>
+    </div>
+    <div class="o_loading" ng-show="loading"></div>
+</div>

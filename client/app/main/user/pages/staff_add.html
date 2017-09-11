@@ -1,0 +1,58 @@
+<section class="tool fixedTool">
+  <div class="left">
+    <a ng-click="gotoBack()" class="red_btn icon_return">返回</a>
+    <vc-search vc-model="queryParams.queryKey" vc-change="loadUserList()"></vc-search>
+  </div>
+</section>
+
+<section class="state">
+      <h3>新增部门成员（必须绑定手机号码）</h3>
+    </section>
+
+<div class="s_p_list">
+        <ul>
+          <li ng-class="{true: 'grey', false: 'open'}[!!user.noLoginname]" ng-repeat="user in userList">
+            <input id="{{user.id}}" type="radio" ng-checked="user.$checked" ng-click="show(user,'')" name="operateUser" ng-disabled="user.noLoginname">
+            <label for="{{user.id}}">
+              <p class="photo">
+                <img ng-src="{{user.imgPath | cutImg40}}" alt="{{user.nickname}}"></p>
+              <dl>
+                <dt ng-bind="user.nickname"></dt>
+                <dd>{{user.loginName}}</dd>
+              </dl>
+            </label>
+            <div ng-show="user.$checked">
+              <div class="s_u_remark text">
+                <label for="">备注：</label>
+                <input type="text" maxlength="8" ng-model="user.userName" placeholder="请输入真实姓名"></div>
+              <div class="s_u_potence tag">
+                <label for="">选择部门</label>
+                <ul>
+                  <li ng-repeat="dept in userList.depts">
+                    <input id="{{user.id}}_dep_{{dept.id}}" type="checkbox" ng-checked="dept.$checked" ng-click="checkDept(dept)" ng-disabled="dept.disabledDept" ng-class="{'grey' : dept.disabledDept}">
+                    <label for="{{user.id}}_dep_{{dept.id}}">{{dept.name}}</label>
+                  </li>
+                  
+                </ul>
+              </div>
+              <div class="s_u_potence tag">
+                <label for="">用户权限</label>
+                <ul>
+                  <li ng-repeat="role in userList.roles">
+                    <input id="{{user.id}}_role_{{role.roleId}}" type="checkbox" ng-checked="role.$checked" ng-click="checkRole(role)">
+                    <label for="{{user.id}}_role_{{role.roleId}}">{{role.roleName}}</label>
+                  </li>
+                  
+                </ul>
+              </div>
+              <div class="button_box">
+                <a ng-click="saveUser(user)" class="green_btn icon_ok">确定</a>
+                <a ng-click="cancelUser(user)" class="red_btn icon_close_2">取消</a>
+              </div>
+           </div>
+          </li>
+          
+        </ul>
+      </div>
+
+<open-page data="pager" params="params" url="user/list" show-page-num="10" go-page="loadUserList(num)"></open-page>

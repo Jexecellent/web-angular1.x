@@ -1,0 +1,158 @@
+<style>
+    .sum [type="number"] {
+        width: 55px !important;
+    }
+
+    input[disabled='disabled'] {
+        color: #ccc;
+    }
+    .progress-bar{height: 4px;background-color: #2897DD;}
+</style>
+<div class="cnt_box mCustomScrollbar">
+    <form name="activityForm" novalidate style="height:100%">
+        <section class="tool fixedTool">
+            <div class="left" ng-if="op_state">
+                <a href="#" class="icon_return red_btn" ng-click="goBack()">返回</a>
+            </div>
+            <ul class="right">
+                <li ng-if="op_state !== 2 && op_state !== 3 && op_state !== 5">
+                    <a href="#" class="icon_box" ng-click="saveDraft()">保存草稿</a>
+                </li>
+                <li>
+                    <input type="submit" class="icon_eye" value="预览" ng-click="preview()" ng-disabled="activityForm.$invalid"/>
+                </li>
+                <li ng-if="pms.add">
+                    <input type="submit" value="发布" ng-click="saveActivityForm()" ng-disabled="activityForm.$invalid"/>
+                    <i class="icon_release"></i>
+                </li>
+                <li ng-if="!pms.add">
+                    <input type="submit" name="draftForm" ng-disabled="activityForm.$invalid"
+                           ng-click="saveActivityForm()" value="提交审核" /><i class="icon_release"></i>
+                </li>
+                <li ng-if="!op_state">
+                    <a href="#" class="icon_brush red_txt" ng-click="clearActivityForm()">清空</a>
+                </li>
+            </ul>
+        </section>
+        <section class="state" ng-if="op_state === 2">
+            <h3>编辑活动:活动-{{activity.title}}</h3>
+        </section>
+
+        <div class="act_info mCustomScrollbar">
+                <ul class="form_box">
+
+                    <li class="text">
+                        <label>
+                            活动名称 <b class="red_txt">*</b>
+                        </label>
+                        <input type="text" placeholder="输入活动名称" name="title" ng-model="activity.title" maxlength="14"
+                               ng-trim="true" required/>
+                    </li>
+                    <li class="time unit">
+                        <label>
+                            开始时间
+                            <b class="red_txt">*</b>
+                        </label>
+
+                        <input type="text" id="startTime" ng-model="activity.startTime" vc-date-picker
+                               date-fmt="yyyy-MM-dd HH:mm" min-date="%y-%M-%d %H:%m" name="startTime"
+                               readonly="readonly" other-conf="startDateConf" placeholder="选择活动出发时间"
+                               ng-required="required.startTime" ng-if="op_state !== 2"/>
+                        <input type="text" id="startTime" readonly="readonly" ng-model="activity.startTime" ng-if="op_state === 2">
+                        <label class="icon_calendar" for="startTime"></label>
+                    </li>
+                    <li class="tag">
+                        <label>
+                            联系人
+                            <b class="red_txt">*</b>
+                        </label>
+                        <ul>
+                            <li class="current" ng-if="selectSonsultList">
+                                <p ng-if="selectSonsultList.nickname !==''">{{selectSonsultList.nickname}}</p>
+
+                                <p ng-if="selectSonsultList.name !==''">{{selectSonsultList.name}}</p> <i class="icon_close_2"
+                                                                                      ng-click="removeUser('sonsult',$index)"></i>
+                            </li>
+                        </ul>
+                        <button class="icon_plus" ng-click="openUser('consult')">管理联系人</button>
+                    </li>
+                    <li class="text">
+                        <label>
+                            目的地
+                            <b class="red_txt">*</b>
+                        </label>
+                        <input type="text" ng-model="activity.address" name="address" maxlength="50"
+                               placeholder="填写活动目的地" required/>
+                    </li>
+                    <li class="select">
+                        <label>
+                            收费方式 <b class="red_txt">*</b>
+                        </label>
+
+                        <div vc-drop-down-list value="activity.payType" select-list="payTypeList" select-name="name"
+                             required ng-disabled="_unModify.payType"></div>
+                    </li>
+                    <!--普通活动选项-->
+                    <li class="text" ng-if="activity.payType !== 1">
+
+                        <label>活动金额</label>
+
+                        <div class="sum unit" ng-if="activity.payType !== 1">
+                            <label for="">
+                                全款
+                            </label>
+                            <input type="number" name="money" ng-pattern="" ng-model="activity.cost"
+                                   ng-readonly="_unModify.payCost" str-to-num  ng-pattern="/^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/" required>
+                            <span>元</span>
+                        </div>
+                        <div class="sum unit" ng-if="activity.payType === 2">
+                            <label for="">定金</label>
+                            <input type="number" name="prepay" ng-model="activity.prePay"
+                                   required str-to-num ng-pattern="/^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/">
+                            <span>元</span>
+                        </div>
+                        <p class="error_prompt" ng-show="activityForm.money.$dirty && activityForm.money.$invalid">
+                            请输入正确的金额</p>
+                    </li>
+                    <li class="txt unit">
+                        <label>
+                            活动名额
+                            <b class="red_txt">*</b>
+                        </label>
+                        <input type="number" placeholder="输入本次活动所需人数值" min="0" ng-model="activity.number"
+                               name="number" max="9999999" ng-pattern="/^[1-9]+[0-9]*$/" required/>
+                        <span>人</span>
+                    </li>
+                </ul>
+            </div>
+        <div class="act_intro mCustomScrollbar">
+                <div class="act_banner_up activity_release_img">
+                    <div class="title">
+                        <h3>
+                            活动封面
+                            <b class="red_txt">*</b>
+                        </h3>
+                    </div>
+                    <div img-uploader vc-picture="activity.poster"></div>
+                </div>
+                <div class="act_details">
+                    <div class="title">
+                        <h3>
+                            活动详情
+                            <b class="red_txt">*</b>
+                        </h3>
+                    </div>
+                    <div style="min-height: 400px;width: 98%;" id="{{ueditorId}}" class="ueditor" ng-model="activity.introduce" required name="introduce"></div>
+                </div>
+                <div class="act_details">
+                    <div class="title">
+                        <h3>报名须知</h3>
+                    </div>
+                    <div class="act_details_editor_box">
+                        <textarea maxlength="500" ng-model="activity.registNotice" style="width:620px;" ng-maxlength="500"
+                                  name="registNotice"></textarea>
+                    </div>
+                </div>
+            </div>
+    </form>
+</div>

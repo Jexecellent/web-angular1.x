@@ -1,0 +1,62 @@
+<div class="act_roster_box_event mCustomScrollbar">
+    <div class="join_activity_list act_roster"
+         style="width: 100%;height: 100%;position: absolute;top: 0px;left: 0px;background-color: white;">
+        <style>
+            .sweet-overlay,.sweet-alert{z-index:2140483647}
+        </style>
+        <section class="tool fixedTool">
+            <div class="left">
+                <a href="javascript:;" class="icon_return red_btn" ng-click="close()">返回</a>
+
+                <vc-search vc-model="params.queryKey" vc-change="search()"></vc-search>
+            </div>
+            <ul class="right">
+                <li><a href="#" class="icon_export" ng-click="export()">导出名单</a></li>
+            </ul>
+        </section>
+        <section class="state">
+            <h3>
+                <span>待退款</span>
+            </h3>
+        </section>
+
+        <table class="list_table">
+                    <thead>
+                    <tr>
+                        <th>账号</th>
+                        <th>手机号</th>
+                        <th>性别</th>
+                        <th ng-if="idCode">身份证</th>
+                        <th>报名时间</th>
+                        <th>报名活动</th>
+                        <th>申请退款时间</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="join in data.content">
+                        <td>
+                            <span ng-bind="join.name"></span>
+                        </td>
+                        <td>
+                            <span ng-bind="join.phone"></span>
+                        </td>
+                        <td>
+                            <span ng-bind="join.sex|sex"></span>
+                        </td>
+                        <td ng-if="idCode">
+                            <span ng-bind="join.idCode"></span>
+                        </td>
+                        <td ng-bind="join.createTime|date:'yyyy-MM-dd HH:mm'"></td>
+                        <td ng-bind="join.ext"></td>
+                        <td ng-bind="join.refundTime|date:'yyyy-MM-dd HH:mm'">
+                        </td>
+                        <td>
+                            <p class="red_txt" ng-show="joinupdatePerminssion" ng-click="refund(join)"><a href="#">退款</a></p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+        <open-page data="data" params="params" url="activity/join_list" show-page-num="10" go-page="go(num)"></open-page>
+    </div>
+</div>

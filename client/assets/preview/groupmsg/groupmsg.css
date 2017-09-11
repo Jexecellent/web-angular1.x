@@ -1,0 +1,29 @@
+body {background-color:#ebebeb;}
+.m_index_box {width:100%;margin:0;float:left;}
+.m_index_box .title {text-align:center;background:#83c084 url(http://imgcache.varicom.im/images/site/open_v3.1/p_head.png) center 4px no-repeat;background-size:contain;}
+.m_index_box .title h3 {padding-top:18px;font-size:14px;line-height:36px;color:#fff;}
+.m_index_box .title ul {background-color:#fff;text-align:left;font-size:0;}
+.m_index_box .title li {display:inline-block;box-sizing:border-box;padding:0 20px;font-size:12px;line-height:2.6;color:#333;}
+.m_index_box .title li.current {color:#83c084;border-bottom:solid 1px #83c084;}
+
+
+
+.m_window {}
+
+.m_box {padding:15px 30px 0 58px;position:relative;}
+.xmn_photo {width:32px;height:32px;position:absolute;top:15px;left:15px;}
+.xmn_photo img {width:inherit;height:inherit;border-radius:50%;}
+
+.m_cnt {padding:10px 12px;background-color:#fff;border-radius:8px;box-shadow:0 0 0 1px #ddd;}
+.m_cnt:before {height:0;width:0;content:'';position:absolute;top:23px;left:52px;box-shadow:
+        0 0 0 .6px #ddd,1px 0 0 .6px #ddd,2px 0 0 .6px #ddd,3px 0 0 .6px #ddd,4px 0 0 .6px #ddd,5px 0 0 .6px #ddd,6px 0 0 .6px #ddd,
+        1px 1px 0 .6px #ddd,2px 1px 0 .6px #fff,3px 1px 0 .6px #fff,4px 1px 0 .6px #fff,5px 1px 0 .6px #fff,6px 1px 0 .6px #fff,
+        2px 2px 0 .6px #ddd,3px 2px 0 .6px #fff,4px 2px 0 .6px #fff,5px 2px 0 .6px #fff,6px 2px 0 .6px #fff,
+        3px 3px 0 .6px #ddd,4px 3px 0 .6px #fff,5px 3px 0 .6px #fff,6px 3px 0 .6px #fff,
+        4px 4px 0 .6px #ddd,5px 4px 0 .6px #fff,6px 4px 0 .6px #fff,
+        5px 5px 0 .6px #ddd,6px 5px 0 .6px #fff,
+        6px 6px 0 .6px #ddd;}
+
+.m_cnt h3 {font-size:14px;line-height:1.4;color:#333;}
+.m_cnt p {font-size:12px;line-height:1.2;color:#aaa;}
+.m_cnt img {width:100%;margin:4px 0;}

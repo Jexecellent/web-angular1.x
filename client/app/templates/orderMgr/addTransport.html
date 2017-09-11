@@ -1,0 +1,22 @@
+<div class="ec_deliver_popCnt">
+    <ul>
+        <li>
+            <h3>收货信息</h3>
+
+            <p>
+                {{data.address.province + data.address.city + data.address.county+ data.address.detail
+                +'，'+data.name+'，' + data.phone}}
+            </p>
+        </li>
+        <li>
+            <h3>物流信息</h3>
+            <select ng-model="retData.company" ng-show="!showInput" ng-options="op as op for op in companys">
+                <option value="">请选择快递</option>
+                <!--<option value="{{company}}" ng-repeat="company in companys">{{company}}</option>-->
+            </select>
+            <input type="text" ng-model="retData.company" ng-show="showInput">
+            <label for="">运单号：</label>
+            <input type="text" ng-model="retData.number">
+        </li>
+    </ul>
+</div>

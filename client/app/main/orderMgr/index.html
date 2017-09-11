@@ -1,0 +1,34 @@
+<div class="message" vc-tabs="1" id="orderMgr" style="height: 100%">
+    <section class="page_tab">
+        <ul>
+            <li vc-tab-head tag="waitSend"><a href="#">等待发货</a></li>
+            <li vc-tab-head tag="sent"><a href="#">已发货</a></li>
+            <li vc-tab-head tag="success"><a href="#">交易成功</a></li>
+            <li vc-tab-head tag="waitPay"><a href="#">等待付款</a></li>
+            <li vc-tab-head tag="errorOrder"><a href="#">失败订单</a></li>
+            <li vc-tab-head tag="detail" no-index></li>
+        </ul>
+    </section>
+    <section class="page_content">
+        <div class="ec_order_info">
+            <div vc-tab-body tag="waitSend" ctrl="OrderListController" tpl-url="app/main/orderMgr/pages/list.html"
+                 locals="{status:2}">
+            </div>
+            <div vc-tab-body tag="sent" ctrl="OrderListController" tpl-url="app/main/orderMgr/pages/list.html"
+                 locals="{status:3}">
+            </div>
+            <div vc-tab-body tag="success" ctrl="OrderListController" tpl-url="app/main/orderMgr/pages/list.html"
+                 locals="{status:4}">
+            </div>
+            <div vc-tab-body tag="waitPay" ctrl="OrderListController" tpl-url="app/main/orderMgr/pages/list.html"
+                 locals="{status:1}">
+            </div>
+            <div vc-tab-body tag="errorOrder" ctrl="OrderListController" tpl-url="app/main/orderMgr/pages/list.html"
+                 locals="{status:11}">
+            </div>
+            <div vc-tab-body tag="detail" ctrl="OrderDetailController" tpl-url="app/main/orderMgr/pages/detail.html">
+            </div>
+        </div>
+        <div class="o_loading" ng-show="loading"></div>
+    </section>
+</div>

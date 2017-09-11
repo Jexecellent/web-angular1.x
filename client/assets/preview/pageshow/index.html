@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--头部文件-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="format-detection" content="telephone=no, email=no"/>
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <link rel="stylesheet" href="http://imgcache.varicom.im/css/standard_file/public.css">
+    <link rel="stylesheet" href="http://imgcache.varicom.im/css/varicom/common/component.css">
+    <link rel="stylesheet" href="http://imgcache.varicom.im/css/site/app/activity/activity_3.css?v=<%=version%>">
+    <link rel="stylesheet" href="http://imgcache.varicom.im/css/site/open_v3.2/o_vc_page.css">
+    <link rel="stylesheet" href="/app/styles/swiper.css">
+</head>
+<body ng-app="previewApp">
+<section class="page_content" ng-controller="pageShowController as pageShow">
+    <div class="ec_setHome disableSelect">
+        <div class="mCustomScrollbar">
+            <article class="ec_appHome_box" style="width: 289px;">
+                <section ng-repeat="com in pageShow.comps" class="{{com.__class}}">
+                    <ul class="swiper-wrapper" ng-if="com.type === 1">
+                        <li class="swiper-slide" ng-repeat="con in com.content">
+                            <img ng-src="{{con.image}}.318x159" alt="">
+                        </li>
+                    </ul>
+                    <div class="title_show" ng-if="com.type === 8 && com.title">
+                        <p ng-bind="com.title.text"></p>
+                        <span ng-class="{'hidden':!com.title.action}">更多</span>
+                    </div>
+                    <ul class="swiper-wrapper" ng-if="com.type === 8">
+                        <li class="swiper-slide upload" ng-repeat="con in com.content">
+                            <img ng-src="{{con.image}}.70x70" alt="">
+                        </li>
+                    </ul>
+                    <div class="title_show" ng-if="com.type === 4 && com.title">
+                        <p ng-bind="com.title.text"></p>
+                        <span ng-class="{'hidden':!com.title.action}">更多</span>
+                    </div>
+                    <ul ng-if="com.type === 4">
+                        <li ng-repeat="con in com.content">
+                            <img ng-src="{{con.image}}.70x70" alt="">
+                        </li>
+                    </ul>
+                    <div class="title_show" ng-if="com.type === 2 && com.title">
+                        <p ng-bind="com.title.text"></p>
+                        <span ng-class="{'hidden':!com.title.action}">更多</span>
+                    </div>
+                    <ul ng-if="com.type === 2">
+                        <li ng-repeat="con in com.content">
+                            <img ng-src="{{con.image}}" alt="">
+                        </li>
+                    </ul>
+                    <nav ng-if="com.type === 9">
+                        <p ng-repeat="con in com.content track by $index" ng-class="{'current':$index==0}">
+                            {{con.title}}
+                        </p>
+                    </nav>
+                </section>
+            </article>
+        </div>
+    </div>
+</section>
+</body>
+<script type="text/javascript" src="http://imgcache.varicom.im/js/lib/angular.min.js"></script>
+<script type="text/javascript" src="http://imgcache.varicom.im/js/lib/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="http://imgcache.varicom.im/js/lib/store.min.js"></script>
+<script type="text/javascript" src="./page_show.controller.js"></script>
+<script src="/bower_components/jquery/dist/jquery.js"></script>
+<script src="/bower_components/swiper/dist/js/swiper.js"></script>
+</html>

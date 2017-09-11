@@ -1,0 +1,22 @@
+<div class="message" vc-tabs="1" id="storeIndexTabs" style="height: 100%">
+    <section class="page_tab">
+        <ul>
+            <li vc-tab-head tag="online"><a href="#">配置首页</a></li>
+            <li vc-tab-head tag="audit" ng-show="hasPermission('audit:10')"><a href="#">等待审核</a></li>
+            <li vc-tab-head tag="myaudit" ng-show="!hasPermission('audit:10')"><a href="#">我的审核</a></li>
+        </ul>
+    </section>
+    <section class="page_content">
+        <div class="cnt_box cnt_Ypaging mCustomScrollbar">
+            <!-- 首页 -->
+            <div vc-tab-body tag="online" ctrl="StoreMainController" tpl-url="app/main/storeIndex/main.html"></div>
+
+            <!-- 待审核列表 -->
+            <div vc-tab-body tag="audit" ng-show="hasPermission('audit:10')" ctrl="AuditController" tpl-url="app/common/audit/index.html" locals="{bizType:10,auditStatuses:'1'}"></div>
+
+            <!-- 我的审核 -->
+            <div vc-tab-body tag="myaudit" ng-show="!hasPermission('audit:10')" ctrl="AuditController" tpl-url="app/common/audit/index.html" locals="{bizType:10,applyRid:$currentRid}"></div>
+        </div>
+        <div class="o_loading" ng-show="loading"></div>
+    </section>
+</div>

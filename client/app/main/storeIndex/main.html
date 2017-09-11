@@ -1,0 +1,106 @@
+<div class="ec_setHome disableSelect">
+    <section class="tool fixedTool">
+        <div class="left" ng-if="op_state">
+            <a href="#" class="icon_return red_btn" ng-click="goBack()">返回</a>
+        </div>
+        <ul class="right">
+            <li><a href="#" class="icon_ok red_txt" ng-click="save()">确认提交</a></li>
+        </ul>
+    </section>
+    <article class="ec_appHome_box">
+            <h3>APP首页预览</h3>
+
+            <div style="position: relative;">
+                <section ng-repeat="comp in components_body" class="{{comp.__class}}" drag-drop all-sort="true"
+                         top="-260" sort-id="{{comp.__id}}" callback="dragSuccess(cur,prev, next,all_ids)">
+                    <!--多张卡片-->
+                    <nav class="tool" ng-if="comp.type === 1">
+                        <ul>
+                            <li><a href="#" class="icon_edit_3" ng-click="edit(comp)">编辑</a></li>
+                            <li><a href="#" class="icon_close_2" ng-click="remove(comp)">删除</a></li>
+                        </ul>
+                    </nav>
+                    <ul class="swiper-wrapper" ng-if="comp.type === 1">
+                        <li class="swiper-slide" ng-repeat="con in comp.content" repeat-done="initSwiper()">
+                            <img ng-src="{{(con.image|origImg:'.318x159')||'http://imgcache.varicom.im/images/site/open_v3.1/occupied_1080_540_e.gif'}}"
+                                alt=""></li>
+                    </ul>
+                    <div class="swiper-pagination" ng-if="comp.type === 1"></div>
+                    <!--两列风格，左大右三小-->
+                    <nav class="tool" ng-if="comp.type === 2">
+                        <ul>
+                            <li><a href="#" class="icon_edit_3" ng-click="edit(comp)">编辑</a></li>
+                            <li><a href="#" class="icon_close_2" ng-click="remove(comp)">删除</a></li>
+                        </ul>
+                    </nav>
+                    <div class="title_show" ng-if="comp.type === 2 && comp.title">
+                        <p ng-bind="comp.title.text"></p>
+                        <span ng-class="{'hidden':!comp.title.action}">更多</span>
+                    </div>
+                    <ul ng-if="comp.type === 2">
+                        <li>
+                            <img ng-src="{{(comp.content[0].image|origImg:'.160x160')||'http://imgcache.varicom.im/images/site/open_v3.1/occupied.gif'}}" alt="">
+                        </li>
+                        <li>
+                            <img ng-src="{{(comp.content[1].image|origImg:'.151x52')||'http://imgcache.varicom.im/images/site/open_v3.1/occupied_500_160_e.gif'}}" alt="">
+                        </li>
+                        <li>
+                            <img ng-src="{{(comp.content[2].image|origImg:'.151x52')||'http://imgcache.varicom.im/images/site/open_v3.1/occupied_500_160_e.gif'}}" alt="">
+                        </li>
+                        <li>
+                            <img ng-src="{{(comp.content[3].image|origImg:'.151x52')||'http://imgcache.varicom.im/images/site/open_v3.1/occupied_500_160_e.gif'}}" alt="">
+                        </li>
+                    </ul>
+                    <!--矩形一行，只显示四列-->
+                    <nav class="tool" ng-if="comp.type === 8">
+                        <ul>
+                            <li><a href="#" class="icon_edit_3" ng-click="edit(comp)">编辑</a></li>
+                            <li><a href="#" class="icon_close_2" ng-click="remove(comp)">删除</a></li>
+                        </ul>
+                    </nav>
+                    <div class="title_show" ng-if="comp.type === 8 && comp.title">
+                        <p ng-bind="comp.title.text"></p>
+                        <span ng-class="{'hidden':!comp.title.action}">更多</span>
+                    </div>
+                    <ul class="swiper-wrapper" ng-if="comp.type === 8">
+                        <li class="swiper-slide upload" ng-repeat="con in comp.content" repeat-done="initSwiper()" style="height:80px !important;">
+                            <img ng-src="{{(con.image|origImg:'.70x70')||'http://imgcache.varicom.im/images/site/open_v3.1/occupied.gif'}}" alt="">
+                        </li>
+                    </ul>
+                    <!--矩形多列-->
+                    <nav class="tool" ng-if="comp.type === 4">
+                        <ul>
+                            <li><a href="#" class="icon_edit_3" ng-click="edit(comp)">编辑</a></li>
+                            <li><a href="#" class="icon_close_2" ng-click="remove(comp)">删除</a></li>
+                        </ul>
+                    </nav>
+                    <div class="title_show" ng-if="comp.type === 4 && comp.title">
+                        <p ng-bind="comp.title.text"></p>
+                        <span ng-class="{'hidden':!comp.title.action}">更多</span>
+                    </div>
+                    <ul ng-if="comp.type === 4">
+                        <li ng-repeat="con in comp.content">
+                            <img ng-src="{{(con.image|origImg:'.70x70')||'http://imgcache.varicom.im/images/site/open_v3.1/occupied.gif'}}" alt="">
+                        </li>
+                    </ul>
+                </section>
+            </div>
+            <section ng-repeat="comp in components_foot track by comp.__id" class="{{comp.__class}}">
+                <!--推荐瀑布流-->
+                <nav class="tool" ng-if="comp.type === 9">
+                    <ul>
+                        <li><a href="#" class="icon_edit_3" ng-click="edit(comp)">编辑</a></li>
+                        <li><a href="#" class="icon_close_2" ng-click="remove(comp)">删除</a></li>
+                    </ul>
+                </nav>
+                <nav ng-if="comp.type === 9">
+                    <p ng-repeat="con in comp.content track by con.__id" ng-class="{'current':$index==0}">
+                        {{con.title}}
+                    </p>
+                </nav>
+            </section>
+            <button class="icon_plus_2 red_btn" ng-click="addComponent()">添加组件</button>
+        </article>
+    <article class="ec_appHome_box"></article>
+    <div id="_type_img_upload" style="display: none;"></div>
+</div>

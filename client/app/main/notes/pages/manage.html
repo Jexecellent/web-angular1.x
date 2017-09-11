@@ -1,0 +1,38 @@
+<div vc-tabs="1" id="manage" style="height: 100%">
+    <nav class="state">
+        <ul>
+            <li vc-tab-head tag="online"><a href="#">正在线上</a></li>
+            <li vc-tab-head tag="audit" ng-show="hasPermission('note:add')"><a href="#">等待审核</a></li>
+            <li vc-tab-head tag="myaudit" ng-show="!hasPermission('note:add')"><a href="#">我的审核</a></li>
+            <li vc-tab-head tag="offline"><a href="#">已经下线</a></li>
+            <li vc-tab-head tag="draft"><a href="#">草稿箱</a></li>
+        </ul>
+    </nav>
+    <div class="cnt_box cnt_Ystate cnt_Ypaging mCustomScrollbar">
+        <!-- 已上线列表 -->
+        <div vc-tab-body tag="online" ctrl="NotesListController" tpl-url="app/main/notes/pages/list.html" locals="{status:3}">
+
+        </div>
+
+        <!-- 待审核列表 -->
+        <div vc-tab-body tag="audit" ctrl="AuditController" tpl-url="app/common/audit/index.html" locals="{bizType:5,auditStatuses:'1'}">
+
+        </div>
+
+        <!-- 审核中列表 -->
+        <div vc-tab-body tag="myaudit" ctrl="AuditController" tpl-url="app/common/audit/index.html" locals="{bizType:5,applyRid:$currentRid}">
+
+        </div>
+
+        <!-- 已下线列表 -->
+        <div vc-tab-body tag="offline" ctrl="NotesListController" tpl-url="app/main/notes/pages/list_offline.html" locals="{status:4}">
+
+        </div>
+
+        <!-- 草稿 -->
+        <div vc-tab-body tag="draft" ctrl="DraftController" tpl-url="app/common/draft/index.html" locals="{bizType:5,auditTypes:'0'}">
+        </div>
+
+    </div>
+    <div class="o_loading" ng-show="loading"></div>
+</div>

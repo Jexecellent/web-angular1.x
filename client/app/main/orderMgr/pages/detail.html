@@ -1,0 +1,154 @@
+<div class="cnt_box mCustomScrollbar">
+    <section class="tool fixedTool">
+        <div class="left">
+            <a href="#" class="icon_return return_red_btn" ng-click="back()">返回</a>
+        </div>
+        <ul class="right">
+            <li ng-show="data.status === 3"><a href="#" class="icon_release" ng-click="vcModal(data,3)">物流跟踪</a></li>
+            <li ng-show="data.status === 2 && hasPermission('transport:add')"><a href="#" class="icon_release"
+                                                                                 ng-click="vcModal(data,1)">发货</a></li>
+            <li ng-show="data.status === 2 && hasPermission('receive:update')">
+                <a href="#" class="icon_edit_2 editAdd_btn" ng-click="vcModal(data,2)">修改收货地址</a>
+            </li>
+        </ul>
+    </section>
+    <div class="order_details_cnt">
+        <div class="order_progress">
+            <div class="title">
+                <h3>订单进度</h3>
+            </div>
+            <ul>
+                <!--完成一个步骤 在对应的 li 添加 class = complete -->
+                <li ng-class="{complete:data.status>=1}">
+                    <p>买家提交订单</p>
+                    <span>{{data.createTime | date:'yyyy-MM-dd HH:mm:ss' }}</span>
+                </li>
+                <li ng-class="{complete:data.status>=2}">
+                    <p>买家付款</p>
+                    <span>{{data.payTime | date:'yyyy-MM-dd HH:mm:ss' }}</span>
+                </li>
+                <li ng-class="{complete:data.status>=3}">
+                    <p>卖家发货</p>
+                    <span>{{data.sendTime | date:'yyyy-MM-dd HH:mm:ss' }}</span>
+                </li>
+                <li ng-class="{complete:data.status>=4}">
+                    <p>确认收货</p>
+                    <span>{{data.finishTime | date:'yyyy-MM-dd HH:mm:ss' }}</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="order_info">
+            <div class="title">
+                <h3>订单信息</h3>
+
+                <p>订单编号：{{data.indentUid}}</p>
+
+                <p>下单时间：{{data.createTime | date:'yyyy-MM-dd HH:mm:ss' }}</p>
+
+                <p ng-show="data.payTime">付款时间：{{data.payTime | date:'yyyy-MM-dd HH:mm:ss' }}</p>
+
+                <p>订单内包含商品 {{data.totalNum}} 件</p>
+            </div>
+            <table class="table_box">
+                <thead>
+                <tr>
+                    <th>商品信息</th>
+                    <th>规格</th>
+                    <th>售价</th>
+                    <th>数量</th>
+                    <th>实收款</th>
+                    <th>买家</th>
+                    <th>收货人/联系方式</th>
+                    <th>买家备注</th>
+                    <th>收货地址</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <!--订单的用户信息-->
+                <tr>
+                    <td style="padding:0;"></td>
+                    <td style="padding:0;"></td>
+                    <td style="padding:0;"></td>
+                    <td style="padding:0;"></td>
+
+                    <td rowspan="999">
+                        <p>{{data.totalPrice}}元</p>
+                        <span>(含运费:{{data.carriage}})</span>
+                    </td>
+                    <td rowspan="999">
+                        {{data.nickname}}
+                    </td>
+                    <td rowspan="999">
+                        <p>{{data.name}}</p>
+
+                        <p>{{data.phone}}</p>
+                    </td>
+                    <td rowspan="999">
+                        <p>{{data.remark}}</p>
+                    </td>
+                    <td rowspan="999">
+                        {{data.address.province + data.address.city + data.address.county+ data.address.detail}}
+                    </td>
+                </tr>
+
+                <!--订单内  商品列表-->
+                <tr ng-repeat="goods in data.p">
+                    <td>
+                        <div class="orderGoods">
+                            <div class="tag" ng-show="data.status != 1 && data.status !=5">
+                                <button class="grey_btn" ng-show="goods.status === 2">已退款</button>
+                                <button class="green_btn" ng-show="data.status === 3 && goods.status !==2">已发货</button>
+                            </div>
+
+                            <img ng-src="{{goods.image}}" height="40px;" width="40px;">
+
+                            <h3>{{goods.goodsName}}</h3>
+
+                            <p class="code">商品编码：{{goods.goodsUid}}</p>
+                        </div>
+                    </td>
+                    <td>
+                        <p ng-repeat="property in goods.property">{{property}}</p>
+                    </td>
+                    <td>
+                        <p>{{goods.realPrice}}元</p>
+                        <span class="t_tline">原价：{{goods.price}}元</span>
+                    </td>
+                    <td>{{goods.num}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="order_remarks">
+            <div class="title">
+                <h3>添加备注</h3>
+                <button ng-click="saveRemark()">保存</button>
+            </div>
+            <div class="textarea_box">
+                <div class="textarea_cnt">
+                    <textarea ng-model="data.adminRemark" placeholder="请添加对此订单的备注" maxlength="300"></textarea>
+
+                    <p>{{data.adminRemark.length|numDefault}}/300</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="order_log" ng-if="data.status != 1">
+            <div class="title">
+                <h3>订单状态变更</h3>
+            </div>
+            <div class="mCustomScrollbar order_log_cnt">
+                <ul>
+                    <li ng-repeat="op in log">
+                        <span>{{(op.createTime|date:'yyyy-MM-dd HH:mm:ss') + '   ' + op.desc}}</span>
+
+                        <p>{{op.title}}</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

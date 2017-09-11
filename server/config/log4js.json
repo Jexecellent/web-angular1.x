@@ -1,0 +1,24 @@
+{
+    "appenders": [
+        {
+            "type": "console"
+        },
+        {
+            "type": "file",
+            "filename": "/data/logs/open/openrest.log",
+            "maxLogSize": 100048576,
+            "layout": {
+                "type": "basic"
+            },
+            "backups": 5,
+            "category": "openrest-log"
+        }
+    ],
+
+    "levels": {
+        "openrest-log": "INFO"
+    },
+
+    "replaceConsole": true,
+    "lineDebug": false
+}

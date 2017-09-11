@@ -1,0 +1,21 @@
+<div class="message" vc-tabs="2" id="groupmsgTabs"  style="height: 100%">
+    <section class="page_tab">
+        <ul>
+            <li vc-tab-head tag="edit">
+                <a href="#">消息发布</a>
+            </li>
+            <li vc-tab-head tag="manage">
+                <a href="#">管理消息</a>
+            </li>
+        </ul>
+    </section>
+    <section class="page_content">
+        <!-- 编辑 -->
+        <div vc-tab-body tag="edit" ctrl="GroupMsgEditController" tpl-url="app/main/groupmsg/pages/edit.html"></div>
+
+        <!-- 管理消息 -->
+        <div vc-tab-body tag="manage" ctrl="GroupMsgMgrController" tpl-url="app/main/groupmsg/pages/manage.html"></div>
+
+        <div class="o_loading" ng-show="loading"></div>
+    </section>
+</div>

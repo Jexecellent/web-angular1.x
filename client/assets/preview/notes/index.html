@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!--头部文件-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <title>手记详情</title>
+
+    <link rel="stylesheet" href="http://imgcache.varicom.im/css/varicom/common/component.css">
+    <link rel="stylesheet" href="http://imgcache.varicom.im/css/varicom/notes/notes.css">
+</head>
+
+<style>
+    html,body{
+        height:auto;
+    }
+</style>
+<body ng-app="previewApp">
+<div class="index_box notes_page" ng-controller="NoteDetailCtrl">
+    <header class="page_head">
+        <div class="banner">
+            <img ng-src="{{note.thumbnail}}" alt="" name="img"/>
+        </div>
+    </header>
+
+    <section class="notes_info">
+        <dl>
+            <dt class="notes_title">
+            <div class="user_info">
+                <a ><img ng-src="{{note.create.imgPath}}"/></a>
+                <h4 ng-bind="note.create.name"></h4>
+            </div>
+            </dt>
+            <dd>
+                <div class="start_time" ng-bind="note.createTime"></div>
+            </dd>
+            <dd>
+                <div class="notes_desc" ng-bind="note.artDesc">
+                    <p>
+
+                    </p>
+                </div>
+            </dd>
+        </dl>
+    </section>
+    <section class="notes_progress">
+    <div ng-bind-html="note.articleContent"></div>
+    </section>
+
+    <!-- <footer class="notes_footer">
+        <div class="button_box">
+            <a href="#" class="enroll_button enroll_succeed" id="show_comment">查看评论</a>
+        </div>
+    </footer> -->
+    <div class="arrow hidden"></div>
+</div>
+
+</body>
+<script type="text/javascript" src="http://imgcache.varicom.im/js/lib/angular.min.js"></script>
+<script type="text/javascript" src="http://imgcache.varicom.im/js/lib/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="http://imgcache.varicom.im/js/lib/store.min.js"></script>
+<script type="text/javascript" src="http://imgcache.varicom.im/js/lib/moment.min.js"></script>
+<script type="text/javascript" src="./notes.js"></script>
+
+</html>

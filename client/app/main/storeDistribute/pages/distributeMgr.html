@@ -1,0 +1,23 @@
+<div vc-tabs="1" id="distributeMgr" style="height: 100%">
+    <nav class="state">
+        <ul>
+            <li vc-tab-head tag="distributeOnline"><a href="#">我的分销商</a></li>
+            <li vc-tab-head tag="distributeAudit"><a href="#">等待审核</a></li>
+            <li vc-tab-head tag="distributeRefused"><a href="#">已处理</a></li>
+        </ul>
+    </nav>
+    <div class="cnt_box cnt_Ystate cnt_Ypaging mCustomScrollbar">
+        <div vc-tab-body tag="distributeOnline" ctrl="DistributeListController"
+             tpl-url="app/main/storeDistribute/pages/distributeList.html">
+        </div>
+        <div vc-tab-body tag="distributeAudit" ctrl="DistributeAuditController"
+             tpl-url="app/main/storeDistribute/pages/distributeAudit.html"
+             locals="{params:{status:1}}">
+        </div>
+        <div vc-tab-body tag="distributeRefused" ctrl="DistributeAuditController"
+             tpl-url="app/main/storeDistribute/pages/distributeAudit.html"
+             locals="{params:{status:4}}">
+        </div>
+    </div>
+    <div class="o_loading" ng-show="loading"></div>
+</div>

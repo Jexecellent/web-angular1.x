@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!--头部文件-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <title>商品详情</title>
+
+    <link rel="stylesheet" href="http://imgcache.varicom.im/css/standard_file/m_public_v0.1.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body ng-app="previewApp">
+    <div class="index_box goods_details" ng-controller="GoodsDetailCtrl">
+        <header class="m_block">
+            <section class="swiper-container goodsImages_show">
+                <article class="swiper-wrapper">
+                    <section class="swiper-slide" ng-repeat="imgDetail in goods.ImgDetail">
+                        <img ng-src="{{imgDetail.img}}">
+                    </section>
+                </article>
+                <article class="swiper-pagination"></article>
+            </section>
+
+            <section class="goods_head">
+                <h3 ng-bind="goods.name"></h3>
+
+                <h5>售价：￥ <span ng-bind="goods.realPrice"></span></h5>
+                <!--卖家售价 买家隐藏-->
+                <h4>佣金：￥ <span ng-bind="goods.commission"></span></h4>
+                <!--卖家佣金 买家售价-->
+
+                <!--商品介绍-->
+                <div class="details">
+                    <p ng-bind="goods.desc"></p>
+                </div>
+            </section>
+        </header>
+
+        <section class="goods_info m_block">
+            <div class="title">
+                <h3>商品信息</h3>
+            </div>
+            <div class="content">
+                <ul>
+                    <li ng-repeat="attr in goods.attributes">
+                    <p>{{attr.name}}{{attr.value}}</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="goods_details m_block">
+            <div class="content" ng-bind-html="introDecoded()">
+            </div>
+        </section>
+    </div>
+
+</body>
+<!--JS文件-->
+<script type="text/javascript" src="http://imgcache.varicom.im/js/lib/angular.min.js"></script>
+  <script type="text/javascript" src="http://imgcache.varicom.im/js/lib/angular-sanitize.min.js"></script>
+  <script type="text/javascript" src="http://imgcache.varicom.im/js/lib/store.min.js"></script>
+  <script type="text/javascript" src="http://imgcache.varicom.im/js/lib/lodash.min.js"></script>
+  <script type="text/javascript" src="http://imgcache.varicom.im/js/lib/moment.min.js"></script>
+  <script type="text/javascript" src="http://imgcache.varicom.im/js/lib/zepto.js"></script>
+<script type="text/javascript" src="http://imgcache.varicom.im/js/lib/swiper.zepto.min.js"></script>
+  <script type="text/javascript" src="./goods.js"></script>
+
+<script>
+    $(function () {
+        var mySwiper = new Swiper('.swiper-container', {
+            autoplay: 3000,
+            speed: 300,
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            onSlideChangeEnd: function (_swipe) {
+                //console.log(_swipe.activeIndex)
+            }
+        });
+
+        $("body").on("touchmove", function (e) {
+            if ($(".pop").hasClass("show")) {
+                e.preventDefault();
+            }
+        });
+
+        $(".buy_btn").on("click", function () {
+            $(".pop").removeClass("hidden");
+            $(".pop").addClass("show");
+
+            return false
+        });
+        $(".close").on("click", function () {
+            $(".pop").removeClass("show");
+            $(".pop").addClass("hidden");
+        });
+    });
+</script>
+
+
+</html>

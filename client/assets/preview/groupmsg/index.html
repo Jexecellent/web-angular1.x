@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>APP管理平台 - 我的应用 我做主</title>
+    <!--头部文件-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <link rel="stylesheet" href="http://imgcache.varicom.im/css/standard_file/public.css">
+    <link rel="stylesheet" href="groupmsg.css">
+</head>
+
+<body ng-app="previewApp">
+    <div class="m_index_box" ng-controller="GroupmsgDetailCtrl">
+        <div class="title">
+            <h3>小秘书</h3>
+        </div>
+        <div class="m_window">
+        
+            <div class="m_box">
+                <div class="xmn_photo"><img src="http://imgcache.varicom.im/images/site/open_v3.1/xmn.jpg" alt=""></div>
+                <div class="m_cnt">
+                    <h3 ng-bind="groupmsg.title"></h3>
+                    <p ng-show="groupmsg.type === 2"><img ng-src="{{groupmsg.picture}}" alt=""></p>
+                    <p ng-bind="groupmsg.content"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript" src="http://imgcache.varicom.im/js/lib/angular.min.js"></script>
+<script type="text/javascript" src="http://imgcache.varicom.im/js/lib/store.min.js"></script>
+<script type="text/javascript" src="http://imgcache.varicom.im/js/lib/moment.min.js"></script>
+<script type="text/javascript" src="./groupmsg.js"></script>
+
+
+</html>

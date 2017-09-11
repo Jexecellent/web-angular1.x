@@ -1,0 +1,18 @@
+<div class="pop_n_branch">
+    <ul class="form_box">
+        <li class="text">
+            <label for="">部门名称</label>
+            <input type="text" placeholder="输入部门名称" required maxlength="4" ng-model="dept.name" ng-blur="checkName()">
+            <p ng-show="errorName">该部门已存在,请重新输入</p>
+        </li>
+        <li class="text">
+            <label for="">部门类型</label>
+            <select ng-model="dept.type" ng-options="op.key as op.desc for op in _types"></select>
+        </li>
+        <li class="text">
+            <label for="">备注</label>
+            <textarea role="5" placeholder="输入备注" maxlength="30" ng-model="dept.desc"></textarea>
+            <p>{{dept.desc.length}}<span ng-if="dept.desc ===undefined">0</span>/30</p>
+        </li>
+    </ul>
+</div>

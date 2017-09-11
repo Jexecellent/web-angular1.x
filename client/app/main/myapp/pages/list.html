@@ -1,0 +1,24 @@
+<div class="cnt_box mCustomScrollbar">
+    <section class="tool fixedTool">
+        <ul class="right">
+            <li><a href="#" class="icon_box" ng-show="userInfo.op === 1" ng-click="update()" >保存</a></li>
+        </ul>
+    </section>
+    <div class="app_info">
+        <ul class="form_box">
+        <li>
+            <label>APP图标</label>
+            <p><img ng-src="{{appInfo.logo | cutImg100}}" alt="" /></p>
+        </li>
+        <li>
+            <label>APP名称{{op}}</label>
+            <p ng-bind="appInfo.appName"></p>
+        </li>
+        <li class="textarea">
+            <label>APP介绍</label>
+            <textarea ng-model="appInfo.desc" ng-show="userInfo.op === 1" rows="10" maxlength="200" cols="200"></textarea>
+            <p ng-bind="appInfo.desc" ng-show="userInfo.op != 1"></p>
+        </li>
+    </ul>
+    </div>
+</div>

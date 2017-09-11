@@ -1,0 +1,40 @@
+<section class="tool fixedTool">
+    <div class="left">
+        <vc-search vc-model="params.querykey" placeholder="请输入关键词" vc-change="loadData(1)"></vc-search>
+    </div>
+</section>
+<table class="list_table">
+    <thead>
+    <tr>
+        <th width="60px">头像</th>
+        <th width="100px">账户</th>
+        <th width="30px">性别</th>
+        <th width="50px">手机</th>
+        <th width="100px">加入时间</th>
+        <th width="40px">下属人员</th>
+        <th width="40px">累计售出</th>
+        <th width="40px">销售额</th>
+        <th width="40px">佣金累计</th>
+        <th width="40px">奖金累计</th>
+        <th width="100px">收款账号</th>
+        <th width="40px">待发佣金</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="distribute in data">
+        <td><img ng-src="{{distribute.imgPath}}" ng-show="distribute.imgPath" height="40px;" width="40px;"/></td>
+        <td>{{distribute.name}}</td>
+        <td>{{distribute.sex | sexFilter}}</td>
+        <td>{{distribute.loginName}}</td>
+        <td>{{distribute.createTime|date:'yyyy-MM-dd'}}</td>
+        <td>{{distribute.teamNum | numDefault}}人</td>
+        <td>{{distribute.totalSalesNum | numDefault}}件</td>
+        <td>{{distribute.totalSales | numDefault}}元</td>
+        <td>{{distribute.totalCommission | numDefault}}元</td>
+        <td>{{distribute.totalBonus | numDefault}}元</td>
+        <td>{{distribute.account}}</td>
+        <td>{{(distribute.totalCommission - distribute.hasCommission) | numDefault}}元</td>
+    </tr>
+    </tbody>
+</table>
+<open-page data="page" params="params" show-page-num="10" go-page="loadData(num)"></open-page>

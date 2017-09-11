@@ -1,0 +1,65 @@
+<section class="tool fixedTool">
+	<div class="left">
+		<ul class="u_screening">
+			<li ng-class="{'current' : show.timeType == 1}">
+				<a ng-click="changeData(1)">全部</a>
+			</li>
+			<li ng-class="{'current' : show.timeType == 2}">
+				<a ng-click="changeData(2)">今日</a>
+			</li>
+			<li ng-class="{'current' : show.timeType == 3}">
+				<a ng-click="changeData(3)">本月</a>
+			</li>
+			<li ng-class="{'current' : show.timeType == 4}">
+				<a ng-click="changeData(4)">近三个月</a>
+			</li>
+		</ul>
+
+		<vc-search vc-model="queryParams.queryKey" vc-change="loadQueryData()"></vc-search>
+	</div>
+	<div class="right">
+		<p ng-bind="show.currentUserNum" style="margin-right:15px;"></p>
+	</div>
+</section>
+
+<table class="list_table" ng-init="loadData()">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>头像</th>
+			<th>账户</th>
+			<th>性别</th>
+			<th>手机号</th>
+			<th>注册时间</th>
+			<th>是否推荐</th>
+			<th ng-if="currentApp !== 14">创建圈子</th>
+			<th>用户身份</th>
+			<th width="80">操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="appuser in interestUser">
+			<td ng-bind="$index+1+(queryParams.pageNumber-1)*10"></td>
+			<td><img ng-src="{{appuser.imgPath | cutImg40}}" style="width:40px;height:40px" /></td>
+			<td ng-bind="appuser.nickname | replaceName : appuser.remark"></td>
+			<td ng-bind="appuser.sex | sex"></td>
+			<td ng-bind="appuser.loginName"></td>
+			<td ng-bind="appuser.createTime | date:'yyyy-MM-dd HH:mm:ss'"></td>
+			<td ng-bind="appuser.recommend | inApp"></td>
+			<td  ng-if="currentApp !== 14" ng-bind="appuser.createClubPerm | clubCreate"></td>
+			<td ng-bind="appuser.label | replaceUndefined : '普通'"></td>
+			<td>
+				<div class="operate">
+					<ul>
+						<li ng-show="hasPermission('user:update')">
+							<a ng-click="openEditUser(appuser)">编辑</a>
+						</li>
+					</ul>
+				</div>
+			</td>
+		</tr>
+
+	</tbody>
+</table>
+
+<open-page data="pager" params="params" url="user/list" show-page-num="10" go-page="loadData(num)"></open-page>

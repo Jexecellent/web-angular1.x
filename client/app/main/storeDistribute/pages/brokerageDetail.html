@@ -1,0 +1,47 @@
+<div class="cnt_box mCustomScrollbar">
+    <section class="tool fixedTool">
+        <div class="left">
+            <a href="#" class="icon_return return_red_btn" ng-click="back()">返回</a>
+        </div>
+    </section>
+    <table class="table_box">
+        <thead>
+        <tr>
+            <th colspan="999">
+                <div class="brokerageDetailBar">佣金明细（取当前时间前十六天的所有订单）</div>
+            </th>
+        </tr>
+        <tr class="table_occupied">
+            <th colspan="999">
+                <p></p>
+            </th>
+        </tr>
+        <tr>
+            <th>商品信息</th>
+            <th>规格信息</th>
+            <th>购买数量</th>
+            <th>下单时间</th>
+            <th>佣金</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="detail in data">
+            <td>
+                <div class="orderGoods">
+                    <img ng-src="{{detail.image}}" width="40px;" height="40px;">
+
+                    <h3>{{detail.goodsName}}</h3>
+
+                    <p class="code">商品编码：{{detail.goodsUid}}</p>
+                </div>
+            </td>
+            <td>
+                <p ng-repeat="pro in detail.property">{{pro}}</p>
+            </td>
+            <td>{{detail.num | numDefault}}</td>
+            <td>{{detail.orderTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{detail.commission | numDefault}}元</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

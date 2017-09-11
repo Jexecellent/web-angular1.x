@@ -1,0 +1,21 @@
+<div class="p_list_s select">
+    <h4>请选择资源：</h4> <div vc-drop-down-list value="moduleId" select-list="modules" select-name="moduleId" id="moduleId" dis="moduleName"></div>
+
+</div>
+<div class="p_list">
+    <ul ng-repeat="article in dataList">
+        <li>
+            <input id="{{article.id}}" type="radio" style="width:13px;" name="art_radio"
+                   ng-click="selectArt(article)" ng-checked="article.$checked"/>
+            <label for="{{article.id}}">
+                <p class="photo">
+                    <img ng-src="{{article.thumbnail|cutImg40}}"/>
+                </p>
+
+                <h3>{{article.title}}</h3>
+
+                <p class="time">{{article.createTime|date:'yyyy-MM-dd HH:mm'}}</p>
+            </label>
+        </li>
+    </ul>
+</div>

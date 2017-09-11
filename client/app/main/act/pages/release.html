@@ -1,0 +1,386 @@
+<style>
+    .sum [type="number"] {
+        width: 55px !important;
+    }
+
+    input[disabled='disabled'] {
+        color: #ccc;
+    }
+    .progress-bar{height: 4px;background-color: #2897DD;}
+</style>
+<form name="activityForm" novalidate style="height:100%" class="act_release">
+    <section class="state" ng-if="op_state === 2">
+        <h3>编辑活动:活动-{{activity.title}}</h3>
+    </section>
+    <!-- <button type="submit" ng-disabled="activityForm.$invalid" value="submit">submit</button>-->
+    <div class="cnt_box">
+        <section class="tool fixedTool">
+            <div class="left" ng-if="op_state === 2 || op_state === 3">
+                <a href="#" class="icon_return red_btn" ng-click="goBack()">返回</a>
+            </div>
+            <ul class="right">
+                <li ng-if="display.currentOperation =='add' ||display.currentOperation =='updateDraft' ">
+                    <a href="#" class="icon_box" ng-click="saveDraft()">保存草稿</a>
+                </li>
+                <li>
+                    <input type="submit" class="icon_eye" value="预览" ng-click="preview()" ng-disabled="activityForm.$invalid"/>
+                </li>
+                <li ng-if="perminssion">
+                    <input type="submit" value="发布" ng-click="saveActivityForm()" ng-disabled="activityForm.$invalid"/>
+                    <i class="icon_release"></i>
+                </li>
+                <li ng-if="!perminssion">
+                    <input type="submit" name="draftForm" ng-disabled="activityForm.$invalid"
+                           ng-click="saveActivityForm()" value="提交审核" /><i class="icon_release"></i>
+                </li>
+                <li ng-if="op_state !== 2 && op_state !== 3">
+                    <a href="#" class="icon_brush red_txt" ng-click="clearActivityForm()">清空</a>
+                </li>
+            </ul>
+        </section>
+        <div class="act_info mCustomScrollbar">
+            <ul class="form_box">
+                <li class="select">
+                    <label>
+                        活动类型 <b class="red_txt">*</b>
+                    </label>
+
+                    <div vc-drop-down-list value="activity.subType" select-list="typeList" select-name="type"
+                         required ng-disabled="readonly.type" on-change="typeChange"></div>
+                    <p ng-show="activityForm.type.$error.required">请输入活动类型</p>
+                </li>
+
+                <li class="text">
+                    <label>
+                        活动名称 <b class="red_txt">*</b>
+                    </label>
+                    <input type="text" placeholder="输入活动名称" name="title" ng-model="activity.title" maxlength="14"
+                           ng-trim="true" required/>
+
+                    <p ng-show="activityForm.title.$dirty && activityForm.title.$invalid">请输入活动名称</p>
+                </li>
+                <li class="time unit" ng-if="display.subType != 'week'">
+                    <label>
+                        出发时间
+                        <b class="red_txt">*</b>
+                    </label>
+
+                    <input type="text" id="startTime" ng-model="activity.startTime" vc-date-picker
+                           date-fmt="yyyy-MM-dd HH:mm" min-date="%y-%M-%d %H:%m" name="startTime"
+                           readonly="readonly" other-conf="startDateConf" placeholder="选择活动出发时间"
+                           ng-required="required.startTime" ng-if="op_state !== 2"/>
+                    <input type="text" id="startTime" readonly="readonly" ng-model="activity.startTime" ng-if="op_state === 2">
+                    <label class="icon_calendar" for="startTime"></label>
+                    <p ng-show="activityForm.startTime.$dirty && activityForm.startTime.$invalid">请选择出发时间</p>
+                </li>
+
+                <li class="time unit" ng-if="display.subType != 'week'">
+                    <label>
+                        返程时间
+                        <b class="red_txt">*</b>
+                    </label>
+                    <input id="end_time" type="text" ng-model="activity.endTime" vc-date-picker
+                           min-date="%y-%M-%d %H:%m" name="endTime" readonly="readonly" placeholder="选择活动返程时间"
+                           ng-required="required.endTime" other-conf="endDateConf"/>
+                    <label class="icon_calendar" for="end_time"></label>
+                    <p ng-show="activityForm.endTime.$error.required">请选择返程时间</p>
+
+                    <p class="error_prompt" ng-show="formError.endTime">活动返程时间不能早于出发时间</p>
+                </li>
+
+                <li class="tag unit" ng-if="display.subType == 'week'">
+                    <label>出发时间</label>
+                    <ul>
+                        <li style="font-size:14px" ng-repeat="week in weekList">
+                            <input type="checkbox" name="weekIds" ng-click="week.state ===0?week.state=1:week.state=0"
+                                   id="{{week.id}}" ng-checked="week.state === 1"/>
+                            <label for="{{week.id}}">{{week.name}}</label>
+                        </li>
+                    </ul>
+                    <p ng-show="weekStartTimeError">请输入出发时间</p>
+                </li>
+                <li class="text unit" ng-if="display.subType == 'week'">
+                    <label>行程天数</label>
+                    <input type="number" ng-model="activity.tripDur" placeholder="请输入行程天数" max="365" name="tripDur" ng-pattern="/^[1-9]+[0-9]*$/" required/>
+                    <span>天</span>
+
+                    <p class="error_prompt" ng-show="weekDayError">请输入行程天数</p>
+                </li>
+
+                <li class="time unit" ng-if="display.subType != 'week'">
+                    <label>报名截止时间</label>
+                    <input id="reg_end_time" type="text" placeholder="选择报名截止日期" ng-model="activity.registEndTime"
+                           vc-date-picker
+                           date-fmt="yyyy-MM-dd HH:mm" min-date="%y-%M-%d %H:%m" name="reg_end_time"
+                           readonly="readonly" other-conf="regEndDateConf"/>
+                    <label class="icon_calendar" for="reg_end_time"></label>
+                    <p class="error_prompt" ng-show="formError.regEndTimeS">报名截止时间不能晚于出发时间</p>
+
+                    <p class="error_prompt" ng-show="formError.regEndTimeE">报名截止时间不能晚于返程时间</p>
+                </li>
+
+                <li class="group">
+                    <label>集合地和领队</label>
+
+                    <div class="subGroup" ng-repeat="assemble in assembleGroupList"
+                         ng-if="assembleGroupList.length != 0">
+                        <ul>
+                            <li class="add">
+                                <label for="">地址</label>
+                                <input type="text" placeholder="填写详细地址" maxlength="50" ng-model="assemble.address"
+                                       name="assAddress" ng-readonly="hasJoinNumber ===1" required></li>
+                            <li class="time unit">
+                                <label for="">时间</label>
+                                <input type="text" id="group_{{$index}}" placeholder="请选择集合时间" ng-if="hasJoinNumber !==1" ng-model="assemble.time"
+                                       vc-date-picker
+                                       id="assembleTime" name="assTime"
+                                       readonly="readonly" other-conf="groupTimeConf">
+                                <!--编辑显示，不可更改-->
+                                <input type="text" readonly="readonly" ng-model="assemble.time" ng-if="hasJoinNumber ===1">
+                                <label class="icon_calendar" for="group_{{$index}}"></label>
+                            </li>
+                        </ul>
+                        <button class="{{assemble.addButton}}" ng-if="hasJoinNumber !==1"
+                                ng-click="operateGroup('assemble',assembleGroupList,$index)"></button>
+                        <button class="{{assemble.removeButton}}" ng-click="removeGroup(assembleGroupList,$index)"
+                                ng-if="add.addButton != 'false' && hasJoinNumber !==1"></button>
+                        <div class="tag">
+                            <label for="" ng-bind="assemble.label"></label>
+                            <ul>
+                                <li class="current" ng-repeat="leader in assemble.leaders">
+                                    <p ng-if="leader.nickname">{{leader.nickname}}</p>
+
+                                    <p ng-if="leader.name">{{leader.name}}</p>
+                                    <i class="icon_close_2" ng-click="removeUser('leader',$index,$parent.$index)"></i>
+                                </li>
+                            </ul>
+                            <button class="icon_plus" ng-click="openUser('leader',$index)">{{assemble.leaButton}}
+                            </button>
+                        </div>
+                    </div>
+
+                </li>
+
+                <li class="tag">
+                    <label>
+                        活动咨询
+                        <b class="red_txt">*</b>
+                    </label>
+                    <ul>
+                        <li class="current" ng-repeat="sonsult in selectSonsultList">
+                            <p ng-if="sonsult.nickname !==''">{{sonsult.nickname}}</p>
+
+                            <p ng-if="sonsult.name !==''">{{sonsult.name}}</p> <i class="icon_close_2"
+                                                                                  ng-click="removeUser('sonsult',$index)"></i>
+                        </li>
+                    </ul>
+                    <button class="icon_plus" ng-click="openUser('consult')">管理咨询</button>
+                </li>
+                <li class="text">
+                    <label>
+                        出发地
+                        <b class="red_txt">*</b>
+                    </label>
+                    <input ng-model="activity.begAddr" type="text" name="begAddr" maxlength="50" placeholder="填写活动出发地" required/>
+
+                    <p ng-show="activityForm.begAddr.$dirty && activityForm.begAddr.$invalid">请输入出发地</p>
+                </li>
+                <li class="text">
+                    <label>
+                        目的地
+                        <b class="red_txt">*</b>
+                    </label>
+                    <input type="text" ng-model="activity.address" name="address" maxlength="50" placeholder="填写活动目的地" required/>
+
+                    <p ng-show="activityForm.address.$dirty && activityForm.address.$invalid">请填写活动目的地</p>
+                </li>
+                <li class="select">
+                    <label>
+                        收费方式 <b class="red_txt">*</b>
+                    </label>
+
+                    <div vc-drop-down-list value="activity.payType" select-list="payTypeList" select-name="name"
+                         required ng-disabled="readonly.type"></div>
+                    <p ng-show="activityForm.payType.$error.required">请选择收费方式类型</p>
+                </li>
+                <!--普通活动选项-->
+                <li class="text" ng-if="display.subType !== 'event'&& activity.payType !== 1">
+
+                    <label>活动金额</label>
+
+                    <div class="sum unit" ng-if="activity.payType !== 1">
+                        <label for="">
+                            全款
+                        </label>
+                        <input type="number" name="money" ng-pattern="" ng-model="activity.cost"
+                               ng-readonly="readonly.cost" str-to-num  ng-pattern="/^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/" required>
+                        <span>元</span>
+                    </div>
+                    <div class="sum unit" ng-if="activity.payType === 2">
+                        <label for="">定金</label>
+                        <input type="number" name="prepay" ng-model="activity.prePay"
+                               required str-to-num ng-pattern="/^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/">
+                        <span>元</span>
+                    </div>
+                    <p class="error_prompt" ng-show="activityForm.money.$dirty && activityForm.money.$invalid">
+                        请输入正确的金额</p>
+                </li>
+                <!--赛事活动选项-->
+                <li class="group event" ng-if="display.subType == 'event'">
+                    <label>活动分组</label>
+
+                    <div class="subGroup" ng-repeat="eventGroup in eventGroupList track by $index"
+                         ng-if="eventGroupList.length != 0">
+                        <ul>
+                            <li class="add">
+                                <label>组名</label>
+                                <input type="text" placeholder="填写活动分组名称" ng-model="eventGroup.name"
+                                       name="eventName" maxlength="6" required ng-readonly="hasJoinNumber ===1 || isUnion"></li>
+                            <li class="text">
+                                <div class="sum unit" ng-if="activity.payType !== 1">
+                                    <label>全款</label>
+                                    <input type="number" ng-model="eventGroup.price" name="eventPrice" str-to-num
+                                           ng-readonly="hasJoinNumber ===1 || isUnion"
+                                           required ng-pattern="/^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/">
+                                    <span>元</span>
+                                </div>
+                                <div class="sum unit" ng-if="activity.payType === 2">
+                                    <label>定金</label>
+                                    <input type="number" ng-model="eventGroup.prePay" name="eventPrepay" str-to-num
+                                           ng-readonly="hasJoinNumber ===1 || isUnion"
+                                           required ng-pattern="/^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/">
+                                    <span>元</span>
+                                </div>
+                            </li>
+                            <li class="text unit">
+                                <label>数量</label>
+                                <input type="number" placeholder="填写分组名额" ng-model="eventGroup.number"
+                                       ng-readonly="hasJoinNumber ===1 ||isUnion"
+                                       name="eventNumber" max="9999999" ng-pattern="/^[1-9]+[0-9]*$/">
+                                <span>人</span>
+                            </li>
+                        </ul>
+                        <button class="{{eventGroup.addButton}}"
+                                ng-click="operateGroup('event',eventGroupList,$index)"
+                                ng-if="eventGroup.addButton != 'false' && hasJoinNumber !==1 && !isUnion"></button>
+                        <button class="{{eventGroup.removeButton}}" ng-click="removeGroup(eventGroupList,$index)"
+                                ng-if="eventGroup.removeButton != 'false' && hasJoinNumber !==1 && !isUnion"></button>
+                    </div>
+
+                </li>
+
+                <!--普通活动选项-->
+                <li class="select" ng-if="display.subType != 'event'">
+                    <label>
+                        活动所属分类
+                        <b class="red_txt">*</b>
+                    </label>
+
+                    <div vc-drop-down-list value="activity.activityTags" select-list="actiTypeList"
+                         select-name="activityTags" ng-disabled="readonly.activityTags"></div>
+                </li>
+
+                <li class="text" ng-if="display.subType != 'event'">
+                    <label>添加标签</label>
+                    <input type="text" placeholder="为本次活动添加一个标签" ng-model="activity.tags" maxlength="4"
+                           name="tags"/>
+
+                    <p ng-show="activityForm.tags.$dirty && activityForm.tags.$invalid">仅限四字</p>
+                </li>
+
+                <!--普通活动选项-->
+                <li class="tag" ng-if="display.subType != 'event'">
+                    <label for="">难度等级</label>
+                    <ul>
+                        <li ng-class="{'current' : activity.level == 1}">
+                            <input type="radio" value="1" id="101" ng-model="activity.level">
+                            <label for="101">无难度</label>
+                        </li>
+                        <li ng-class="{'current' : activity.level == 2}">
+                            <input type="radio" value="2" id="102" ng-model="activity.level">
+                            <label for="102">初级难度</label>
+                        </li>
+                        <li ng-class="{'current' : activity.level == 3}">
+                            <input type="radio" value="3" id="103" ng-model="activity.level">
+                            <label for="103">中级难度</label>
+                        </li>
+                        <li ng-class="{'current' : activity.level == 4}">
+                            <input type="radio" value="4" id="104" ng-model="activity.level">
+                            <label for="104">自虐型</label>
+                        </li>
+                    </ul>
+                </li>
+                <!--普通活动选项-->
+                <li class="txt unit" ng-if="display.subType != 'event'">
+                    <label>
+                        活动名额
+                        <b class="red_txt">*</b>
+                    </label>
+                    <input type="number" placeholder="输入本次活动所需人数值" min="0" ng-model="activity.number"
+                           name="number" max="9999999" ng-pattern="/^[1-9]+[0-9]*$/"/>
+                    <span>人</span>
+
+                    <p ng-show="activityForm.number.$dirty && activityForm.number.$invalid">活动名额不正确</p>
+                </li>
+
+                <li class="select">
+                    <label>
+                        是否买保险
+                        <b class="red_txt">*</b>
+                    </label>
+
+                    <div vc-drop-down-list value="activity.isNeedIdCode" select-list="isCodeList"
+                         select-name="isNeedIdCode" required></div>
+                </li>
+                <li class="select">
+                    <label>
+                        报名是否需要审核
+                        <b class="red_txt">*</b>
+                    </label>
+
+                    <div vc-drop-down-list value="activity.isNeedCheck" select-list="isCheckList"
+                         select-name="isNeedCheck" required></div>
+                </li>
+
+            </ul>
+        </div>
+        <div class="act_intro mCustomScrollbar">
+            <div class="act_banner_up activity_release_img">
+                <div class="title">
+                    <h3>
+                        活动封面
+                        <b class="red_txt">*</b>
+                    </h3>
+                </div>
+                <div id="poster">选择图片</div>
+                <div id="propress_bar" style="display: inline-block;"></div>
+                <img class="activity_poster_img" style="display: block;" ng-show="activity.poster" ng-src="{{activity.poster | origImg:'.500x300z'}}"/>
+            </div>
+            <div class="act_details">
+                <div class="title">
+                    <h3>
+                        活动详情
+                        <b class="red_txt">*</b>
+                    </h3>
+                </div>
+                <div class="switch_editor">
+                    <input type="radio" name="editor" id="old_editor" ng-checked="!isNewEditor">
+                    <label for="old_editor" ng-click="switchEditor(0)">经典编辑器</label>
+                    <input type="radio" name="editor" id="new_editor" ng-checked="isNewEditor">
+                    <label for="new_editor" ng-click="switchEditor(1)">新版编辑器</label>
+                </div>
+                <div style="min-height: 400px;width: 98%;" ng-show="!isNewEditor" id="{{ueditorId}}" class="ueditor" ng-model="activity.introduce" name="introduce"></div>
+                <div ng-show="isNewEditor" ng-model="editor_content" open-editor editor="editor" style="width: 460px;"></div>
+            </div>
+            <div class="act_details">
+                <div class="title">
+                    <h3>报名须知</h3>
+                </div>
+                <div class="act_details_editor_box">
+                    <textarea maxlength="500" ng-model="activity.registNotice" style="width:620px;" ng-maxlength="500"
+                              name="registNotice"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

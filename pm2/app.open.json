@@ -1,0 +1,17 @@
+{
+    "apps": [
+    {
+        "name": "open-front-server",
+        "script": "app.js",
+        "args": "[]",
+        "watch": "false",
+        "merge_logs": true,
+        "cwd": "/usr/local/webProject/openRoot/dist/server/",
+        "exec_mode": "fork_mode",
+        "env":{
+            "NODE_ENV":"production",
+            "PORT":9000
+        }
+    }
+]
+}

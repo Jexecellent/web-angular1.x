@@ -1,0 +1,22 @@
+<p>Swiper滚动效果</p>
+<section class="swiper-container" style="height: 200px; width: 500px">
+    <ul class="swiper-wrapper">
+        <li class="swiper-slide" ng-repeat="data in swiperList" repeat-done="initSwiper()">
+            <img ng-src="{{data.src}}" alt="" style="width: 100%;height: 100%"/>
+        </li>
+    </ul>
+    <div class="swiper-pagination"></div>
+</section>
+
+<p>选择商品链接</p>
+<p>已选商品链接：<span ng-bind="goodsLink"></span></p>
+<button ng-click="selectGoodsInModal()">点我选择</button><br/>
+
+<p>模式窗口内点击上传图片</p>
+<button ng-click="uploadInModal()">点击看看</button><br/>
+
+<p>图片上传组件（label包含img,label可点击）</p>
+<section style="width:250px;height:250px">
+    <vc-uploader default-image="http://imgcache.varicom.im/images/site/open_v3.1/occupied_250_250.gif" vc-picture="uploadImg"></vc-uploader>
+</section>
+

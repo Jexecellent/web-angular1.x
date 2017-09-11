@@ -1,0 +1,23 @@
+<div class="setTitle">
+    <h3>配置标题</h3>
+    <ul>
+        <li>
+            <input type="checkbox" ng-checked="activate_title">
+            <label ng-click="activateTitle()">打开标题</label>
+            <!--打开标题选择后 去掉disabled属性 反之添加disabled属性 -->
+            <input type="text" placeholder="请输入标题内容（超过8个字）" maxlength="8" ng-disabled="!activate_title"
+                    ng-model="component.title.text">
+            <b class="red_txt">*</b>
+        </li>
+        <!--打开标题选择后 去掉class = disabled 反之添加class = disabled -->
+        <li ng-class="{'disabled':!component.title.text}">
+            <!--添加链接后 按钮文字修改成 修改链接 显示链接位置 显示 更多-->
+            <button class="icon_link blue_btn" ng-click="titlelinkOp(compnent)">{{component.title._linkName?'修改链接':'添加链接'}}</button>
+            <span ng-class="{'hidden':!component.title._linkName}">链接位置：“{{component.title._linkName}}”</span>
+            <div class="title_show">
+                <p ng-bind="component.title.text"></p>
+                <span ng-class="{'hidden':!component.title.action}">更多</span>
+            </div>
+        </li>
+    </ul>
+</div>

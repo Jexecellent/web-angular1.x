@@ -1,0 +1,28 @@
+<div class="structure" vc-tabs="1" id="goodsTypeTabs">
+    <section class="page_tab">
+        <ul>
+            <li vc-tab-head tag="typeManager"><a href="#">管理分类</a></li>
+            <li vc-tab-head tag="setBrand"><a href="#">设置推荐</a></li>
+            <li vc-tab-head tag="brandManager"><a href="#">管理品牌</a></li>
+            <li vc-tab-head tag="specManager"><a href="#">管理规格</a></li>
+        </ul>
+    </section>
+    <section class="page_content">
+        <!-- 管理分类 -->
+        <div vc-tab-body tag="typeManager" ctrl="TypeManagerController" tpl-url="app/main/goodsType/pages/type.html">
+        </div>
+        <!-- 设置推荐 -->
+        <div vc-tab-body tag="setBrand" ctrl="SetRecommendController" tpl-url="app/main/goodsType/pages/setRecommend.html">
+        </div>
+        <!-- 管理品牌 -->
+        <div vc-tab-body tag="brandManager" ctrl="BrandManagerController" tpl-url="app/main/goodsType/pages/brandManager.html">
+        </div>
+        <!-- 管理规格 -->
+        <div vc-tab-body tag="specManager" ctrl="SpecManagerController" tpl-url="app/main/goodsType/pages/specManager.html">
+        </div>
+
+        <div class="o_loading" ng-show="loading"></div>
+        <!--品牌页面的上传图片示例(避免DOM未渲染到即放在此处)-->
+        <div id="brandImg" style="display: none;"></div>
+    </section>
+</div>

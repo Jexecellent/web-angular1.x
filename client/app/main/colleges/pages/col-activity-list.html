@@ -1,0 +1,68 @@
+<section class="tool fixedTool">
+    <div class="right">
+    </div>
+    <div class="left">
+        <button class="screening_btn icon_pushpin_1" ng-class="{'open':opt_show}" ng-click="showOpts()">筛选
+        </button>
+        <vc-search vc-model="query_key" vc-change="search(1)"></vc-search>
+        <!--活动搜索筛选-->
+        <span ng-bind="search_text_show_"></span>
+    </div>
+    <div class="screening_box" id="act-list-screening_box">
+        <ul sub-title="发布时间">
+            <li ng-repeat="date in _search_date" ng-click="checkDate(date)" ng-class="{current:date.opt}">
+                <a href="#">{{date.name}}</a>
+            </li>
+        </ul>
+    </div>
+</section>
+<table class="list_table">
+    <thead>
+    <tr>
+        <th width="50px">ID</th>
+        <th width="100px">封面</th>
+        <th>活动名称</th>
+        <th width="60px">人数</th>
+        <th width="80px">价格</th>
+        <th width="60px">浏览量</th>
+        <th width="90px">联系人</th>
+        <th width="70px">发布时间</th>
+        <th width="100px">操作</th>
+    </tr>
+    </thead>
+    <tbody class="drag_container">
+    <tr ng-repeat="activity in data.content" sort-id="{{activity.id}}" drag-drop type="tr"
+        top="-180"
+        left="-245" callback="dragSuccess(cur,prev, next)" able="activity.activityStatus == 1 && activity.unionState !== 5">
+        <td ng-bind="$index+1+(sparams.pageNumber-1)*10"></td>
+        <td>
+            <img ng-src="{{activity.poster | cutImg40}}"/>
+        </td>
+        <!--<td><a href="#" ng-click="showDetail(activity)">{{activity.title}}</a></td>-->
+        <td>
+            <a href="#" ng-click="preview(activity)" ng-bind="activity.title"></a>
+        </td>
+        <td>{{activity.joinNumber}}/{{activity.number}}</td>
+        <td>{{activity.cost|activity_cost_$}}</td>
+        <td>{{activity.times}}</td>
+        <td>{{activity.leaderName}}</td>
+        <td>{{activity.createTime|date:'yyyy-MM-dd'}}</td>
+        <td>
+            <div class="operate">
+                <ul>
+                    <li ng-show="activity.isTop === 0">
+                        <a href="javascript:;" ng-click="toTop(activity)">置顶</a>
+                    </li>
+                    <li ng-show="activity.isTop === 1">
+                        <a href="javascript:;" ng-click="cancelTop(activity)">取消置顶</a>
+                    </li>
+                    <li ng-show="pms.join"><a href="javascript:;" ng-click="activityJoin(activity)">名单管理</a></li>
+                    <li ng-show="pms.update"><a ng-click="toEdit(activity)">编辑</a></li>
+                    <li><a href="#" ng-show="pms.offline" ng-click="activityOffline(activity)">下线</a></li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<open-page data="data" show-page-num="10" go-page="goPage(num)"></open-page>

@@ -1,0 +1,167 @@
+<style type="text/css">
+    .height100 { height: 100%;}
+</style>
+<section class="tool fixedTool">
+    <div class="left">
+        <button class="screening_btn icon_pushpin_1" ng-class="{'open':op.showQuery}" ng-click="openQuery()">筛选</button>
+        <!--活动搜索-->
+        <vc-search vc-model="params.content" placeholder="可输入商品名称或编号" vc-change="loadData()"></vc-search>
+
+    </div>
+    <!--活动搜索筛选-->
+    <div class="screening_box" ng-class="{'height100':op.showQuery}" ng-if="op.showQuery">
+        <ul sub-title="商品分类" class="ec_gm_types">
+            <li>
+                <div vc-drop-down-list value="op.typeId" select-list="parentLevel" select-name="parentLevel" required on-change="changeParentLevel" default-show="全部一级分类"></div>
+            </li>
+            <li>
+                <div vc-drop-down-list value="op.childTypeId" select-list="childLevel" select-name="childLevel"></div>
+            </li>
+            <li>
+                <span>商品品牌</span>
+                <div vc-drop-down-list value="op.brandId" select-list="brandList" select-name="brand" default-show="全部品牌" required></div>
+            </li>
+        </ul>
+        <ul class="ec_gm_filter3">
+            <li>
+                <div class="gm_price_filter">
+                    <span>现价</span>
+                    <span class="gm_price_from gm_input_number gm_dash">
+                        <input type="number" name="minPrice" ng-model="params.minPrice" ng-pattern="/^\d{0,8}\.{0,1}(\d{1,2})?$/"/>
+                    </span>
+                    <span class="gm_price_to gm_input_number">
+                        <input type="number" name="maxPrice" ng-model="params.maxPrice" ng-pattern="/^\d{0,8}\.{0,1}(\d{1,2})?$/"/>
+                    </span>
+                </div>
+                <div class="gm_price_filter">
+                    <span>库存</span>
+                    <span class="gm_price_from gm_input_number gm_dash">
+                        <input type="number" ng-model="params.minNumber" ng-pattern="/^[1-9]+[0-9]*$/"/>
+                    </span>
+                    <span class="gm_price_to gm_input_number">
+                        <input type="number" ng-model="params.maxNumber" ng-pattern="/^[1-9]+[0-9]*$/"/>
+                    </span>
+                </div>
+                <div class="gm_price_filter">
+                    <span>上架时间</span>
+                    <span class="gm_price_from gm_input_number gm_dash">
+                        <input type="text" ng-model="op.startOnlineTime" vc-date-picker
+                   date-fmt="yyyy-MM-dd HH:mm"
+                   readonly="readonly"/>
+                    </span>
+                    <span class="gm_price_to gm_input_number">
+                        <input type="text" ng-model="op.endOnlineTime" vc-date-picker
+                   date-fmt="yyyy-MM-dd HH:mm"
+                   readonly="readonly"/>
+                    </span>
+                </div>
+            </li>
+        </ul>
+
+        <ul class="ec_gm_filter4">
+            <li>
+                <div class="gm_price_filter">
+                    <span>佣金</span>
+                    <span class="gm_price_from gm_input_number gm_dash">
+                        <input type="number" ng-model="params.minProfit" ng-pattern="/^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/" maxlength="6" />
+                    </span>
+                    <span class="gm_price_to gm_input_number">
+                        <input type="number" ng-model="params.maxProfit" ng-pattern="/^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/" maxlength="6"/>
+                    </span>
+                </div>
+                <div class="gm_price_filter">
+                    <span>本月销量</span>
+                    <span class="gm_price_from gm_input_number gm_dash">
+                        <input type="number" ng-model="params.minSaleCount" ng-pattern="/^[0-9]*[1-9][0-9]*$/"/>
+                    </span>
+                    <span class="gm_price_to gm_input_number">
+                        <input type="number" ng-model="params.maxSaleCount" ng-pattern="/^[0-9]*[1-9][0-9]*$/"/>
+                    </span>
+                </div>
+            </li>
+        </ul>
+        <ul class="ec_gm_filtAct">
+            <li>
+                <button ng-click="formatQueryInfo()">确定</button>
+                <button ng-click="clearQueryInfo()">清空条件</button>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<section class="ec_gm_table">
+    <table class="table_box">
+        <thead>
+            <tr>
+                <th>商品信息</th>
+                <th>所属分类</th>
+                <th>所属品牌</th>
+                <th>价格</th>
+                <th>佣金</th>
+                <th ng-hide="status!=1">库存</th>
+                <th>本月浏览量</th>
+                <th>本月销量</th>
+                <th ng-bind="status==1 ? '上架时间' : '下架时间'"></th>
+                <th>操作</th>
+                <th>是否推荐</th>
+            </tr>
+        </thead>
+        <tbody class="drag_container">
+            <tr ng-repeat="goods in goodsList">
+                <td>
+                    <div class="ec_gs_goodInfo">
+                        <div class="ec_gs_goodImg">
+                            <a ng-click="preview(goods.id)"><img ng-src="{{goods.image}}" alt="商品图片" /></a>
+                        </div>
+                        <div class="ec_gs_goodName">
+                            <a ng-click="preview(goods.id)">{{goods.name}}</a>
+                        </div>
+                    </div>
+                    <div class="ec_gm_gdsNum">商品编号：{{goods.goodsUid}}</div>
+                </td>
+                <td class="ec_gm_gdsTypes">
+                    <span class="icon_edit_3" ng-if="hasPermission('goods:updatebase')" ng-click="goodsEditList('editType',goods.typeId,goods.id)"></span>
+                    <p ng-repeat="typeName in goods.typeName" ng-bind="typeName" ng-class="{'no_edit' : $index == 0}"></p>
+                </td>
+                <td class="ec_gm_gdsBra">
+                <span class="icon_edit_3" ng-if="hasPermission('goods:updatebase')" ng-click="goodsEditList('editBrand',goods.brandId,goods.id)"></span>
+                    <p ng-bind="goods.brandName"></p>
+                </td>
+                <td class="ec_gm_pris">
+                    <!-- <span class="icon_edit_3" ng-click="goodsEditList('editRealPrice',goods.commission,goods.id)"></span> -->
+                    <p>{{goods.realPrice}}元</p>
+                    <span class="t_tline" ng-if="goods.price">原价{{goods.price}}元</span>
+                </td>
+                <td>
+                    <span class="icon_edit_3" ng-if="hasPermission('goods:updatebase')" ng-click="goodsEditList('editCommission',goods.commission,goods.id)"></span>
+                    <p ng-bind="goods.commission"></p>
+                </td>
+                <td ng-hide="status!=1">
+                    <!-- <span class="icon_edit_3" ng-click="goodsEditList('editNumber',goods.commission,goods.id)"></span> -->
+                    <p ng-bind="goods.number"></p>
+                </td>
+                <td>
+                    <p></p>
+                </td>
+                <td>
+                    <p ng-bind="goods.saleCount"></p>
+                </td>
+                <td>
+                    <p ng-bind="goods.onlineTime | date:'yyyy-MM-dd HH:mm'"></p>
+                </td>
+                <td>
+                    <a ng-click="editGoods(goods.id,'edit')">编辑</a>
+                    <a ng-hide="status != 1" ng-if="hasPermission('goods:offline')" ng-click="offlineGoods(goods.id)">下架</a>
+                </td>
+                <td>
+                    <div class="union_switch">
+                        <input id="{{goods.id}}" type="checkbox" ng-checked="goods.isRecommend" ng-disabled="status != 1" ng-click="changeRecommend(goods)">
+                        <label before-title="未推荐" after-title="已推荐" for="{{goods.id}}"> <b></b>
+                        </label>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+<open-page data="pager" params="params" url="goods/list" show-page-num="10" go-page="loadData(num)"></open-page>

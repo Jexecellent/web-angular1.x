@@ -1,0 +1,14 @@
+<div class="ec_module_edit disableSelect mCustomScrollbar">
+    <div class="setContent">
+        <h3>配置内容</h3>
+        <section class="sh_mod_product">
+            <ul>
+                <li class="tag" ng-repeat="con in allStream" drag-drop sort-id="{{con.__id}}" all-sort="true"
+                    callback="dragSuccess(cur,prev, next,all_ids)" ng-click="checkLi(con)">
+                    <input type="checkbox" ng-checked="con.ischeck">
+                    <label>{{con.title}}</label>
+                </li>
+            </ul>
+        </section>
+    </div>
+</div>

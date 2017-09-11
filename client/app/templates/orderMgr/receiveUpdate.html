@@ -1,0 +1,20 @@
+<div class="ec_editAdd_popCnt">
+    <ul>
+        <li>
+            <select ng-model="retData.province" ng-options="op.name as op.name for op in _province"
+                    ng-change="changeCity('province')" required>
+                <option value="" style="display: none;">请选择省份</option>
+            </select>
+            <select ng-model="retData.city" ng-options="op.name as op.name for op in _city"
+                    ng-change="changeCity('city')" required>
+                <option value="" style="display: none;">请选择城市</option>
+            </select>
+            <select ng-model="retData.county" ng-options="op.name as op.name for op in _county">
+                <option value="" style="display: none;" required>请选择区</option>
+            </select>
+        </li>
+        <li>
+            <textarea ng-model="retData.detail" required></textarea>
+        </li>
+    </ul>
+</div>

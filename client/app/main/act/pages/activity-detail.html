@@ -1,0 +1,100 @@
+<style>
+    ._union_number_sp{display: inline-block;}
+    .lab_top_s{vertical-align: top;display: inline-block;}
+</style>
+<div class="act_preview" style="height:100%;">
+    <!--<div class="cnt_box">-->
+        <section class="tool fixedTool">
+            <div class="left">
+                <a href="#" class="icon_return red_btn" ng-click="goBackFromDetail()">返回</a>
+            </div>
+            <ul class="right">
+                <li ng-if="_cur_act_detail.activityInfo.unionState < 3 || _cur_act_detail.activityInfo.unionState === 5">
+                    <a href="#" class="icon_edit_3" ng-click="toEdit()">编辑</a>
+                </li>
+                <li ng-if="_cur_act_detail.activityInfo.unionState >= 3 && _cur_act_detail.activityInfo.unionState !== 5">
+                    <!--联盟过来的活动-->
+                    <a href="#" class="icon_edit_3" ng-click="toEdit()">修改联盟信息</a>
+                </li>
+                <li ng-show="joinlistPerminssion">
+                    <a class="icon_doc" ng-click="activityJoin(_cur_act_detail.activity)">名单管理</a>
+                </li>
+                <li ng-if="_cur_act_detail.activityInfo.unionState === 0 || _cur_act_detail.activityInfo.unionState === 2 || _cur_act_detail.activityInfo.unionState === 5">
+                    <a href="#" class="icon_quit_2 red_txt" ng-click="switchUnion()">加入联盟</a>
+                </li>
+                <li ng-if="_cur_act_detail.activityInfo.unionState === 1">
+                    <a href="#" class="icon_quit_2 red_txt" ng-click="switchUnion(2)">修改联盟</a>
+                </li>
+                <li ng-if="_cur_act_detail.activityInfo.unionState === 3">
+                    <a href="#" class="icon_quit_2 red_txt" ng-click="switchUnion()">退出联盟</a>
+                </li>
+                <li ng-if="_cur_act_detail.activityInfo.unionState < 3 && offlinePerminssion">
+                    <a href="#" class="icon_quit_2 red_txt" ng-click="activityOffline()">活动下线</a>
+                </li>
+            </ul>
+        </section>
+        <div class="preview" id="preview_div">
+            <h3>普通活动</h3>
+        </div>
+        <div class="preview_right mCustomScrollbar">
+            <div class="union_box">
+                <!--联盟结束的不显示-->
+                <div class="union_info" ng-if="_cur_act_union && _cur_act_detail.activityInfo.unionState !== 5">
+                    <h3>联盟信息</h3>
+                    <ul>
+                        <li>联盟方式：{{_cur_act_union_type}}
+                        </li>
+                        <li>
+                            <span class="lab_top_s">名额限制：</span>
+                            <span class="_union_number_sp" ng-bind-html="_cur_act_union|union_info_number"></span>
+                        </li>
+                        <li>日期截止：{{_cur_act_union.time|date:'yyyy-MM-dd'}}</li>
+                        <li ng-if="_cur_act_union.repay || _cur_act_union.groupRepay">
+                            <span class="lab_top_s">返　　利：</span>
+                            <b class="_union_number_sp" class="red_txt" ng-bind-html="_cur_act_union|union_info_repay"></b>
+                        </li>
+                    </ul>
+                </div>
+                <!--
+                <div class="union_ally" ng-if="_cur_act_detail.unionList && _cur_act_detail.unionList.length>0">
+                    <h3>已联盟社团</h3>
+                    <ul>
+                        <li ng-repeat="union in _cur_act_detail.unionList">
+                            <div class="ally">
+                                <p>某某某社团</p>
+
+                                <div class="ally_info">
+                                    <dl>
+                                        <dd><img ng-src="union.leaderHead"></dd>
+                                        <dt>某某某社团</dt>
+                                    </dl>
+                                    <ul>
+                                        <li>
+                                            <p>团长：{{union.leaderName}}</p>
+                                            <span>{{union.leaderPhone}}</span>
+                                        </li>
+                                        <li>
+                                            <p>客服：{{union.consultInfo}}</p>
+                                            <span>18888888888</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <span>已报名：<b class="red_txt">88</b>人</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            -->
+            <!--
+            <div class="examine_box">
+                <h3>审核意见</h3>
+                <ul>
+                    <li>我是审核意见我是审核意见我是审核意见我是审核意见我是审核意见我是审核意见 第一次</li>
+                </ul>
+            </div>
+            -->
+        </div>
+    </div>
+   <!--</div>-->
+</div>

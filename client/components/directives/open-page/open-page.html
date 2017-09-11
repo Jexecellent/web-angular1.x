@@ -1,0 +1,13 @@
+<div class="paging">
+    <ul>
+        <li><a href="javascript:;" ng-show="!data.firstPage" ng-click="go(1)">首页</a></li>
+        <li><a href="javascript:;" ng-show="!data.firstPage" ng-click="go(data.pageNumber-1)">上一页</a></li>
+        <li ng-repeat="line in pageLine" ng-class="{current:line.index == data.pageNumber}">
+        <a ng-click="go(line.index)">
+        {{line.index}}
+        </a>
+        </li>
+        <li><a href="javascript:;" ng-show="!data.lastPage" ng-click="go(data.pageNumber+1)">下一页</a></li>
+        <li><a href="javascript:;" ng-show="!data.lastPage" ng-click="go(data.totalPages)">尾页</a></li>
+    </ul>
+</div>

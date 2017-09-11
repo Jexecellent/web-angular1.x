@@ -1,0 +1,10 @@
+    <div class="ec_spec_pop">
+        <p>规格名称</p>
+        <input type="text" placeholder="输入规格名称" required maxlength="6" ng-model="editSpec.name" ng-blur="checkName()">
+        <!--<p>规格类型</p>-->
+        <!--<div vc-drop-down-list value="editSpec.type" select-list="typeList" select-name="type" required></div>-->
+        <p>备注</p>
+        <textarea name="remark"  id="remark" cols="30" rows="5" placeholder="输入备注" ng-model="editSpec.remark" maxlength="30"></textarea>
+        <p class="ec_sp_counts">{{editSpec.remark.length}}<span ng-if="editSpec.remark ===undefined">0</span>/30</p>
+    </div>
+

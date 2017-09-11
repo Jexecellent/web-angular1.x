@@ -1,0 +1,48 @@
+<li class="union" style="width:245px;margin:20px auto;">
+    <style>
+        .union li.unit {
+            position: relative;
+        }
+
+        .union li .union_error {
+            color: red;
+            padding-left: 67px;
+            height: 20px;
+            font-size: 12px;
+        }
+        .time .icon_calendar{width: 30px;}
+    </style>
+    <ul class="form_box">
+        <li class="tag">
+            <label>联盟模式</label>
+            <ul sun-title="联盟模式" ng-if="activity.unionState === 0">
+                <li ng-click="unionType(1)" ng-class="{current:params.unionType ==1}">返点</li>
+                <li ng-click="unionType(2)" ng-class="{current:params.unionType ==2}">拼车</li>
+            </ul>
+            <ul sun-title="联盟模式" ng-if="activity.unionState === 2 || activity.unionState === 1 || activity.unionState === 5">
+                <li ng-show="params.unionType ==1" class="current">返点</li>
+                <li ng-show="params.unionType ==2" class="current">拼车</li>
+            </ul>
+        </li>
+        <li class="text unit">
+            <label>名额限制</label>
+            <input type="number" placeholder="输入名额限制"  type="number" ng-model="params.number">
+            <span>人</span>
+
+            <div class="union_error" ng-show="number_max_err === true">{{join_num_min}}最多{{activity.number}}人</div>
+        </li>
+        <li class="time unit">
+            <label>截止日期</label>
+            <input type="text" id="end_time_union_join" placeholder="选择截止日期" ng-model="params.time" vc-date-picker
+                   min-date="%y-%M-%d %H:%m" other-conf="otherConf">
+            <label class="icon_calendar" for="end_time_union_join"></label>
+        </li>
+        <li class="text unit" ng-show="activity.unionState === 0 && params.unionType ===1">
+            <label>返利每人</label>
+            <input type="number" str-to-num min="0" placeholder="输入返利每人" ng-model="params.repay">
+            <span>元</span>
+
+            <div class="union_error" ng-show="cost_max_err === true">最多{{activity.cost}}元</div>
+        </li>
+    </ul>
+</li>

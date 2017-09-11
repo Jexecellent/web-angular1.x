@@ -1,0 +1,24 @@
+<div class="structure" vc-tabs="1" id="userTabs">
+    <section class="page_tab">
+        <ul>
+            <li vc-tab-head tag="department"><a href="#">部门管理</a></li>
+            <li vc-tab-head tag="staff"><a href="#">成员管理</a></li>
+             <li vc-tab-head tag="staffDetail" no-index></li>
+        </ul>
+    </section>
+    <section class="page_content">
+        <div class="cnt_box cnt_Ypaging mCustomScrollbar">
+            <!-- 部门列表 -->
+            <div vc-tab-body tag="department" ctrl="UserDepListController" tpl-url="app/main/user/pages/dep_list.html">
+            </div>
+            <!-- 人员列表 -->
+            <div vc-tab-body tag="staff" ctrl="UserStaffController" tpl-url="app/main/user/pages/staff_list.html">
+            </div>
+            <!-- 新增人员 -->
+            <div vc-tab-body tag="staffDetail" ctrl="UserEditController" tpl-url="app/main/user/pages/staff_add.html">
+            </div>
+
+            <div class="o_loading" ng-show="loading"></div>
+        </div>
+    </section>
+</div>

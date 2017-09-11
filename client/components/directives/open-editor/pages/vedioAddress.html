@@ -1,0 +1,31 @@
+<div class="ed_addVideoCnt disableSelect mCustomScrollbar">
+    <ul class="videoSource">
+        <li class="radio">
+            <input id="tencent_video" type="radio" name="videoPlayer" checked>
+            <label for="tencent_video" ng-click="checkBrand(1)"></label>
+
+            <div class="videoUrl">
+                <p ng-bind="_brand_url[1]"></p>
+                <input type="text" placeholder="请填入视频ID" ng-model="vedio_address.vedioId">
+            </div>
+        </li>
+        <li class="radio">
+            <input id="tudou" type="radio" name="videoPlayer">
+            <label for="tudou" ng-click="checkBrand(2)"></label>
+
+            <div class="videoUrl">
+                <p ng-bind="_brand_url[2]"></p>
+                <input type="text" placeholder="请填入视频ID" ng-model="vedio_address.vedioId">
+            </div>
+        </li>
+        <li class="radio">
+            <input id="youku" type="radio" name="videoPlayer">
+            <label for="youku" ng-click="checkBrand(3)"></label>
+
+            <div class="videoUrl">
+                <p ng-bind="_brand_url[3]"></p>
+                <input type="text" placeholder="请填入视频ID" ng-model="vedio_address.vedioId">
+            </div>
+        </li>
+    </ul>
+</div>

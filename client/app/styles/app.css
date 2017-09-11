@@ -1,0 +1,103 @@
+@font-face {
+  font-family: 'fontello';
+  src: url('/assets/font/fontello.eot?13686755');
+  src: url('/assets/font/fontello.eot?13686755#iefix') format('embedded-opentype'),
+       url('/assets/font/fontello.woff?13686755') format('woff'),
+       url('/assets/font/fontello.ttf?13686755') format('truetype'),
+       url('/assets/font/fontello.svg?13686755#fontello') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'fontello';
+    src: url('../font/fontello.svg?13686755#fontello') format('svg');
+  }
+}
+*/
+ 
+ [class^="icon_"]:before, [class*=" icon_"]:before {
+  font-family: "fontello";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+ 
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+ 
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+ 
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+ 
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+ 
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+ 
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+ 
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+ 
+.icon_arrow_u:before { content: '\e800'; } /* '' */
+.icon_box:before { content: '\e801'; } /* '' */
+.icon_calendar:before { content: '\e802'; } /* '' */
+.icon_close:before { content: '\e803'; } /* '' */
+.icon_close_2:before { content: '\e804'; } /* '' */
+.icon_doc:before { content: '\e805'; } /* '' */
+.icon_edit_1:before { content: '\e806'; } /* '' */
+.icon_edit_2:before { content: '\e807'; } /* '' */
+.icon_edit_3:before { content: '\e808'; } /* '' */
+.icon_editor_1:before { content: '\e809'; } /* '' */
+.icon_news:before { content: '\e80a'; } /* '' */
+.icon_ok:before { content: '\e80b'; } /* '' */
+.icon_order:before { content: '\e80c'; } /* '' */
+.icon_plus:before { content: '\e80d'; } /* '' */
+.icon_plus_2:before { content: '\e80e'; } /* '' */
+.icon_pushpin_1:before { content: '\e80f'; } /* '' */
+.icon_pushpin_2:before { content: '\e810'; } /* '' */
+.icon_quit:before { content: '\e811'; } /* '' */
+.icon_quit_2:before { content: '\e812'; } /* '' */
+.icon_reduce_1:before { content: '\e813'; } /* '' */
+.icon_app:before { content: '\e814'; } /* '' */
+.icon_arrow_d:before { content: '\e815'; } /* '' */
+.icon_arrow_l:before { content: '\e816'; } /* '' */
+.icon_arrow_r:before { content: '\e817'; } /* '' */
+.icon_editor_2:before { content: '\e818'; } /* '' */
+.icon_editor_3:before { content: '\e819'; } /* '' */
+.icon_editor_4:before { content: '\e81a'; } /* '' */
+.icon_export:before { content: '\e81b'; } /* '' */
+.icon_eye:before { content: '\e81c'; } /* '' */
+.icon_home:before { content: '\e81d'; } /* '' */
+.icon_horn:before { content: '\e81e'; } /* '' */
+.icon_list:before { content: '\e81f'; } /* '' */
+.icon_lock:before { content: '\e820'; } /* '' */
+.icon_mail:before { content: '\e821'; } /* '' */
+.icon_reduce_2:before { content: '\e822'; } /* '' */
+.icon_release:before { content: '\e823'; } /* '' */
+.icon_return:before { content: '\e824'; } /* '' */
+.icon_search:before { content: '\e825'; } /* '' */
+.icon_tree:before { content: '\e826'; } /* '' */
+.icon_up:before { content: '\e827'; } /* '' */
+.icon_user:before { content: '\e828'; } /* '' */
+.icon_users_1:before { content: '\e829'; } /* '' */
+.icon_users_2:before { content: '\e82a'; } /* '' */
+.icon_alert:before { content: '\e82b'; } /* '' */
+.icon_emoji_1:before { content: '\e82c'; } /* '' */
+.icon_link:before { content: '\e82d'; } /* '' */
+.icon_brush:before { content: '\e82e'; } /* '' */

@@ -1,0 +1,48 @@
+<section class="tool fixedTool">
+    <div class="left">
+        <a ng-click="gotoAddStaff()" class="green_btn icon_plus" ng-show="hasPermission('useradmin:add')">新增人员</a>
+        <div ng-if="queryDept"><vc-search vc-model="queryParams.queryKey" vc-change="loadStaff()"></vc-search></div>
+    </div>
+</section>
+<section class="state">
+    <h3 ng-bind="currentDept"></h3>
+    <ul class="right">
+        <li class="select">
+        <div vc-drop-down-list value="queryParams.departmentIds" select-list="deptList" select-name="departId"></div>
+        </li>
+    </ul>
+</section>
+<table  class="list_table">
+    <thead>
+        <tr>
+            <th width="30">ID</th>
+            <th width="40px">账号</th>
+            <th width="30px">性别</th>
+            <th width="50px">备注</th>
+            <th width="80px">添加时间</th>
+            <th width="70px">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="draft in draftList">
+            <td ng-bind="$index+1+(queryParams.pageNumber-1)*10"></td>
+            <td ng-bind="draft.loginName"></td>
+            <td ng-bind="draft.sex | sex"></td>
+            <td ng-bind="draft.nickname | replaceName : draft.remark"></td>
+            <td ng-bind="draft.createTime | date:'yyyy-MM-dd HH:mm'"></td>
+            <td>
+                <div class="operate">
+                    <ul>
+                        <li ng-if="hasPermission('useradmin:update')">
+                            <a ng-click="edit(draft)">编辑</a>
+                        </li>
+                        <li ng-if="hasPermission('useradmin:delete')">
+                            <a ng-click="del(draft.id,draft.loginName)">删除</a>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<open-page data="pager" params="params" url="user/list" show-page-num="10" go-page="loadStaff(num)"></open-page>

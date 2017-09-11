@@ -1,0 +1,30 @@
+<table class="list_table" ng-init="loadData()">
+    <thead>
+        <tr>
+            <th width="40">ID</th>
+            <th width="120">封面</th>
+            <th>标题</th>
+            <th width="80">发布时间</th>
+            <th width="80">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="banner in data" sort-id="{{banner.id}}" drag-drop type="tr" top="-215"
+            left="-245" callback="dragSuccess(cur,prev, next)" able="banner.status == 2">
+
+            <td ng-bind="$index+1+(params.pageNumber-1)*10"></td>
+            <td><img ng-src="{{banner.bannerimage|origImg}}.120x40" alt="" width="120px"></td>
+            <td><a ng-click="preview($currentAppName,banner)">{{banner.bannername}}</a></td>
+            <td ng-bind="banner.updatetime |date:'yyyy-MM-dd'"></td>
+            <td>
+                <div class="operate">
+                    <ul>
+                        <li><a ng-click="edit(banner,params.status)">编辑</a></li>
+                        <li ng-show="hasPermission('banneroffline:bizType{{moduleType}}')  && params.status !=1"><a ng-click="offline(banner)">下线</a></li><li ng-hide="params.status == 2"><a ng-click="del(banner.id)">删除</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<open-page data="pager" params="params" url="banner/list" show-page-num="10" go-page="loadData(num)"></open-page>

@@ -1,0 +1,41 @@
+<table class="list_table">
+    <thead>
+    <tr>
+        <th width="100px">ID</th>
+        <th width="100px">封面</th>
+        <th>消息内容</th>
+        <th width="100px">接收人</th>
+        <th width="100px">类型</th>
+        <th width="100px">发送人</th>
+        <th width="100px">状态</th>
+        <th width="140px">发送时间</th>
+        <th width="80px">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="msg in data">
+        <td>{{$index+ 1 + (page.pageNumber-1)*10}}</td>
+        <td><img ng-src="{{msg.picture | cutImg40}}" ng-show="msg.picture" height="40px;" width="40px;" ng-if="2===msg.type"/></td>
+        <td align="left">
+            <a ng-click="preview(msg)" ng-if="1===msg.type" ng-bind="msg.content"></a>
+            <a ng-click="preview(msg)" ng-if="2===msg.type" ng-bind="msg.title"></a>
+        </td>
+        <td ng-bind="msg.receiveId|groupMsgUsers"></td>
+        <td ng-bind="msg.type | groupMsgType"></td>
+        <td ng-bind="_sender[msg.senderRid].nickname"></td>
+        <td ng-bind="msg.status | groupMsgStatus"></td>
+        <td ng-bind="msg.scheduleTime|date:'yyyy-MM-dd HH:mm:ss'"></td>
+        <td>
+            <div class="operate">
+                <ul>
+                    <!--<li><a ng-show="msg.status==6" ng-click="edit(msg)">编辑</a></li>
+                    <li><a ng-show="msg.status==4 || msg.status==5" ng-click="edit(msg)">再次编辑</a></li>-->
+                    <li><a ng-show="(msg.status==4 || msg.status==5) && hasPermission('groupmsg:delete')" ng-click="delete(msg)">删除</a></li>
+                    <li><a ng-show="msg.status==6 && hasPermission('groupmsg:offline')" ng-click="offline(msg)">取消发送</a></li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<open-page data="page" params="params" show-page-num="10" go-page="loadData(num)"></open-page>

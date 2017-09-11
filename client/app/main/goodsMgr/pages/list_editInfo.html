@@ -1,0 +1,145 @@
+<div class="o_pop_content">
+    <!--修改分类-->
+    <div class="ec_gm_typeModify" pop-title="修改分类" ng-if="edit.type === 'editType'">
+      <div>
+          <div vc-drop-down-list value="edit.typeId" select-list="edit.parentLevel" select-name="parentLevel" required on-change="changeParentLevel"></div>
+          <div vc-drop-down-list value="edit.childTypeId" select-list="edit.childLevel" select-name="childLevel"></div>
+      </div>
+    </div>
+
+    <!--修改品牌-->
+    <div class="ec_gm_braModify" pop-title="修改品牌" ng-if="edit.type === 'editBrand'">
+        <div vc-drop-down-list value="edit.info" select-list="edit.brandList" select-name="brand" required></div>
+    </div>
+
+    <!--修改价格-->
+    <!-- <div class="ec_gm_prisModify" pop-title="修改价格">
+        <div class="mCustomScrollbar">
+            <table class="list_table">
+                <thead>
+                    <tr>
+                        <th>颜色</th>
+                        <th>尺码</th>
+                        <th>原价</th>
+                        <th>现价</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <p>红色</p>
+                        </td>
+                        <td>
+                            <p>L</p>
+                        </td>
+                        <td>
+                            <p>
+                                <input type="text" value="456" />
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                <input type="text"  value="123" />
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div> -->
+
+    <!--修改佣金-->
+    <div class="ec_gm_comsModify" pop-title="修改佣金" ng-if="edit.type === 'editCommission'">
+        <div>
+            <input type="number" name="commission" ng-model="edit.info" str-to-num  ng-pattern="/^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/"  maxlength="6" required/>
+                   
+            <span>元</span>
+        </div>
+    </div>
+
+    <!--修改库存-->
+    <!-- <div class="ec_gm_stockModify" pop-title="修改库存">
+        <div class="mCustomScrollbar">
+            <div class="ec_stock_tips">
+                <p>总库存：382件</p>
+                <p>出库填入负数，例“-50”，入库填入正数，例“50”</p>
+            </div>
+            <table class="list_table">
+                <thead>
+                    <tr>
+                        <th>颜色</th>
+                        <th>尺码</th>
+                        <th>库存</th>
+                        <th>入/出库</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <p>红色</p>
+                        </td>
+                        <td>
+                            <p>L</p>
+                        </td>
+                        <td>
+                            <p>456</p>
+                        </td>
+                        <td>
+                            <p>
+                                <input type="text"  value="123" />
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>红色</p>
+                        </td>
+                        <td>
+                            <p>L</p>
+                        </td>
+                        <td>
+                            <p>456</p>
+                        </td>
+                        <td>
+                            <p>
+                                <input type="text"  value="123" />
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>红色</p>
+                        </td>
+                        <td>
+                            <p>L</p>
+                        </td>
+                        <td>
+                            <p>456</p>
+                        </td>
+                        <td>
+                            <p>
+                                <input type="text"  value="123" />
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>红色</p>
+                        </td>
+                        <td>
+                            <p>L</p>
+                        </td>
+                        <td>
+                            <p>456</p>
+                        </td>
+                        <td>
+                            <p>
+                                <input type="text"  value="123" />
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div> -->
+</div>

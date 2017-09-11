@@ -1,0 +1,98 @@
+<style>
+    .icon_search{cursor: pointer;}
+</style>
+<section class="tool fixedTool">
+    <div class="right">
+    </div>
+    <div class="left">
+        <button class="screening_btn icon_pushpin_1" ng-class="{'open':opt_show}" ng-click="showOpts()">筛选
+        </button>
+        <vc-search vc-model="query_key" vc-change="search(1)"></vc-search>
+        <!--活动搜索筛选-->
+        <span ng-bind="search_text_show_"></span>
+    </div>
+    <div class="screening_box" id="act-list-screening_box">
+        <ul sub-title="活动方式">
+            <li ng-repeat="sub in _act_sub_type" ng-click="checkSubType(sub)" ng-class="{current:sub.opt}">
+                <a href="javascript:;">{{sub.name}}</a>
+            </li>
+        </ul>
+        <ul sub-title="活动类型">
+            <li ng-repeat="type in _type" ng-click="checkType(type)" ng-class="{current:type.opt}">
+                <a href="#">{{type.name}}</a>
+            </li>
+        </ul>
+        <ul sub-title="难易程度">
+            <li ng-repeat="level in _levels" ng-click="checkLevel(level)" ng-class="{current:level.opt}">
+                <a href="#">{{level.name}}</a>
+            </li>
+        </ul>
+        <ul sub-title="发布时间">
+            <li ng-repeat="date in _search_date" ng-click="checkDate(date)" ng-class="{current:date.opt}">
+                <a href="#">{{date.name}}</a>
+            </li>
+        </ul>
+    </div>
+</section>
+<table class="list_table">
+    <thead>
+    <tr>
+        <th width="50px">ID</th>
+        <th width="100px">封面</th>
+        <th>活动名称</th>
+        <th width="60px">人数</th>
+        <th width="80px">价格</th>
+        <th width="60px">浏览量</th>
+        <th width="60px">分类</th>
+        <th width="60px">发布人</th>
+        <th width="70px">发布时间</th>
+        <th width="100px">操作</th>
+        <th width="100px">联盟状态</th>
+    </tr>
+    </thead>
+    <tbody class="drag_container">
+    <tr ng-repeat="activity in data.content" sort-id="{{activity.id}}" drag-drop type="tr"
+        top="-180"
+        left="-245" callback="dragSuccess(cur,prev, next)" able="activity.activityStatus == 1 && activity.unionState !== 5">
+        <td ng-bind="$index+1+(params.pageNumber-1)*10"></td>
+        <td>
+            <img ng-src="{{activity.poster | cutImg40}}"/>
+        </td>
+        <td><a href="#" ng-click="showDetail(activity.id)">{{activity.title}}</a>
+        </td>
+        <td>{{activity.joinNumber}}/{{activity.number}}</td>
+        <td>{{activity.costV2}}</td>
+        <td>{{activity.times}}</td>
+        <td>{{activity.subType|subType}}</td>
+        <td>{{activity.leaderName}}</td>
+        <td>{{activity.createTime|date:'yyyy-MM-dd'}}</td>
+        <td>
+            <div class="operate">
+                <ul>
+                    <li ng-show="activity.isTop === 0">
+                        <a href="javascript:;" ng-click="toTop(activity)">置顶</a>
+                    </li>
+                    <li ng-show="activity.isTop === 1">
+                        <a href="javascript:;" ng-click="downTop(activity)">取消置顶</a>
+                    </li>
+                    <li ng-show="joinlistPerminssion"><a href="javascript:;" ng-click="activityJoin(activity)">名单管理</a></li>
+                    <li><a ng-click="toEdit(activity)">编辑</a></li>
+                    <li ng-show="offlinePerminssion"><a href="#" ng-click="activityOffline(activity)">下线</a></li>
+                </ul>
+            </div>
+        </td>
+        <td>
+            <div class="union_switch" ng-click="switchUnion(activity)">
+                <input id="act_{{activity.id}}" type="checkbox"
+                       ng-checked="activity.unionState == 1 || activity.unionState == 3">
+                <label before-title="未联盟" after-title="已联盟">
+                    <b></b>
+                </label>
+
+                <p ng-if="activity.unionState == 3">来自:{{activity.unionInfo|union_info_iname}}</p>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<open-page data="data" params="params" url="activity/getActivityList" show-page-num="10" go-page="goPage(num)"></open-page>

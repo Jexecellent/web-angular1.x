@@ -1,0 +1,29 @@
+<div class="message" vc-tabs="1" id="distributeTabs" style="height: 100%">
+    <section class="page_tab">
+        <ul>
+            <li vc-tab-head tag="distributeMgr"><a href="#">管理分销商</a></li>
+            <li vc-tab-head tag="setting"><a href="#">分销设置</a></li>
+            <li vc-tab-head tag="brokerageMgr"><a href="#">佣金结算</a></li>
+            <li vc-tab-head tag="awardMgr"><a href="#">奖金结算</a></li>
+            <li vc-tab-head tag="brokerageDetail" no-index></li>
+        </ul>
+    </section>
+    <section class="page_content">
+        <div vc-tab-body tag="distributeMgr" ctrl="DistributeMgrController"
+             tpl-url="app/main/storeDistribute/pages/distributeMgr.html"></div>
+
+        <div vc-tab-body tag="setting" ctrl="SettingController"
+             tpl-url="app/main/storeDistribute/pages/setting.html"></div>
+
+        <div vc-tab-body tag="brokerageMgr" ctrl="BrokerageMgrController"
+             tpl-url="app/main/storeDistribute/pages/brokerageMgr.html"></div>
+
+        <div vc-tab-body tag="awardMgr" ctrl="BrokerageMgrController"
+             tpl-url="app/main/storeDistribute/pages/awardMgr.html"></div>
+
+        <div vc-tab-body tag="brokerageDetail" ctrl="BrokerageDetailController"
+             tpl-url="app/main/storeDistribute/pages/brokerageDetail.html"></div>
+
+        <div class="o_loading" ng-show="loading"></div>
+    </section>
+</div>

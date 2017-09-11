@@ -1,0 +1,58 @@
+<section class="tool fixedTool">
+    <div class="left">
+        <ul class="date_box">
+            <li class="unit">
+                <input type="text" placeholder="开始时间" ng-model="params.startTime" vc-date-picker
+                       date-fmt="yyyy-MM-dd" readonly="readonly"/>
+                <button class="icon_calendar"></button>
+            </li>
+            <li class="until">至</li>
+            <li class="unit">
+                <input type="text" placeholder="结束时间" ng-model="params.endTime" vc-date-picker
+                       date-fmt="yyyy-MM-dd" readonly="readonly"/>
+                <button class="icon_calendar"></button>
+            </li>
+        </ul>
+    </div>
+    <ul class="right">
+        <li><a href="#" class="icon_edit_1" ng-click="excel()">导出明细</a></li>
+    </ul>
+</section>
+<table class="list_table">
+    <thead>
+    <tr>
+        <th><input type="checkbox" ng-click="checkAll=!checkAll" ng-checked="checkAll"/></th>
+        <th>头像</th>
+        <th>账户</th>
+        <th>昵称</th>
+        <th>手机</th>
+        <th>收款账号</th>
+        <th>明细</th>
+        <th ng-show="params.type === 1">佣金</th>
+        <th ng-show="params.type === 2">团队奖金</th>
+        <th>结算人</th>
+        <th>结算时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="disPayOff in data">
+        <td>
+            <input type="checkbox" ng-checked="checkAll"
+                   ng-class="{_pay_brokerage_checkbox:params.type === 1,_pay_award_checkbox:params.type === 2}"/>
+        </td>
+        <td><img ng-src="{{disPayOff.imgPath}}" ng-show="disPayOff.imgPath" height="40px;" width="40px;"/></td>
+        <td>{{disPayOff.name}}</td>
+        <td>{{disPayOff.nickname}}</td>
+        <td>{{disPayOff.loginName}}</td>
+        <td>{{disPayOff.account}}</td>
+        <td>
+            {{(disPayOff.lastSendTime | date:'yyyy-MM-dd') + '至' + (disPayOff.sendTime | date:'yyyy-MM-dd')}}
+        </td>
+        <td ng-show="params.type === 1">{{disPayOff.amount | numDefault}}元</td>
+        <td ng-show="params.type === 2">{{disPayOff.amount | numDefault}}元</td>
+        <td>{{disPayOff.opname}}</td>
+        <td>{{disPayOff.createTime| date:'yyyy-MM-dd'}}</td>
+    </tr>
+    </tbody>
+</table>
+<open-page data="page" params="params" show-page-num="10" go-page="loadData(num)"></open-page>

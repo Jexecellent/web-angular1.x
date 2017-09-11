@@ -1,0 +1,43 @@
+<div class="o_u_home" ng-init="ready()" style="position: relative;">
+    <section class="page_title">
+        <h3>待处理信息</h3>
+        <dl class="o_home_dropdown" ng-repeat="tips in statTips">
+            <dt> <i class="icon_edit_1"></i>
+                {{tips.typeName}}
+                <span>{{tips.total}}</span>
+            </dt>
+
+            <dd ng-if="tips.showClick">
+                <a ng-repeat="subtip in tips.subtips" ng-click="openFunc(subtip.clickType)">
+                    {{subtip.bizName}}
+                    <span>{{subtip.count}}</span>
+                </a>
+            </dd>
+            <dd ng-if="!tips.showClick">
+                <a ng-repeat="subtip in tips.subtips" ui-sref="{{subtip.state}}">
+                    {{subtip.bizName}}
+                    <span>{{subtip.count}}</span>
+                </a>
+            </dd>
+        </dl>
+    </section>
+
+    <section class="page_content">
+        <section class="statistic_box" style="width:100%">
+            <h3>App日度新增用户量&日度登录用户量</h3>
+            <div class="statistic_content" id="stat_dict_1"style="padding: 0px;margin-top: 10px; margin-bottom: 10px;"></div>
+        </section>
+        <section class="statistic_box" style="width:100%">
+            <h3>App日度新增用户留存率</h3>
+            <div class="statistic_content" id="stat_dict_2"style="padding: 0px;margin-top: 8px; margin-bottom: 10px;"></div>
+        </section>
+        <!-- <section class="statistic_box">
+            <h3>App各板块日度使用量</h3>
+            <div class="statistic_content" id="stat_dict_3"></div>
+        </section>
+        <section class="statistic_box">
+            <h3>最近7天资讯阅读人数 &#38; 数量统计</h3>
+            <div class="statistic_content" id="stat_dict_4"></div>
+        </section> -->
+    </section>
+</div>

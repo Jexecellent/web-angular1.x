@@ -1,0 +1,20 @@
+<div vc-tabs="2" id="goodsMgr" style="height: 100%">
+    <section class="page_tab">
+        <ul>
+            <li vc-tab-head tag="release"><a href="#">商品发布</a></li>
+            <li vc-tab-head tag="manage"><a href="#">商品管理</a></li>
+        </ul>
+    </section>
+    <section class="page_content">
+        <!-- 商品发布 -->
+        <div vc-tab-body tag="release" ctrl="GoodsReleaseController" tpl-url="app/main/goodsMgr/pages/release.html">
+        </div>
+
+        <!-- 商品管理 -->
+        <div vc-tab-body tag="manage" ctrl="GoodsManagerController" tpl-url="app/main/goodsMgr/pages/manager.html">
+        </div>
+
+
+        <div class="o_loading" ng-show="loading"></div>
+    </section>
+</div>

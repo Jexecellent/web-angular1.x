@@ -1,0 +1,44 @@
+<section class="tool fixedTool">
+    <div class="left">
+        <vc-search vc-model="params.querykey" placeholder="请输入关键词" vc-change="loadData(1)"></vc-search>
+    </div>
+</section>
+<table class="list_table">
+    <thead>
+    <tr>
+        <th width="60px">姓名</th>
+        <th width="50px">手机</th>
+        <th width="50px">邀请码</th>
+        <th width="100px">申请时间</th>
+        <th width="100px">状态</th>
+        <th width="100px" ng-show="params.status === 4">处理时间</th>
+        <th width="50px">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="disapply in data">
+        <td>{{disapply.name}}</td>
+        <td>{{disapply.loginName}}</td>
+        <td>{{disapply.sellerCode}}</td>
+        <td>{{disapply.createTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+        <td>{{disapply.status| distributeStatusFilter}}</td>
+        <td ng-show="params.status === 4">{{disapply.auditTime| date:'yyyy-MM-dd HH:mm:ss'}}</td>
+        <td>
+            <div class="operate">
+                <ul>
+                    <li ng-show="hasPermission('disapply:get')">
+                        <a href="javascript:;" ng-click="detailDept(1,disapply)">详情</a>
+                    </li>
+                    <li ng-show="hasPermission('distributor:audit') && params.status === 1">
+                        <a href="javascript:;" ng-click="detailDept(2,disapply)">审核</a>
+                    </li>
+                    <li ng-show="params.status === 4">
+                        <a href="javascript:;" ng-click="audit(disapply.id,3)">删除</a>
+                    </li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<open-page data="page" params="params" show-page-num="10" go-page="loadData(num)"></open-page>

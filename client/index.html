@@ -1,0 +1,176 @@
+<!doctype html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<base href="/">
+<title>麦潮管理平台</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width">
+
+  <!-- build:css(client) app/app.css -->
+  <!-- injector:css -->
+  <link rel="stylesheet" href="app/styles/app.css">
+  <link rel="stylesheet" href="app/styles/sweetalert.css">
+  <link rel="stylesheet" href="app/styles/swiper.css">
+  <!-- endinjector -->
+  <!-- endbuild -->
+
+  <!--open_v3-->
+  <link rel="stylesheet" href="http://imgcache.varicom.im/css/standard_file/public.css">
+  <link rel="stylesheet" href="http://imgcache.varicom.im/css/standard_file/open_component.css">
+
+  <link rel="stylesheet" href="http://imgcache.varicom.im/css/site/open_v3.1/vc-angular.css">
+  <link rel="stylesheet" href="http://imgcache.varicom.im/css/site/open_v3.1/vc-alert.css">
+
+
+  <link rel="stylesheet" href="http://imgcache.varicom.im/css/site/open_v3.2/o_vc_frame.css">
+  <link rel="stylesheet" href="http://imgcache.varicom.im/css/site/open_v3.2/o_vc_page.css">
+  <link rel="stylesheet" href="http://imgcache.varicom.im/css/site/open_v3.2/smallScreen.css" media="screen and (max-height:720px)">
+
+  <link rel="stylesheet" href="http://imgcache.varicom.im/css/site/open_v3.2/o_vc_editor.css">
+  <link rel="stylesheet" href="http://imgcache.varicom.im/css/standard_file/o_vc_editContent.css">
+  <link rel="stylesheet" href="/assets/style/fontello.css">
+
+</head>
+<body ng-app="openApp">
+
+<!--[if lt IE 9]>
+<p>您的浏览器不支持本站，请先升级浏览器。</p>
+<![endif]-->
+<div class="vc_o_index_box o_theme_dft" ng-class="{'o_login':isInLoginPg}">
+
+  <header class="vc_pc_head">
+    <div class="vc_head_logo">
+      <a ui-sref="main.home">
+        <h1>麦潮管理平台</h1>
+        <h2>我的应用我做主</h2>
+      </a>
+    </div>
+    <div class="vc_head_right" ng-if="isLogined">
+      <ul>
+        <li>
+          <a class="user_btn" ui-sref="main.home"><i class="icon_home"></i>主页</a></li>
+        <li>
+        <a class="user_btn" ui-sref="main.myapp"><i class="icon_user"></i><span ng-bind="currentUserName"></span></a>
+        </li>
+        <li>
+          <a class="quit_btn" href="#" ng-click="logout()"> <i class="icon_quit"></i> 退出</a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="vc_o_page_content"  data-ui-view="view" ng-controller="DefaultController"></div>
+
+  <footer class="vc_o_foot">
+    <div class="vc_o_copyright">
+      <p>
+        客服电话：0755-86559100 9:30-18:30（周一至周五） Copyright © 2015 Varicom.All Rights Reserved
+      </p>
+    </div>
+  </footer>
+</div>
+
+</body>
+
+<!--[if lt IE 9]>
+<script src="http://imgcache.varicom.im/js/lib/es5-shim.js" type="text/javascript"></script>
+<script src="http://imgcache.varicom.im/js/lib/json3.min.js" type="text/javascript"></script>
+<script src="http://imgcache.varicom.im/js/lib/placeholder.js" type="text/javascript"></script>
+<![endif]-->
+
+<!-- build:js(client) app/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/lodash/dist/lodash.compat.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/oclazyload/dist/ocLazyLoad.js"></script>
+<script src="bower_components/fex-webuploader/dist/webuploader.js"></script>
+<script src="bower_components/restangular/dist/restangular.js"></script>
+<script src="bower_components/store-js/store.js"></script>
+<script src="bower_components/sweetalert/dist/sweetalert.min.js"></script>
+<script src="bower_components/angular-sweetalert/SweetAlert.js"></script>
+<script src="bower_components/jquery-mousewheel/jquery.mousewheel.js"></script>
+<script src="bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js"></script>
+<script src="bower_components/moment/moment.js"></script>
+<script src="bower_components/async/lib/async.js"></script>
+<script src="bower_components/angular-once/once.js"></script>
+<script src="bower_components/swiper/dist/js/swiper.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- ueditor -->
+<script src="assets/ueditor/ueditor.config.js"></script>
+<script src="assets/ueditor/ueditor.all.min.js"></script>
+<script src="assets/ueditor/custom/addActivityModel.js"></script>
+<script src="assets/ueditor/custom/addNoteModel.js"></script>
+<!-- third-plugin -->
+<script src="assets/third-plugin/My97DatePicker/WdatePicker.js"></script>
+<script src="assets/third-plugin/echart/echarts-all.js"></script>
+
+<!-- build:js(.tmp) app/app.js -->
+<script src="app/app.js"></script>
+<!-- injector:js -->
+<script src="app/common/audit/audit.controller.js"></script>
+<script src="app/common/auth/login.js"></script>
+<script src="app/common/banner/banner.controller.js"></script>
+<script src="app/common/draft/draft.controller.js"></script>
+<script src="app/common/selector/selectAppUser.js"></script>
+<script src="app/common/selector/selectGoods.js"></script>
+<script src="app/common/selector/selectGoodsSpec.js"></script>
+<script src="app/common/selector/selectResource.js"></script>
+<script src="app/common/statistics/statistics.controller.js"></script>
+<script src="app/main/act/act.js"></script>
+<script src="app/main/article/article.js"></script>
+<script src="app/main/colleges/col_activity.js"></script>
+<script src="app/main/demo/demo.js"></script>
+<script src="app/main/goodsMgr/goodsMgr.js"></script>
+<script src="app/main/goodsType/goodsType.js"></script>
+<script src="app/main/groupmsg/groupmsg.js"></script>
+<script src="app/main/home/home.js"></script>
+<script src="app/main/interestUser/interestUser.js"></script>
+<script src="app/main/log/log.js"></script>
+<script src="app/main/main.js"></script>
+<script src="app/main/mate/mate.js"></script>
+<script src="app/main/myapp/myapp.js"></script>
+<script src="app/main/myindex/myindex.js"></script>
+<script src="app/main/notes/notes.js"></script>
+<script src="app/main/orderMgr/orderMgr.js"></script>
+<script src="app/main/pageShow/page_show.js"></script>
+<script src="app/main/storeDistribute/storeDistribute.js"></script>
+<script src="app/main/storeIndex/index.js"></script>
+<script src="app/main/user/user.js"></script>
+<script src="app/service/ArticleService.js"></script>
+<script src="app/service/AuditService.js"></script>
+<script src="app/service/AuthService.js"></script>
+<script src="app/service/BannerService.js"></script>
+<script src="app/service/CacheService.js"></script>
+<script src="app/service/CommRestService.js"></script>
+<script src="app/service/CommTabService.js"></script>
+<script src="app/service/ModuleService.js"></script>
+<script src="components/directives/drag-drop/drag-drop.js"></script>
+<script src="components/directives/emoji-parse/emojiParse.js"></script>
+<script src="components/directives/img-uploader/imgUploader.js"></script>
+<script src="components/directives/open-editor/open-editor-dire.js"></script>
+<script src="components/directives/open-editor/open-editor.controller.js"></script>
+<script src="components/directives/open-editor/open-editor.service.js"></script>
+<script src="components/directives/open-page/open-page.js"></script>
+<script src="components/directives/open-ueditor/open-ueditor.js"></script>
+<script src="components/directives/vcDragDrop.js"></script>
+<script src="components/directives/vcTabs/vcTabsDirective.js"></script>
+<script src="components/directives/vcUploader/vcUploader.js"></script>
+<script src="components/directives/vcUtils.js"></script>
+<script src="components/filters/vcFilter.js"></script>
+<script src="components/services/commonAppendService.js"></script>
+<script src="components/services/commonModalService.js"></script>
+<script src="components/services/home/join_audit_list.js"></script>
+<script src="components/services/previewModalService.js"></script>
+<script src="components/services/vcModalService.js"></script>
+<script src="components/services/vcUtilService.js"></script>
+<!-- endinjector -->
+<!-- endbuild -->
+
+</html>

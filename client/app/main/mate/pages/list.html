@@ -1,0 +1,71 @@
+<nav class="state">
+    <ul>
+        <li ng-class="{'current':showRun}" ng-click="changePage(true)">
+            <a href="#">正在进行</a>
+        </li>
+        <li ng-class="{'current':!showRun}" ng-click="changePage(false)">
+            <a href="#">已经结束</a>
+        </li>
+    </ul>
+</nav>
+<div class="cnt_box cnt_Ystate cnt_Ypaging">
+    <section class="tool fixedTool">
+        <div class="left">
+            <button class="screening_btn icon_pushpin_1" ng-class="{open:opt_show}" ng-click="changeMyStyle()">筛选
+            </button>
+            <vc-search vc-model="params.queryKey" vc-change="loadData(1)"></vc-search>
+            <div class="c_screening" sub-title="当前筛选条件：" ng-show="0!=sumIndex">
+                <ul>
+                    <li ng-repeat="type in totalTypes" ng-show="0!= type.index">
+                        {{totalTypes[$index].typeName}}：{{totalTypes[$index].typeValues[type.index].name}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--活动搜索筛选-->
+        <div class="screening_box" ng-style="myStyle">
+            <ul sub-title="{{type.typeName}}" ng-repeat="type in totalTypes">
+                <li ng-repeat="typeValue in type.typeValues" ng-class="{current:$index===totalTypes[$parent.$index].index}"
+                    ng-click="changeType($parent.$index,$index)">
+                    <a href="#">{{typeValue.name}}</a>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <table class="list_table">
+        <thead>
+        <tr>
+            <th width="60px">ID</th>
+            <th width="60px">封面</th>
+            <th width="100px">约伴名称</th>
+            <th width="50px">发起人</th>
+            <th width="30px">类型</th>
+            <th width="40px">约伴类型</th>
+            <th width="40px">已报名</th>
+            <th width="40px">约伴对象</th>
+            <th width="40px">收费方式</th>
+            <th width="40px">浏览量</th>
+            <th width="40px">发布时间</th>
+            <th width="40px" ng-show="hasPermission('meet:offline')">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="mate in mates" ng-class="{current:mate.isChecked}" ng-click="select(mate)">
+            <td ng-bind="$index+1+(params.pageNumber-1)*10"></td>
+            <td align="left"><img ng-src="{{mate.poster}}" height="30px" width="40px"/></td>
+            <td ng-bind="mate.title"></td>
+            <td ng-bind="mate.leaderName"></td>
+            <td ng-bind="mate.mateTags|mateTags"></td>
+            <td ng-bind="mate.mateNum | mateNum"></td>
+            <td ng-bind="mate.joinNumber"></td>
+            <td ng-bind="mate.mateType|mateType"></td>
+            <td ng-bind="mate.costType|mateCost"></td>
+            <td ng-bind="mate.times"></td>
+            <td ng-bind="mate.createTime|date:'yyyy-MM-dd HH:mm:ss'"></td>
+            <td ng-show="hasPermission('meet:offline')"><a href="#" ng-click="delete(mate.id)">删除</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="o_loading" ng-show="loading"></div>
+<open-page data="page" params="params" show-page-num="10" go-page="loadData(num)"></open-page>

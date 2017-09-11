@@ -1,0 +1,121 @@
+<div class="cnt_box act_roster_box_event mCustomScrollbar">
+<div class="append_parent_body join_activity_list act_roster">
+    <style>
+        .append_parent_body table td input{line-height: 18px; height:18px;}
+    </style>
+    <section class="tool fixedTool">
+        <div class="left">
+            <a href="javascript:;" class="icon_return red_btn" ng-click="close()">返回</a>
+
+            <vc-search vc-model="params.queryKey" vc-change="search()"></vc-search>
+        </div>
+        <ul class="right">
+            <li><a href="#" class="icon_export" ng-click="export()">导出名单</a></li>
+        </ul>
+    </section>
+    <section class="state">
+        <h3>
+            <span>名单管理</span>
+            <ul class="right">
+                <li class="select">
+                    <div ng-if="auditStats" vc-drop-down-list value="params.payState"
+                         select-list="auditStats" select-name="name"
+                         id="value"></div>
+                </li>
+                <li class="time unit">
+                    <input id="join_list_cycle_time" type="text" placeholder="请选择活动周期" ng-model="selectDate" vc-date-picker min-date="0" other-conf="my97Conf">
+                    <label class="icon_calendar" for="join_list_cycle_time"></label>
+                </li>
+            </ul>
+        </h3>
+    </section>
+
+    <table class="list_table">
+                <thead>
+                <tr>
+                    <th>账号</th>
+                    <th>手机号</th>
+                    <th>性别</th>
+                    <th ng-show="activity.isNeedIdCode === 1">身份证</th>
+                    <th>报名时间</th>
+                    <th>报名周期</th>
+                    <th>集合地</th>
+                    <th>报名人</th>
+                    <th>备注</th>
+                    <th>报名状态</th>
+                    <th ng-show="is_need_audit === 1 && params.payState !== 4">审核意见</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="join in data.content">
+                    <td>
+                        <span ng-bind="join.name" ng-show="join._show ===0"></span>
+                        <input ng-model="join.name" ng-show="join._show===1"/>
+                    </td>
+                    <td>
+                        <span ng-bind="join.phone" ng-show="join._show ===0"></span>
+                        <input ng-model="join.phone" ng-show="join._show===1"/>
+                    </td>
+                    <td>
+                        <span ng-bind="join.sex|sex" ng-show="join._show ===0"></span>
+                            <span ng-show="join._show===1">
+                                <input type="radio" ng-model="join.sex" value=1>男
+                                <input type="radio" ng-model="join.sex" value=2>女
+                            </span>
+                    </td>
+                    <td ng-show="activity.isNeedIdCode === 1">
+                        <span ng-bind="join.idCode" ng-show="join._show ===0"></span>
+                        <input ng-model="join.idCode" ng-show="join._show===1"/>
+                    </td>
+                    <td ng-bind="join.createTime|date:'yyyy-MM-dd HH:mm'"></td>
+                    <td ng-bind="join.period|date:'yyyy-MM-dd'"></td>
+                    <td>
+                        <span ng-bind="join.place" ng-show="join._show ===0"></span>
+                        <!--<input ng-model="join.place" ng-show="join._show===1"/>-->
+                        <select ng-show="join._show===1" ng-model="join.place" ng-options="op.address as op.address for op in assembles"></select>
+                    </td>
+                    <td ng-bind="join.agent"></td>
+                    <td>
+                        <span ng-bind="join.remark" ng-show="join._show ===0"></span>
+                        <input ng-model="join.remark" ng-show="join._show===1"/>
+                    </td>
+                    <td>
+                        {{join.payState|join_activity_audit}}
+                    </td>
+                    <td ng-show="is_need_audit === 1 && params.payState !== 4">
+                        {{join.audit}}
+                    </td>
+                    <td>
+                        <div ng-if="is_need_audit === 1" ng-show="joinupdatePerminssion"><!--需审核-->
+                            <p ng-show="join._show===0"><a href="#" ng-click="edit(join)">编辑</a></p>
+                            <p ng-show="join._show===1"><a href="#" ng-click="update(join)">确定</a></p>
+                            <p ng-show="join._show===1"><a href="#" ng-click="cancleEdit(join)">取消</a></p>
+                            <div ng-if="join.payState !== 4 && join.payState !== 12" ng-show="joinupdatePerminssion"><!--审核通过-->
+                                <p ng-if="join.payState === 5">
+                                    <a class="red_txt" ng-click="refuse(join)">拒绝此人</a>
+                                </p>
+                                <a class="red_txt" href="#" ng-show="joinupdatePerminssion" ng-if="join.payState !== 5"
+                                   ng-click="cancelReg(join)">取消报名</a>
+                            </div>
+                            <div ng-if="join.payState == 4" ng-show="joinupdatePerminssion"><!--待审核-->
+                                <a ng-click="audit(join)">审核</a>
+                            </div>
+                            <div ng-if="join.payState == 12"><!--审核不通过-->
+
+                            </div>
+                        </div>
+                        <div ng-if="is_need_audit !== 1"><!--不需要审核-->
+                            <p ng-show="join._show===0"><a href="#" ng-click="edit(join)">编辑</a></p>
+                            <p ng-show="join._show===1"><a href="#" ng-click="update(join)">确定</a></p>
+                            <p ng-show="join._show===1"><a href="#" ng-click="cancleEdit(join)">取消</a></p>
+                            <a class="red_txt" href="#" ng-if="joinupdatePerminssion" ng-show="join.payState !== 11" ng-click="cancelReg(join)">取消报名</a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+    <open-page data="data" params="params" url="activity/join_list"
+                       show-page-num="10" go-page="go(num)"></open-page>
+</div>
+</div>

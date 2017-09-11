@@ -1,0 +1,37 @@
+<section class="tool fixedTool">
+    <div class="left">
+        <vc-search vc-model="params.queryKey" vc-change="loadData()"></vc-search>
+    </div>
+</section>
+<table class="list_table" ng-init="loadData()">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>封面</th>
+        <th>手记标题</th>
+        <th>行程天数</th>
+        <th>发布时间</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="note in data">
+        <td ng-bind="$index+1+(params.pageNumber-1)*10"></td>
+        <td>
+            <img ng-src="{{note.thumbnail|cutImg40}}"/>
+        </td>
+        <td>{{note.title}}</td>
+        <td ng-bind="note.tags | subTags : '#'"></td>
+        <td ng-bind="note.createTime|date:'yyyy-MM-dd'"></td>
+        <td>
+            <div class="operate">
+                <ul>
+                    <li><a ng-click="edit(note,'editOffline')">编辑</a>
+                    <li><a ng-click="del(note.id)">删除</a>
+                </ul>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<open-page data="pager" params="params" url="notes/list" show-page-num="10" go-page="loadData(num)"></open-page>

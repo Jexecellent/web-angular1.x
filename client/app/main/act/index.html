@@ -1,0 +1,30 @@
+<div vc-tabs="2" id="actTabs" style="height: 100%;">
+    <section class="page_tab">
+        <ul>
+            <li vc-tab-head tag="act-tab-add"><a href="#">发布活动</a></li>
+            <li vc-tab-head tag="manage"><a href="#">管理活动</a></li>
+            <li vc-tab-head tag="act-tab-union"><a href="#">联盟活动</a></li>
+            <li vc-tab-head tag="banner"><a href="#">广告位管理</a></li>
+            <li vc-tab-head tag="act-tab-data"><a href="#">数据统计</a></li>
+        </ul>
+    </section>
+    <section class="page_content">
+
+        <!-- 发布活动 -->
+        <div vc-tab-body tag="act-tab-add" ctrl="ActivityReleaseController" tpl-url="app/main/act/pages/release.html"></div>
+
+        <!-- 管理活动 -->
+        <div vc-tab-body tag="manage" ctrl="ActivityManagerController" tpl-url="app/main/act/pages/manager.html" class="act_list"></div>
+
+        <!-- 联盟活动 -->
+        <div vc-tab-body tag="act-tab-union" ctrl="UnionActivityController" tpl-url="app/main/act/pages/activity-union.html" class="act_list"></div>
+
+        <!-- Banner -->
+        <div vc-tab-body tag="banner" ctrl="BannerController" tpl-url="app/common/banner/index.html" locals="{moduleType:4,moduleId:moduleId,aid:20}"></div>
+
+        <!-- 数据统计 -->
+        <div vc-tab-body tag="act-tab-data" ctrl="StatisticsController" tpl-url="app/common/statistics/index.html"></div>
+
+        <div class="o_loading" ng-show="loading"></div>
+    </section>
+</div>

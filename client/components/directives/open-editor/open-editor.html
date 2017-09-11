@@ -1,0 +1,176 @@
+<style>
+    button.activite {background-color: #66b3ef;color: white;}
+</style>
+<div class="vc_editor_container">
+    <div class="vc_editor_box">
+        <nav class="vc_editor_tool">
+            <ul>
+                <li>
+                    <button class="icon_editor_1" title="插入标题" ng-click="myEd.addComponent(1)"></button>
+                </li>
+                <li>
+                    <button class="icon_editor_2" title="插入文字" ng-click="myEd.addComponent(2)"></button>
+                </li>
+                <li>
+                    <button class="icon_editor_3" title="插入图片" ng-click="myEd.addComponent(3)"></button>
+                </li>
+                <li>
+                    <button class="icon_editor_4" title="插入视频" ng-click="myEd.addComponent(4)"></button>
+                </li>
+            </ul>
+
+            <!--<p class="fullScreen_btn"></p>-->
+        </nav>
+
+        <div class="mCustomScrollbar">
+            <!--无任何模块 添加class=ed_bn_none, 有模块 添加class=ed_bn_have -->
+            <ul class="vc_editor_content ed_bn_have">
+
+                <!--标题块-->
+                <li class="ed_cnt_block" ng-repeat="comp in components" repeat-done="repeatDone()">
+                    <section class="vc_ed_title_block" ng-if="comp.type === 1">
+                        <div class="vc_ed_tool">
+                            <ul>
+                                <li><a href="#" class="icon_edit_4">编辑</a></li>
+                                <li>
+                                    <a href="#" class="icon_trash" ng-click="removeComponent(comp)">删除</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="{{comp.__class}}">
+                            <textarea name="" placeholder="请输入标题文字" ng-model="comp.content.con"></textarea>
+                        </div>
+                    </section>
+                    <!--文本块-->
+                    <section class="vc_ed_text_block" ng-if="comp.type === 2">
+                        <div class="vc_ed_tool">
+                            <ul>
+                                <li>
+                                    <a href="#" class="icon_edit_4">编辑</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="icon_trash" ng-click="removeComponent(comp)">删除</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="textContainer">
+                            <div class="textEdit_tool">
+                                <ul>
+                                    <li class="t_size" title="字体大小">
+                                        <select ng-model="comp.styleObj['font-size']" ng-options="op for op in editorTools.font_size">
+                                        </select>
+                                    </li>
+                                    <li class="colorSelect" title="选择字体颜色">
+                                        <button class="jscolor icon_color" ng-model="comp.styleObj.color" jscolor-dir ng-style="{'background-color':comp.styleObj.color}"></button>
+                                    </li>
+                                    <li>
+                                        <button ng-class="{'activite':comp.styleObj['font-weight']=='bold','t_bold':true}"
+                                                title="粗体" ng-click="setStyle(comp,'font-weight','bold')">B</button>
+                                    </li>
+                                    <li>
+                                        <button ng-class="{'activite':comp.styleObj['font-style']=='italic','t_italic':true}"
+                                                title="斜体" ng-click="setStyle(comp,'font-style','italic')">I</button>
+                                    </li>
+                                    <li>
+                                        <button ng-class="{'activite':comp.styleObj['text-decoration']=='underline','t_uline':true}"
+                                                title="下划线" ng-click="setStyle(comp,'text-decoration','underline')">U</button>
+                                    </li>
+                                    <li>
+                                        <button ng-class="{'activite':comp.styleObj['text-decoration']=='line-through','t_tline':true}"
+                                                title="中划线" ng-click="setStyle(comp,'text-decoration','line-through')">U</button>
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li class="line_height" title="行高">
+                                        <select ng-model="comp.styleObj['line-height']" ng-options="op for op in editorTools.line_height">
+                                        </select>
+                                    </li>
+                                    <li>
+                                        <button ng-class="{'activite':comp.styleObj['text-align']=='left','l_align icon_align_l':true}"
+                                                title="左对齐" ng-click="setStyle(comp,'text-align','left')"></button>
+                                    </li>
+                                    <li>
+                                        <button class="" ng-class="{'activite':comp.styleObj['text-align']=='center','c_align icon_align_c':true}"
+                                                title="居中" ng-click="setStyle(comp,'text-align','center')"></button>
+                                    </li>
+                                    <li>
+                                        <button ng-class="{'activite':comp.styleObj['text-align']=='right','r_align icon_align_r':true}"
+                                                title="右对齐" ng-click="setStyle(comp,'text-align','right')"></button>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <textarea name="" placeholder="请输入段落文字" style="{{comp.__style()}}" ng-model="comp.content.con"></textarea>
+                        </div>
+                    </section>
+                    <!--图片块-->
+                    <section class="vc_ed_img_block" ng-if="comp.type === 3">
+                        <div class="vc_ed_tool">
+                            <ul>
+                                <li><a href="#" class="icon_edit_4">编辑</a></li>
+                                <li>
+                                    <a href="#" class="icon_trash" ng-click="removeComponent(comp)">删除</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="img_box" ng-click="upload(comp)">
+                            <img ng-src="{{comp.content.con||'http://imgcache.varicom.im/images/site/open_v3.1/banner.jpg'}}" alt="">
+                        </div>
+                    </section>
+
+                    <!--视频块-->
+                    <section class="vc_ed_video_block" ng-if="comp.type === 4">
+                        <div class="vc_ed_tool">
+                            <ul>
+                                <li><a href="#" class="icon_edit_4" ng-click="selectVedio(comp)">编辑</a></li>
+                                <li>
+                                    <a href="#" class="icon_trash" ng-click="removeComponent(comp)">删除</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--
+                                腾讯src= http://v.qq.com/iframe/player.html?vid=这是ID&auto=0
+                                优酷src= http://player.youku.com/embed/这是ID==
+                                土豆src= http://www.tudou.com/programs/view/html5embed.action?code=这是ID
+                                -->
+
+                        <iframe class="videoPlayer" frameborder="0" allowfullscreen
+                                ng-src="{{trustSrc(comp)}}"></iframe>
+
+                    </section>
+                    <div class="vc_ed_addBlock">
+                        <button class="addBlock_btn icon_plus">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                                <rect class="dashed" width="100%" height="100%"/>
+                            </svg>
+                        </button>
+                        <div class="ed_ftool">
+                            <nav class="vc_editor_tool">
+                                <ul>
+                                    <li>
+                                        <button class="icon_editor_1" title="插入标题"
+                                                ng-click="myEd.addComponent(1, comp.__id)"></button>
+                                    </li>
+                                    <li>
+                                        <button class="icon_editor_2" title="插入文字"
+                                                ng-click="myEd.addComponent(2, comp.__id)"></button>
+                                    </li>
+                                    <li>
+                                        <button class="icon_editor_3" title="插入图片"
+                                                ng-click="myEd.addComponent(3, comp.__id)"></button>
+                                    </li>
+                                    <li>
+                                        <button class="icon_editor_4" title="插入视频"
+                                                ng-click="myEd.addComponent(4, comp.__id)"></button>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="edit_img_upload__" style="display: none;"></div>
+</div>

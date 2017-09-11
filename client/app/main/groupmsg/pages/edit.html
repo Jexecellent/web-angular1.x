@@ -1,0 +1,88 @@
+<div class="cnt_box message_new mCustomScrollbar">
+    <section class="tool fixedTool">
+        <div class="left">
+            <a class="icon_return red_btn" ng-click="back()" ng-show="operate!=='add'">返回</a>
+        </div>
+        <ul class="right">
+            <li ng-show="!hasPermission('groupmsg:add')"><a href="#" class="icon_edit_1" ng-click="submit(2)">提交审核</a></li>
+            <li ng-show="hasPermission('groupmsg:add')"><a href="#" class="icon_horn" ng-click="submit(1)">发布</a></li>
+            <li><a href="#" class="icon_close red_txt" ng-click="clear()">清空</a></li>
+        </ul>
+    </section>
+
+    <ul class="form_box">
+        <li class="tag">
+            <!--如果是选择全部用户  在button上增加 class= current-->
+            <button class="icon_plus" ng-class="{'current':isSelectAll}" ng-click="isSelectAll = true">选择全部用户</button>
+            <button class="icon_plus" ng-class="{'current':!isSelectAll}" ng-click="toggleModal(2)">选择指定用户</button>
+            <!--如果选择全部用户 或 没选择用户 不显示 ul -->
+            <ul class="mCustomScrollbar" style="height:84px;" ng-show="!isSelectAll">
+                <li class="current" ng-repeat="user in users">
+                    {{user.nickname}}
+                    <i class="icon_close_2" ng-click="removeOneUser(user.id)"></i>
+                </li>
+            </ul>
+        </li>
+        <li class="time unit">
+            <label>指定发送时间(选填)</label>
+            <input type="text" placeholder="请选择发送消息时间" ng-model="groupMessage.scheduleTime" vc-date-picker
+                   date-fmt="yyyy-MM-dd HH:mm" id="scheduleTime" min-date="%y-%M-%d %H:%m" readonly="readonly"/>
+            <label class="icon_calendar" for="scheduleTime"></label>
+        </li>
+    </ul>
+    <div class="message_type">
+        <ul class="message_type_title">
+            <li ng-class="{'current':groupMessage.type==1}" ng-click="groupMessage.type=1"><a href="#">文字</a></li>
+            <li ng-class="{'current':groupMessage.type==2}" ng-click="groupMessage.type=2"><a href="#">卡片</a></li>
+        </ul>
+
+        <!--群发预览（文字）-->
+        <div class="message_preview" ng-show="groupMessage.type==1">
+            <h3>{{groupMessage.content}}</h3>
+        </div>
+        <!--群发预览（卡片）-->
+        <div class="message_preview" ng-show="groupMessage.type==2">
+            <h3>{{groupMessage.title || '我是标题'}}</h3>
+            <p><img ng-src="{{groupMessage.picture}}" alt="" height="180px;" id="_img_show"></p>
+            <p>{{groupMessage.desc || '我是导读'}}</p>
+        </div>
+
+        <!--群发文字-->
+        <div class="message_type_w" ng-show="groupMessage.type==1">
+            <textarea class="textarea" placeholder="请输入你要推送的文字" ng-model="groupMessage.content" maxlength="140"></textarea>
+            <div class="message_type_w_tool">
+                <p>还可以输入 <b class="red_txt">{{140 - groupMessage.content.length}}</b> 字</p>
+            </div>
+        </div>
+
+        <!--群发卡片-->
+        <div class="message_type_k" ng-show="groupMessage.type==2">
+            <ul class="form_box">
+                <li class="text">
+                    <label for="">标题&nbsp;&nbsp;{{groupMessage.title.length}}/20</label>
+                    <input type="text" placeholder="请输入20个字符以内的标题" ng-model="groupMessage.title" maxlength="20">
+                </li>
+                <li class="upload">
+                    <label>图片</label>
+                    <!--下面label 最为按钮显示-->
+                    <!--用来存放item-->
+                    <div id="uploader-img">
+                        <!--用来存放item-->
+                        <div id="fileList" class="uploader-list"></div>
+                        <div id="poster">选择图片</div>
+                    </div>
+                </li>
+                <li class="text unit">
+                    <label for="">链接</label>
+                    <input type="text" placeholder="点击右侧按钮，选择资讯作为链接" ng-model="groupMessage.location">
+                    <button class="icon_link" ng-click="toggleModal(3)"></button>
+                </li>
+                <li class="textarea">
+                    <label for="">导读（选填）&nbsp;&nbsp;{{groupMessage.desc.length+0}}/70</label>
+                    <textarea name="" id="" cols="30" rows="10" ng-model="groupMessage.desc" maxlength="70"></textarea>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</div>

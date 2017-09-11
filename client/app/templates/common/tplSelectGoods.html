@@ -1,0 +1,65 @@
+<div class="ec_tc_popMain">
+
+    <div class="select">
+        <div vc-drop-down-list value="selectedType" select-list="selectTypeOption"></div>
+    </div>
+
+    <!--<div class="ec_tc_popCont mCustomScrollbar">-->
+    <div class="ec_tc_popCont">
+        <div class="ec_tc_filter">
+
+            <!--商品筛选：-->
+            <div class="ec_goods_filter" ng-if="selectedType==0">
+                <p class="ec_tc_all">所有商品(按分类)</p>
+                <ul class="ec_tc_lv1 ec_tc_lv">
+                    <!-- 一级分类 -->
+                    <li ng-repeat="goodsType in goodsTypes">
+                        <div class="ec_lv1_name ec_lv_name" ng-class="{ec_lv_current:goodsType.typeId == selectedGoodTypeId}" ng-click="goodsType.open = !goodsType.open;chooseGoodsTypeNode(goodsType,false)">
+                            <i class="icon_plus_2" ng-class="{icon_reduce_2: goodsType.open}"></i>
+                            <p>{{goodsType.name}}</p>
+                        </div>
+                        <ul class="ec_tc_lv2 ec_tc_lv" style="display: block;" ng-if="goodsType.open && goodsType.child.length > 0">
+                            <!-- 二级分类 -->
+                            <li ng-repeat="goodsSubType in goodsType.child">
+                                <div class="ec_lv2_name ec_lv_name" ng-class="{ec_lv_current:goodsSubType.typeId == selectedGoodTypeId}" ng-click="goodsSubType.open = !goodsSubType.open;chooseGoodsTypeNode(goodsSubType,true)">
+                                    <i class="icon_plus_2" ng-class="{icon_reduce_2: goodsSubType.open}"></i>
+                                    <p>{{goodsSubType.name}}</p>
+                                </div>
+                                <ul class="ec_tc_lv3 ec_tc_lv" style="display: block;" ng-if="goodsSubType.open && goodsTypeItems[goodsSubType.typeId]">
+                                    <!-- 具体商品 -->
+                                    <li ng-repeat="goodInfo in goodsTypeItems[goodsSubType.typeId]">
+                                        <div class="ec_lv3_name ec_lv_name" ng-class="{ec_lv_current:goodInfo.id == selectedGoodsId}" ng-click="chooseOneGood(goodInfo)">
+                                            <p>{{goodInfo.name}}</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <!--品牌筛选：-->
+            <div class="ec_bra_filter" ng-if="selectedType==1">
+                <p class="ec_tc_all">所有商品(按品牌)</p>
+                <ul class="ec_tc_lv1 ec_tc_lv">
+                    <!-- 品牌分类 -->
+                    <li ng-repeat="brand in goodsBrands">
+                        <div class="ec_lv1_name ec_lv_name" ng-class="{ec_lv_current:brand.id == selectedBrandId}" ng-click="brand.open = !brand.open;chooseBrandNode(brand)">
+                            <i class="icon_plus_2" ng-class="{icon_reduce_2: brand.open}"></i>
+                            <p>{{brand.name}}</p>
+                        </div>
+                        <ul class="ec_tc_lv3 ec_tc_lv" style="display: block;" ng-if="brand.open && goodsBrandItems[brand.id]">
+                            <!-- 具体商品 -->
+                            <li ng-repeat="goodInfo in goodsBrandItems[brand.id]">
+                                <div class="ec_lv3_name ec_lv_name" ng-class="{ec_lv_current:goodInfo.id == selectedGoodsId}" ng-click="chooseOneGood(goodInfo)">
+                                    <p>{{goodInfo.name}}</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

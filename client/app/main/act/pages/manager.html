@@ -1,0 +1,29 @@
+<div vc-tabs="1" id="manage" style="height: 100%">
+    <nav class="state">
+        <ul>
+            <li vc-tab-head tag="online"><a href="#">正在举办</a></li>
+            <li vc-tab-head tag="audit" ng-show="hasPermission('activity:add')"><a href="#">等待审核</a></li>
+            <li vc-tab-head tag="myaudit" ng-show="!hasPermission('activity:add')"><a href="#">我的审核</a></li>
+            <li vc-tab-head tag="offline"><a href="#">已下线</a></li>
+            <li vc-tab-head tag="draft"><a href="#">草稿箱</a></li>
+            <li vc-tab-head tag="act_detial" no-index>详情</li>
+        </ul>
+    </nav>
+    <div class="cnt_box cnt_Ystate cnt_Ypaging mCustomScrollbar act_tab_body">
+        <!-- 正在举办 -->
+        <div vc-tab-body tag="online" ctrl="ActivityListController" tpl-url="app/main/act/pages/activity-list.html"></div>
+        <!-- 待审核列表 -->
+        <div vc-tab-body tag="audit" ctrl="AuditController" tpl-url="app/common/audit/index.html" locals="{bizType:4,auditStatuses:'1'}"></div>
+        <!-- 我的审核 -->
+        <div vc-tab-body tag="myaudit" ctrl="AuditController" tpl-url="app/common/audit/index.html" locals="{bizType:4,applyRid:$currentRid}"></div>
+        <!-- 已经下线 -->
+        <div vc-tab-body tag="offline" ctrl="ActivityOfflineListController" tpl-url="app/main/act/pages/activity-offline-list.html"></div>
+        <!-- 草稿 -->
+        <div vc-tab-body tag="draft" ctrl="DraftController" tpl-url="app/common/draft/index.html" locals="{bizType:4,auditTypes:'0'}"></div>
+        <!-- 详情 -->
+        <div class="act_detail_body" vc-tab-body tag="act_detial" ctrl="ActivityDetailController" tpl-url="app/main/act/pages/activity-detail.html"></div>
+    </div>
+    <div class="o_loading" ng-show="loading"></div>
+    <!-- 名单浮动区 -->
+    <div class="append_parent"></div>
+</div>

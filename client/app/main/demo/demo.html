@@ -1,0 +1,45 @@
+<div class="demo" vc-tabs="1" id="demoTabs">
+	<section class="tool fixedTool hidden">
+		<div class="right">
+			<ul>
+				<li>
+					<a class="icon_edit_1">一个操作按钮</a>
+				</li>
+				<li>
+					<a vc-permission-button need-permission="{{myPermission}}" need-watch="yes" class="icon_plus">我有权限</a>
+				</li>
+			</ul>
+		</div>
+	</section>
+
+	<section class="page_tab">
+		<!-- 无论是静态还是动态页面加载都不会改变state的tab组件 -->
+		<!-- 支持lazeload -->
+		<ul>
+			<!-- 切换对应加载相应index的vcTabBody -->
+			<li vc-tab-head tag="editor"><a href="#">编辑器演示</a></li>
+			<li vc-tab-head tag="tab4"><a href="#">电商开发组件演示</a></li>
+			<li vc-tab-head tag="tab1"><a href="#">Tab1</a></li>
+			<li vc-tab-head tag="tab2"><a href="#">Tab2</a></li>
+			<li vc-tab-head tag="tab1"><a href="#">Tab3-As-Tab1</a></li>
+			<li vc-tab-head tag="tab-with-tab"><a href="#">Tab-With-Tab</a></li>
+			<li vc-tab-head tag="tab-no-index" no-index></li>
+		</ul>
+	</section>
+
+	<section class="page_content">
+		<div class="cnt_box cnt_Ypaging mCustomScrollbar">
+			<div vc-tab-body tag="tab1" ctrl="TestDemoController", tpl-url="app/main/demo/tab1.html">
+
+			</div>
+			<div vc-tab-body tag="tab2" ctrl="TestTabController" tpl-url="app/main/demo/tab2.html" locals="demoInitConfigs">
+			</div>
+			<div vc-tab-body tag="tab-no-index" ctrl="TestTabController" tpl-url="app/main/demo/tab-no-index.html" locals="getLocals('tab2')">
+			</div>
+			<div vc-tab-body tag="tab-with-tab" ctrl="BannerController" tpl-url="app/common/banner/index.html" locals="{moduleId:4981}">
+			</div>
+			<div vc-tab-body tag="tab4" ctrl="StoreDemoController" tpl-url="app/main/demo/tab4.html" locals="demoInitConfigs"></div>
+			<div vc-tab-body tag="editor" ctrl="demoEditorControlller" tpl-url="app/main/demo/pages/editor.html" locals="demoInitConfigs"></div>
+		</div>
+	</section>
+</div>

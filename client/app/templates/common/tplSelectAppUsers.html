@@ -1,0 +1,23 @@
+<div class="p_list_s select">
+    <div vc-drop-down-list value="queryParams.departmentIds" select-url="department/list" select-name="departId"></div>
+    <vc-search vc-model="queryParams.queryKey" vc-change="loadQueryData()"
+               placeholder="请输入名称或手机号码"></vc-search>
+</div>
+
+<div class="p_list">
+    <ul>
+        <li ng-repeat="user in userList">
+            <input type="radio" style="width:13px;" name="_radio_user" id="{{user.id}}" ng-click="checkedUser(user)"
+                   ng-if="isMulitSelect === false" ng-checked="user.$checked"/>
+            <input type="checkbox" id="{{user.id}}" ng-if="isMulitSelect === true" ng-checked="user.$checked"
+                   ng-click="checkedUser(user)"/>
+            <label for="{{user.id}}">
+                <p class="photo">
+                    <img ng-src="{{user.imgPath|cutImg40}}" />
+                </p>
+                <h3>{{user.nickname}}</h3>
+                <p class="tel">{{user.loginName}}</p>
+            </label>
+        </li>
+    </ul>
+</div>

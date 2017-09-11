@@ -1,0 +1,12 @@
+<div class="uploader">
+    <style type="text/css">
+        .uploader [type="file"] {
+            display: none;
+        }
+        .progress-bar{height: 4px;background-color: #2897DD;}
+    </style>
+    <div id="poster">选择图片</div>
+    <div id="propress_bar" style="display: inline-block;"></div>
+    <img ng-src="{{vcPicture | origImg:'.500x300z'}}" ng-show="vcPicture" class="poster_img"/>
+    <span style="color:red">{{uploadMsg}}</span>
+</div>

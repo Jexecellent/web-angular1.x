@@ -1,0 +1,27 @@
+<div class="vc_o_page_box" ng-init="initMain()">
+    <article class="vc_o_page_left mCustomScrollbar">
+        <button class="icon_order" ng-click="orderMenu()" ng-if="ableToOrderMenu"></button>
+        <ul ng-repeat="menu in menuList" sub-title="{{menuRootNames[$index].name}}">
+            <li ng-repeat="submenu in menu"
+                ng-class="{'current' : checkCurrentState(submenu.menu_state,submenu.moduleId) }">
+                <a ui-sref="{{submenu.menu_url}}"> <i class="{{submenu.icon}}"></i>
+                    {{submenu.menu_name}}
+                </a>
+            </li>
+        </ul>
+    </article>
+
+    <!-- 右侧主体 -->
+    <article ui-view="view" class="vc_o_page_right"></article>
+</div>
+
+<!-- 公共Tips提示 -->
+<div role="alert" class="tips tips-show tips-{{tip.type}}" ng-repeat="tip in tips">
+    <button ng-click="tip.close()" class="close" type="button">
+      <span aria-hidden="true">×</span>
+    </button>
+    <span ng-bind="tip.msg"></span>
+</div>
+
+<!-- 公共loading -->
+<div class="o_loading" ng-show="loading"></div>

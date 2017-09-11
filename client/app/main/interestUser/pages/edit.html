@@ -1,0 +1,27 @@
+<div class="pop_u_info">
+    <p class="photo">
+      <img ng-src="{{user.imgPath}}" alt=""></p>
+    <dl>
+      <dt ng-bind="user.remark"></dt>
+      <dd ng-bind="user.loginName"></dd>
+    </dl>
+  </div>
+  <div class="pop_u_set">
+    <ul class="form_box">
+      <li>
+        <label>是否推荐</label>
+        <div vc-drop-down-list select-list="app" select-name="recommend" value="user.recommend"></div>
+        <p>推荐的用户，其他人加入APP时，会提示关注</p>
+      </li>
+      <li>
+        <label>用户身份</label>
+        <input type="text" placeholder="" name="label" ng-model="user.label" maxlength="5" ng-trim="true"/>
+        <p>用户的身份，会在APP，显示在用户头像旁边</p>
+      </li>
+      <li  ng-if="currentApp !== 14">
+        <label>创建圈子</label>
+        <div vc-drop-down-list select-list="clubCreates" select-name="clubCreate" value="user.clubCreate"></div>
+        <p>选择可以的用户，可以在APP中创建圈子</p>
+      </li>
+    </ul>
+  </div>

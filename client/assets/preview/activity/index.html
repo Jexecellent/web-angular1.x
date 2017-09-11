@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <!--头部文件-->
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="format-detection" content="telephone=no, email=no" />
+  <!-- uc强制竖屏 -->
+  <meta name="screen-orientation" content="portrait">
+  <!-- QQ强制竖屏 -->
+  <meta name="x5-orientation" content="portrait">
+  <title>活动详情</title>
+
+  <link rel="stylesheet" href="http://imgcache.varicom.im/css/standard_file/m_public_v0.1.css">
+
+  <link rel="stylesheet" href="http://imgcache.varicom.im/css/site/app/activity/activity_2.css"></head>
+
+<body ng-app="previewApp">
+  <div class="index_box" ng-controller="ActivityDetailCtrl">
+    <header class="page_head">
+      <div class="tag" ng-if="activity.tags">
+        <p ng-bind="activity.tags"></p>
+      </div>
+
+      <div class="banner">
+        <img ng-src="{{activity.poster}}" alt=""></div>
+    </header>
+
+    <section class="act_info">
+      <dl>
+        <dt class="act_title">
+          <p ng-bind="activity.activityTitle"></p>
+          <p ng-bind="activity.deadlineTime"></p>
+          <span class="trip_day"> <b class="red_txt" ng-bind="activity.day"></b>
+            DAY
+          </span>
+        </dt>
+        <!--打开 添加 class= open  ul赋予 默认一个li 标签高度  打开后 所有li高度-->
+        <dd class="service_p" ng-if="activity.consultInfo.length !== 0" ng-class="consultInfo.class" id="service_consult">
+          <ul class="p_list" id="consult">
+            <li ng-repeat="con in activity.consultInfo">
+              <p class="p_type">咨询：</p>
+              <p class="p_photo">
+                <img ng-src="{{con.imgPath}}" alt="{{con.name}}"></p>
+              <div class="p_info">
+                <p ng-bind="con.name"></p>
+                <p ng-bind="con.phone"></p>
+              </div>
+            </li>
+          </ul>
+          <p class="open_arrow" ng-click="showConGroup()"></p>
+        </dd>
+        <dd class="act_group" ng-if="groups.show" ng-class="groups.class" id="actGroup">
+          <div class="act_group_title">
+            查看分组信息
+            <p class="open_arrow" ng-click="showGroup()"></p>
+          </div>
+          <ul ng-show="groups.display" id="group">
+            <li ng-repeat="group in groups">
+            <p><b ng-bind="group.name"></b></p>
+              <p>活动名额 <b ng-bind="group.number"></b>人    剩余名额 <b ng-bind="group.number"></b> 人</p>
+              <span class="red_txt">
+                ￥<b ng-bind="group.price"></b> <i>(定金: <b class="red_txt">￥<b ng-bind="group.prePay"></b></b>
+                  )</i> 
+              </span>
+            </li>
+          </ul>
+        </dd>
+        <dd class="act_dfy" ng-show="activity.level">
+        <p>困难度：<b ng-bind="activity.level"></b></p>
+        </dd>
+        <dd class="act_setOut view_map">
+          <p>出发地：<b ng-bind="activity.begAddr"></b></p>
+        </dd>
+        <dd class="act_termini view_map">
+          <p>目的地：<b ng-bind="activity.address"></b></p>
+        </dd>
+      </dl>
+    </section>
+    <article class="act_intro feedify">
+      <div class="feedify-item">
+        <div class="title feedify-item-header">
+          <ul id="act_item">
+            <li data-id="act_xq" ng-click="showTab('xq')" ng-class="{'current' : tabs.current == 'xq'}">活动详情</li>
+            <li data-id="act_xz" ng-click="showTab('xz')" ng-class="{'current' : tabs.current == 'xz'}">活动须知</li>
+            <li data-id="act_jhd"  ng-class="{'current' : tabs.current == 'jhd'}" ng-click="showTab('jhd')">集合地</li>
+          </ul>
+        </div>
+        <div class="feedify-item-body">
+
+          <section id="act_xq" class="act_details " ng-if="tabs.xq">
+            <div ng-bind-html="introDecoded()"></div>
+          </section>
+          <section id="act_xz" class="act_details " ng-if="tabs.xz">
+          <p><b ng-bind="activity.registNotice"></b></p>
+          </section>
+          <section id="act_jhd" class="set_add" ng-if="tabs.jhd">
+            <ul>
+              <li ng-repeat="ass in assembles" ng-if="assembles.length !== 0">
+              <div class="set_address_add">集合地点：<b ng-bind="ass.address"></b></div>
+                <div class="set_address_time">集合时间：<b ng-bind="ass.time"></b></div>
+                <!--打开 添加 class= open  ul赋予 默认一个li 标签高度  打开后 所有li高度-->
+                <div class="service_p" ng-class="leaders.class" id="service_leaders" ng-if="assembles.leaders.length !== 0">
+                  <ul class="p_list" id="leaders">
+                    <li ng-repeat="lea in assembles.leaders">
+                      <p class="p_type">领队：</p>
+                      <p class="p_photo">
+                        <img ng-src="{{lea.imgPath}}" alt="{{lea.name}}"></p>
+                      <div class="p_info">
+                        <p ng-bind="lea.name"></p>
+                        <p ng-bind="lea.phone"></p>
+                      </div>
+                    </li>
+                  </ul>
+                  <p class="open_arrow" ng-click="showLeadersGroup()"></p>
+                </div>
+              </li>
+
+            </ul>
+          </section>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <!--向上箭头  首屏不出现 滚动到一定程度出现-->
+  <div class="arrow"></div>
+
+</body>
+  <script type="text/javascript" src="http://imgcache.varicom.im/js/lib/angular.min.js"></script>
+  <script type="text/javascript" src="http://imgcache.varicom.im/js/lib/angular-sanitize.min.js"></script>
+  <script type="text/javascript" src="http://imgcache.varicom.im/js/lib/store.min.js"></script>
+  <script type="text/javascript" src="http://imgcache.varicom.im/js/lib/moment.min.js"></script>
+  <script type="text/javascript" src="./activity.js"></script>
+
+</html>

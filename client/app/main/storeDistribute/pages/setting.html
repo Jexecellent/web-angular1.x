@@ -1,0 +1,40 @@
+<div class="cnt_box mCustomScrollbar ec_distributorSet">
+    <section class="tool fixedTool">
+        <ul class="right">
+            <li><a href="#" class="icon_edit_1" ng-click="save()" ng-if="hasPermission('dispercent:add')">保存</a></li>
+        </ul>
+    </section>
+    <div class="ec_distributorSet_cnt" >
+        <div class="inviteCode" ng-show="hasPermission('sellercode:gen')">
+            <h3>店铺邀请码（每个邀请码有效性只有一次！请注意！）</h3>
+            <button ng-click="getCode()">生成邀请码</button>
+        </div>
+        <div class="premiumSet">
+            <h3>设置奖金下发比例</h3>
+            <ul>
+                <li sub-title="取二级分销商当月所赚佣金的" class="unit">
+                    <input type="number" min="1" max="99" ng-model="data.percent1" required
+                           ng-pattern="/^[0-9]*[1-9][0-9]*$/" ng-disabled="!hasPermission('dispercent:add')"/>
+                    <span>%</span>
+                </li>
+                <li sub-title="加三级分销商当月所赚佣金的" class="unit">
+                    <input type="number" min="1" max="99" ng-model="data.percent2" required
+                           ng-pattern="/^[0-9]*[1-9][0-9]*$/" ng-disabled="!hasPermission('dispercent:add')"/>
+                    <span>%</span>
+                </li>
+            </ul>
+        </div>
+        <div class="brokerage">
+            <h3>佣金细则说明</h3>
+            <div ng-bind-html="data.creadme" ng-if="!hasPermission('dispercent:add')"></div>
+            <div style="height:300px;" ng-model="data.creadme" id="{{brokerageUeditorId}}"
+                 name="creadme" class="ueditor" required ng-if="hasPermission('dispercent:add')"></div>
+        </div>
+        <div class="premiumExplain">
+            <h3>团队奖金细则说明</h3>
+            <div ng-bind-html="data.breadme" ng-if="!hasPermission('dispercent:add')"></div>
+            <div style="height:300px;" ng-model="data.breadme" id="{{awardUeditorId}}"
+                 name="breadme" class="ueditor" required ng-if="hasPermission('dispercent:add')"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+<div id="propress_bar" style="position: fixed;"></div>
+<div class="ec_module_edit disableSelect mCustomScrollbar">
+    <div ng-include="'app/templates/storeIndex/edit_head.html'"></div>
+    <div class="setContent">
+        <h3>配置内容</h3>
+        <section class="sh_mod_HRoll ">
+            <ul>
+                <li class="ec_sh_imgManage" ng-repeat="con in component.content" ng-click="fileClick(con)">
+                    <nav class="tool">
+                        <ul>
+                            <li ng-class="{'link':con.action.aid}">
+                                <a href="javascript:;" class="icon_link" ng-click="linkOp(con,$event)">添加链接</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" class="icon_close_2" ng-click="remove(con,$event)">删除</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="ec_sh_imgContainer">
+                        <label>
+                            <img ng-src="{{(con.image|origImg:'.70x70')||'http://imgcache.varicom.im/images/site/open_v3.1/occupied_250_250.gif'}}" alt="">
+                        </label>
+                    </div>
+                </li>
+                <li class="nothing" ng-click="newContent()">
+                    <img src="http://imgcache.varicom.im/images/site/open_v3.1/occupied.gif" alt="">
+                </li>
+            </ul>
+        </section>
+    </div>
+</div>

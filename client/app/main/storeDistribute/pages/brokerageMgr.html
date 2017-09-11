@@ -1,0 +1,18 @@
+<div vc-tabs="1" id="brokerageMgr" style="height: 100%">
+    <nav class="state">
+        <ul>
+            <li vc-tab-head tag="brokerageWaitClose"><a href="#">等待结算</a></li>
+            <li vc-tab-head tag="brokerageClose"><a href="#">已发放</a></li>
+        </ul>
+    </nav>
+    <div class="cnt_box cnt_Ystate cnt_Ypaging mCustomScrollbar">
+        <div vc-tab-body tag="brokerageWaitClose" ctrl="BrokerageListController"
+             tpl-url="app/main/storeDistribute/pages/waitList.html"
+             locals="{params:{_status:1,type:1}}"></div>
+
+        <div vc-tab-body tag="brokerageClose" ctrl="BrokerageListController"
+             tpl-url="app/main/storeDistribute/pages/paydList.html"
+             locals="{params:{_status:2,type:1}}"></div>
+    </div>
+    <div class="o_loading" ng-show="loading"></div>
+</div>

@@ -1,0 +1,35 @@
+<div class="cnt_box mCustomScrollbar">
+    <div class="ec_gs_typeManage">
+        <div class="ec_gs_typeList" ng-init="loadData('init')">
+            <ul class="ec_gs_type">
+                <li class="current">
+                    <h3>一级分类</h3>
+                    <div class="ec_gs_addType">
+                        <p ng-if="hasPermission('goodstype:add')" ng-click="openEditLevel('first')"><span class="icon_plus"></span>添加新分类</p>
+                        <dl class="mCustomScrollbar">
+                            <dd ng-repeat=" flevel in levelNode" ng-class="{'ec_gs_currentType':flevel.typeId == selectedGoodTypeId}" >
+                                <p ng-bind="flevel.name" ng-click="checkedFirstLevel(flevel)"></p>
+                                <span class="icon_edit_3 ec_gs_icon" ng-if="hasPermission('goodstype:update')" ng-click="openEditLevel('first',flevel)"></span>
+                                <span class="icon_close_2 ec_gs_icon" ng-if="hasPermission('goodstype:delete')" ng-click="openDelLevel('first',flevel.typeId)"></span>
+                            </dd>
+
+                        </dl>
+                    </div>
+                </li>
+                <li ng-class="current">
+                    <h3>二级分类</h3>
+                    <div class="ec_gs_addType">
+                        <p ng-if="hasPermission('goodstype:add')"  ng-click="openEditLevel('second')"><span class="icon_plus"></span>添加新分类</p>
+                        <dl>
+                            <dd ng-repeat="slevel in childLevel">
+                                <p ng-bind="slevel.name"></p>
+                                <span class="icon_edit_3 ec_gs_icon" ng-if="hasPermission('goodstype:update')" ng-click="openEditLevel('second',slevel)"></span>
+                                <span class="icon_close_2 ec_gs_icon" ng-if="hasPermission('goodstype:delete')" ng-click="openDelLevel('second',slevel.typeId)"></span>
+                            </dd>
+                        </dl>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="cnt_box mCustomScrollbar ec_gs_setBra" ng-init="loadData()">
+
+        <section class="tool fixedTool">
+            <div class="left">
+                <button class="ec_newBra red_btn" ng-if="hasPermission('brand:add')" ng-click="addBrand()">添加新品牌</button>
+            </div>
+        </section>
+
+        <table class="list_table">
+            <thead>
+            <tr>
+                <th>品牌名称</th>
+                <th>包含商品</th>
+                <th>已出售</th>
+                <th>封面图</th>
+                <th ng-if="hasPermission('brand:delete')">操作</th>
+            </tr>
+            </thead>
+            <tbody class="drag_container ec_bra_tb">
+            <tr ng-repeat="brand in brandList">
+                <td ng-bind="brand.name"></td>
+                <td ng-bind="brand.number">
+                </td>
+                <td ng-bind="brand.saleCount"></td>
+                <td>
+                    <div class="ec_bra_img">
+                        <img ng-src="{{brand.image}}" ng-if="brand.image"/>
+                        <button class="ec_bra_del" ng-click="removeImg(brand)" ng-if="brand.image">删除图片</button>
+                        <span class="ec_bra_add" ng-click="fileClick(brand)" ng-if="!brand.image">添加封面图<br/>
+                        推荐尺寸640X320
+                        </span>
+                        
+                    </div>
+                </td>
+                <td>
+                    <a ng-click="del(brand.id)" ng-if="hasPermission('brand:delete')">删除品牌</a>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+</div>

@@ -1,0 +1,21 @@
+<div class="app_home">
+    <section class="tool fixedTool">
+        <ul class="right">
+            <li><a href="#" class="icon_ok" ng-click="showSrc()">展示</a></li>
+            <li><a href="#" class="icon_ok" ng-click="submitSrc()">保存</a></li>
+        </ul>
+    </section>
+    <section class="cnt_box cnt_Ystate mCustomScrollbar">
+        <div class="preview_box">
+            <iframe height="100%" width="100%" id="iframe" onerror=""></iframe>
+        </div>
+        <div class="app_home_m">
+            <ul class="form_box">
+                <li class="link unit">
+                    <label for="home_link">首页链接</label>
+                    <input id="home_link" type="text" placeholder="请输入首页链接，以在APP端展示。" ng-model="iframeSrc"/>
+                </li>
+            </ul>
+        </div>
+    </section>
+</div>

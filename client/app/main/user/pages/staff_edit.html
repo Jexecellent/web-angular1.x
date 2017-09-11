@@ -1,0 +1,32 @@
+<div class="s_u_info" ng-init="initStaffDetail()">
+  <div class="pop_u_info">
+    <p class="photo">
+      <img ng-src="{{staff.imgPath | cutImg40}}" alt=""></p>
+    <dl>
+      <dt>{{staff.nickname}}</dt>
+      <dd>{{staff.loginName}}</dd>
+    </dl>
+  </div>
+  <div class="s_u_remark text">
+    <label>备注</label>
+    <input type="text" ng-model="staff.remark"></div>
+    <div class="s_u_potence tag" ng-if="staff.departments.length != 0">
+      <label>用户所在部门</label>
+      <ul>
+        <li ng-repeat="dept in staff.depts">
+          <input id="{{dept.id}}" type="checkbox" ng-checked="dept.$checked" ng-click="changeDept(dept)">
+          <label for="{{dept.id}}">{{dept.name}}</label>
+        </li>
+        
+      </ul>
+    </div>
+    <div class="s_u_potence tag" ng-if="staff.roleInfos.length != 0">
+      <label>用户权限</label>
+      <ul>
+        <li ng-repeat="role in staff.roles">
+          <input id="{{role.roleId}}" type="checkbox" ng-checked="role.$checked" ng-click="changeRole(role)" ng-disabled="role.disabled">
+          <label for="{{role.roleId}}">{{role.roleName}}</label>
+        </li>   
+      </ul>
+    </div>
+</div>

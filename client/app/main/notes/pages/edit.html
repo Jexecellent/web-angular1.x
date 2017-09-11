@@ -1,0 +1,55 @@
+<div class="cnt_box mCustomScrollbar" id="noteEditBox">
+    <form name="noteForm" novalidate ng-submit="saveNote(noteForm.$valid)" style="height:100%">
+        <section class="tool fixedTool">
+        <div class="left">
+            <a href="#" class="icon_return red_btn" ng-click="gotoBack()" ng-show="operate !=='add'">返回</a>
+        </div>
+        <ul class="right">
+            <li ng-show="operate ==='editDraft' || operate === 'add'"><a href="#" class="icon_box" ng-click="saveDraft()">保存草稿</a></li>
+            <li><input ng-disabled="noteForm.$invalid" class="icon_eye" type="button" ng-click="preview()" value="预览" /></li>
+            <li ng-show="hasPermission('note:add')"><input ng-disabled="noteForm.$invalid" type="submit" value="发布" /><i class="icon_release"></i></li>
+            <li ng-show="!hasPermission('note:add')"><input ng-disabled="noteForm.$invalid" type="submit" value="提交审核"/><i class="icon_release"></i></li>
+            <li ng-show="operate === 'add'"><a ng-click="clear()" class="icon_brush red_txt">清空</a></li>
+        </ul>
+    </section>
+
+        <div class="notes_left mCustomScrollbar">
+        <ul class="form_box">
+            <li class="text">
+                <label>手记标题</label>
+                <input type="text" name="noteTitle" maxlength="20" ng-model="note.title" required open-form-focus placeholder="请输入手记标题，不超过20个字"/>
+                <p ng-show="noteForm.noteTitle.$dirty && noteForm.noteTitle.$invalid">请输入手记标题</p>
+            </li>
+            <!-- <li class="time unit">
+                <label>出发日期</label>
+                <input type="text" placeholder="点击选择日历" ng-model="selectDate" vc-date-picker date-fmt="yyyy-MM-dd" />
+                <button class="icon_calendar"></button>
+            </li> -->
+            <li class="text unit">
+                <label>行程天数</label>
+                <input type="number" placeholder="最多不超过3位数" maxlength="3" min="0" ng-model="note.tags" str-to-num required ng-pattern="/^[0-9]*[1-9][0-9]*$/" name="tags" ng-blur="validNum(note.tags)"/>
+                <span>天</span>
+                <p ng-show="noteForm.tags.$dirty && noteForm.tags.$invalid">请输入行程天数</p>
+            </li>
+            <li class="textarea">
+                <label>手记简介</label>
+                <textarea name="artDesc" id="artDesc" cols="40" rows="5" placeholder="输入手记简介，不超过500字" ng-model="note.artDesc" maxlength="500" required></textarea>
+                <p ng-show="noteForm.artDesc.$dirty && noteForm.artDesc.$invalid">请输入手记简介</p>
+            </li>
+            <li class="upload">
+                <label>封面图</label>
+                <img-uploader vc-picture="note.thumbnail" />
+
+                <!-- <img ng-src="{{note.thumbnail}}" alt="" name="img" ng-show="note.thumbnail"/>
+                <lable id="noteImgPicker">上传封面图</lable>
+                <p ng-show="errorImg" style="color:red">请上传封面图</p>
+                <p>添加封面图，仅限一张，支持jpg，jpeg，bmp，png，gif格式图片，大小不得超过2M</p> -->
+            </li>
+        </ul>
+    </div>
+        <div class="notes_right mCustomScrollbar" style="box-sizing: border-box;">
+        <div style="height:300px;width:100%;" ng-model="note.articleContent" id="{{ueditorId}}"  name="articleContent" class="ueditor" required></div>
+        <p ng-show="noteForm.articleContent.$dirty && noteForm.articleContent.$error.required">请输入手记详情</p>
+    </div>
+    </form>
+</div>

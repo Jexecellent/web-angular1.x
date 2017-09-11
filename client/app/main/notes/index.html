@@ -1,0 +1,27 @@
+<div class="notes_list" vc-tabs="2" id="noteTabs" style="height: 100%">
+    <section class="page_tab">
+        <ul>
+            <li vc-tab-head tag="edit" ref-tab="edit"><a href="#">发布手记</a></li>
+            <li vc-tab-head tag="manage" ref-tab="manage"><a href="#">管理手记</a></li>
+            <li vc-tab-head tag="banner" ref-tab="banner" ng-show="hasPermission('bannerlist:bizType5')"><a href="#">广告位管理</a></li>
+        </ul>
+    </section>
+    <section class="page_content">
+        <!-- 发布手记 -->
+        <div vc-tab-body tag="edit" ctrl="NoteEditController" tpl-url="app/main/notes/pages/edit.html"
+             locals="{moduleId:moduleId}">
+        </div>
+
+        <!-- 管理手记 -->
+        <div vc-tab-body tag="manage" ctrl="NoteMgrController" tpl-url="app/main/notes/pages/manage.html"
+             locals="{bizType:5}">
+        </div>
+
+        <!-- Banner -->
+        <div vc-tab-body tag="banner" ctrl="BannerController" tpl-url="app/common/banner/index.html"
+             locals="{moduleType:5,aid:22,moduleId:moduleId}">
+        </div>
+
+        <div class="o_loading" ng-show="loading"></div>
+    </section>
+</div>

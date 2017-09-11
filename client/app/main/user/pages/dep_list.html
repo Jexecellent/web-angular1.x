@@ -1,0 +1,34 @@
+<section class="tool fixedTool">
+    <div class="left">
+    <button ng-click="openAddDept('add')" ng-show="hasPermission('department:add')" ng-disabled="departmentList.length >=5"class="{{disabledClass}}">新增部门</button>
+    </div>
+</section>
+<table class="list_table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>部门名称</th>
+            <th>部门类型</th>
+            <th>备注</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="dep in departmentList">
+            <td  ng-bind="$index+1+(queryParams.pageNumber-1)*10"></td>
+            <td ng-bind="dep.name"></td>
+            <td ng-bind="_types[dep.type].desc"></td>
+            <td ng-bind="dep.desc"></td>
+            <td>
+                <ul>
+                    <li ng-show="hasPermission('department:update')">
+                        <a ng-click="openAddDept('edit',dep)">编辑</a>
+                    </li>
+                    <li ng-show="hasPermission('department:delete')">
+                        <a ng-click="delDept(dep.id)">删除</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    </tbody>
+</table>

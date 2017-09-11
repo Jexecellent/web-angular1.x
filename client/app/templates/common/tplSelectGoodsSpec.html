@@ -1,0 +1,13 @@
+<div class="ec_gp_addSpec" ng-init="getData()">
+    <div class="mCustomScrollbar p_list">
+        <ul>
+            <li ng-repeat="spec in goodsSpecList">
+                <input type="checkbox" id="{{spec.name}}" ng-checked="spec.$checked"
+                   ng-click="checkedSpec(spec)"/>
+                <label for="{{spec.name}}">
+                    <h3 ng-bind="spec.name"></h3>
+                </label>
+            </li>
+        </ul>
+    </div>
+</div>

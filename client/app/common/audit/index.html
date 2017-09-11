@@ -1,0 +1,58 @@
+<section class="tool fixedTool">
+    <div class="left">
+        <vc-search vc-model="params.title" vc-change="search()"></vc-search>
+    </div>
+</section>
+<table class="list_table">
+    <thead>
+    <tr>
+        <th width="40px">ID</th>
+        <th width="100px">封面</th>
+        <th ng-bind="bizType==6 ? '消息内容' : '标题'"></th>
+        <th width="100px">类型</th>
+        <th width="100px">审核状态</th>
+        <th width="140px">时间</th>
+        <th width="80px">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="audit in data">
+    <td ng-bind="$index+1+(params.pageNumber-1)*10"></td>
+        <td ng-if="audit.thumbnail === '' || audit.thumbnail === undefined">
+           
+        </td>
+        <td ng-if="audit.thumbnail !== '' && audit.thumbnail !== undefined">
+            <img ng-src="{{audit.thumbnail|cutImg40}}" style="height: 40px;width: 40px"/>
+        </td>
+        <td align="left">
+            <p>
+                <a ng-click="detail(audit,$currentAppName)">{{audit.title}}</a>
+            </p>
+        </td>
+        <td ng-bind="audit.auditType|auditType"></td>
+        <td ng-bind="audit.status|auditStatus"></td>
+        <td ng-bind="audit.addTime|date:'yyyy-MM-dd HH:mm'"></td>
+        <td>
+            <div class="operate">
+                <ul>
+                    <li ng-if="applyRid !==0 && (audit.status ===2 || audit.status === 1)">
+                        <a href="#" ng-click="edit(audit)">修改</a>
+                    </li>
+                    <li ng-if="applyRid ===0 && (audit.status ===2 || audit.status === 1)">
+                        <a href="#" ng-click="detail(audit)">详情</a>
+                    </li>
+                    <!--审核操作只有等待审核列表才有-->
+                    <li ng-if="applyRid ===0">
+                        <a href="#" ng-click="auditAction(audit)">审核</a>
+                    </li>
+                    <!--删除操作只有我的审核列表才有-->
+                    <li ng-if="applyRid !==0 && audit.status === 1">
+                        <a href="#" ng-click="del(audit)">删除</a>
+                    </li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<open-page data="pager" params="params" url="audit/list" show-page-num="10" go-page="loadPage(num)"></open-page>

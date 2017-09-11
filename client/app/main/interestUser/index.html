@@ -1,0 +1,14 @@
+<div class="structure" vc-tabs="1" id="interesUserTabs" style="height: 100%">
+    <section class="page_tab">
+        <ul>
+            <li vc-tab-head tag="list"><a href="#">用户管理</a></li>
+        </ul>
+    </section>
+    <section class="page_content">
+        <div class="cnt_box cnt_Ypaging mCustomScrollbar">
+            <!-- 用户管理 -->
+            <div vc-tab-body tag="list" ctrl="InterestUserListController" tpl-url="app/main/interestUser/pages/list.html"></div>
+        </div>
+        <div class="o_loading" ng-show="loading"></div>
+    </section>
+</div>

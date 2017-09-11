@@ -1,0 +1,35 @@
+<div class="cnt_box mCustomScrollbar">
+<div class="ec_gs_setRec">
+    <!--<div class="mCustomScrollbar">-->
+        <table class="list_table" ng-init="init()">
+            <thead>
+                <tr>
+                    <th>一级分类</th>
+                    <th>二级分类</th>
+                    <th>设置推荐商品（最多可添加三个推荐）</th>
+                </tr>
+            </thead>
+            <tbody class="drag_container" ng-repeat="recommend in recommendList">
+                <tr ng-repeat="subType in recommend.subTypes">
+                    <td rowspan="999" ng-bind="recommend.name" ng-if="$index==0"></td>
+                    <td ng-bind="subType.name"></td>
+                    <td class="ec_gs_list">
+                        <ul class="ec_gs_addList">
+                            <li ng-repeat="good in subType.goods">
+                                <div class="ec_gs_goodInfo">
+                                    <div class="ec_gs_goodImg">
+                                        <img ng-src="{{good.image}}" alt="商品图片" />
+                                    </div>
+                                    <div class="ec_gs_goodName">{{good.name}}</div>
+                                </div>
+                                <span class="ec_gs_del icon_close_2" ng=if="hasPermission('recommend:delete')" ng-click="deleteRecommend(good)"></span>
+                            </li>
+                        </ul>
+                        <span class="ec_gs_addAct" ng-click="addRecommend(subType.typeId)" ng-if="hasPermission('recommend:add') && (subType.goods === undefined || subType.goods.length < 3)">添加商品</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    <!--</div>-->
+</div>
+</div>

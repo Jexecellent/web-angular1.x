@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <title>资讯标题</title>
+    <link rel="stylesheet" href="http://imgcache.varicom.im/css/site/news.css" />
+</head>
+
+<style>
+    html,body{
+        height:auto;
+    }
+</style>
+<body ng-app="previewApp">
+<div class="content-wrapper" ng-controller="NewsDetailCtrl">
+    <header class="news_head">
+        <h2 ng-bind="article.title"></h2>
+        <p ng-bind="article.createTime"></p>
+    </header>
+
+    <section class="news_content">
+        <p ng-bind="article.artDesc"></p>
+    </section>
+
+</div>
+
+</body>
+<script type="text/javascript" src="http://imgcache.varicom.im/js/lib/angular.min.js"></script>
+<script type="text/javascript" src="http://imgcache.varicom.im/js/lib/store.min.js"></script>
+<script type="text/javascript" src="http://imgcache.varicom.im/js/lib/moment.min.js"></script>
+<script type="text/javascript" src="./article.js"></script>
+
+</html>

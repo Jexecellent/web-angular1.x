@@ -1,0 +1,27 @@
+{
+  "name": "trunk",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": ">=1.2.*",
+    "json3": "~3.3.1",
+    "es5-shim": "~3.0.1",
+    "angular-cookies": ">=1.2.*",
+    "angular-sanitize": ">=1.2.*",
+    "lodash": "~2.4.1",
+    "angular-ui-router": "~0.2.15",
+    "oclazyload": "~1.0.6",
+    "fex-webuploader": "~0.1.5",
+    "restangular": "latest",
+    "store-js": "latest",
+    "angular-sweetalert": "latest",
+    "malihu-custom-scrollbar-plugin": "latest",
+    "moment": "~2.10.6",
+    "async": "~1.5.0",
+    "angular-once": "0.1.9",
+    "swiper": "~3.2.7"
+  },
+  "devDependencies": {
+    "angular-mocks": ">=1.2.*",
+    "angular-scenario": ">=1.2.*"
+  }
+}

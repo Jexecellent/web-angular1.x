@@ -1,0 +1,8 @@
+<div class="app_nav_list" ng-init="init()">
+    <ul>
+        <li ng-repeat="submenu in menus" sort-id="{{submenu.id}}" drag-drop top="-10" left="-10"
+            callback="orderMenu(cur,prev,next)">
+            <span class="{{submenu.moduleType|iconModuleClass}}">{{submenu.moduleName}}</span>
+        </li>
+    </ul>
+</div>

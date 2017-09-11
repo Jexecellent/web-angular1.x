@@ -1,0 +1,34 @@
+<div class="cnt_box ec_specContent mCustomScrollbar">
+    <section class="tool fixedTool">
+        <div class="left">
+            <button class="icon_plus_2 red_btn ec_addSpec"  ng-if="hasPermission('specification:add')" ng-click="openEditSpec('add')">添加规格</button>
+        </div>
+    </section>
+
+    <section class="ec_gs_spec" ng-init="loadData()">
+        <table class="list_table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>规格名称</th>
+                <!--<th>规格类型</th>-->
+                <th>备注</th>
+                <th ng-if="hasPermission('specification:delete') || hasPermission('specification:update')">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr ng-repeat="spec in specList">
+                <td ng-bind="spec.id"></td>
+                <td ng-bind="spec.name"></td>
+                <!--<td ng-bind="spec.type | specType"></td>-->
+                <td ng-bind="spec.remark"></td>
+                <td>
+                    <a class="ec_spec_edit"  ng-if="hasPermission('specification:update')" ng-click="openEditSpec('update',spec)">编辑</a>
+                    <a class="ec_spec_del"  ng-if="hasPermission('specification:delete')" ng-click="del(spec.id)">删除</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</div>

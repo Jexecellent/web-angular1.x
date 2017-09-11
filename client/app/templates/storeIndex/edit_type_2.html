@@ -1,0 +1,76 @@
+<div id="propress_bar" style="position: fixed;"></div>
+<div class="ec_module_edit disableSelect mCustomScrollbar">
+    <div ng-include="'app/templates/storeIndex/edit_head.html'"></div>
+    <div class="setContent">
+        <h3>配置内容</h3>
+        <section class="sh_mod_twoColumn">
+            <ul>
+                <li class="ec_sh_imgManage" ng-click="fileClick(component.content[0])">
+                    <nav ng-class="{'tool':component.content[0].image,'hidden':!component.content[0].image}">
+                        <ul>
+                            <li ng-class="{'link':component.content[0].action.aid}">
+                                <a href="javescript:;" class="icon_link" ng-click="linkOp(component.content[0],$event)">添加链接</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" class="icon_close_2" ng-click="clear(component.content[0], $event)">删除</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="ec_sh_imgContainer">
+                        <label>
+                            <img ng-src="{{(component.content[0].image|origImg:'.160x160')||'http://imgcache.varicom.im/images/site/open_v3.1/occupied_500_500.gif'}}" alt="">
+                        </label>
+                    </div>
+                </li>
+                <li class="ec_sh_imgManage" ng-click="fileClick(component.content[1])">
+                    <nav ng-class="{'tool':component.content[1].image,'hidden':!component.content[1].image}">
+                        <ul>
+                            <li ng-class="{'link':component.content[1].action.aid}">
+                                <a href="javascript:;" class="icon_link" ng-click="linkOp(component.content[1],$event)">添加链接</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" class="icon_close_2"
+                                   ng-click="clear(component.content[1],$event)">删除</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="ec_sh_imgContainer">
+                        <label><img ng-src="{{(component.content[1].image|origImg:'.151x52')||'http://imgcache.varicom.im/images/site/open_v3.1/occupied_500_160.gif'}}" alt=""></label>
+                    </div>
+                </li>
+                <li class="ec_sh_imgManage" ng-click="fileClick(component.content[2])">
+                    <nav ng-class="{'tool':component.content[2].image,'hidden':!component.content[2].image}">
+                        <ul>
+                            <li ng-class="{'link':component.content[2].action.aid}">
+                                <a href="javascript:;" class="icon_link" ng-click="linkOp(component.content[2],$event)">添加链接</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" class="icon_close_2"
+                                   ng-click="clear(component.content[2],$event)">删除</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="ec_sh_imgContainer">
+                        <label><img ng-src="{{(component.content[2].image|origImg:'.151x52')||'http://imgcache.varicom.im/images/site/open_v3.1/occupied_500_160.gif'}}" alt=""></label>
+                    </div>
+                </li>
+                <li class="ec_sh_imgManage" ng-click="fileClick(component.content[3])">
+                    <nav ng-class="{'tool':component.content[3].image,'hidden':!component.content[3].image}">
+                        <ul>
+                            <li ng-class="{'link':component.content[3].action.aid}">
+                                <a href="javascript:;" class="icon_link" ng-click="linkOp(component.content[3],$event)">添加链接</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" class="icon_close_2"
+                                   ng-click="clear(component.content[3],$event)">删除</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="ec_sh_imgContainer">
+                        <label><img ng-src="{{(component.content[3].image|origImg:'.151x52')||'http://imgcache.varicom.im/images/site/open_v3.1/occupied_500_160.gif'}}" alt=""></label>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </div>
+</div>

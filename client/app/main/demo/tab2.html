@@ -1,0 +1,30 @@
+
+<p>我是异步加载进来的 Tab2页面</p><br/>
+<li><a href="#" ng-click="gotoTab1(1)">点我进入Tab1</a></li>
+<p>initConfigs：{{initConfigs}}</p>
+<p>Reload 次数:{{reloadTimes}}</p>
+<p>收到传来的参数:{{paramsModel}}</p>
+
+<p>Banner:{{banner}}</p>
+<li class="link unit">
+    <label for="bannerLink">广告位跳转链接</label>
+    <input id="bannerLink" type="text" placeholder="点击右侧按钮，选择资讯作为链接" ng-model="banner.bannerclick"/>
+    <button class="icon_link" ng-click="selectLink()"></button>
+    <p ng-if="linkError" style="color:red">请选择跳转链接</p>
+</li>
+
+<li><a href="#" ng-click="gotoTab1(0)">点我切换回Tab1-不重新加载</a></li>
+<li><a href="#" ng-click="gotoTab1(1)">点我切换回Tab1-重新加载</a></li>
+<li><a href="#" ng-click="goToTabNoIndex()">点我前进到Tab-No-Index-重新加载</a></li>
+<li>
+<a ng-click="getPicture()" >获取图片地址</a>
+    <label>上传图片例子</label>
+    <img-uploader vc-picture="picture" />
+</li>
+
+<br/>
+<br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<p>我是一个很长的页面哦</p>

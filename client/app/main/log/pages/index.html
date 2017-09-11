@@ -1,0 +1,58 @@
+<div class="operating_log">
+    <section class="page_tab">
+        <ul>
+            <li class="current"><a href="#">操作日志</a></li>
+        </ul>
+    </section>
+    <section class="page_content">
+        <section class="cnt_box cnt_Ypaging mCustomScrollbar" id="logCntBox">
+            <section class="tool fixedTool" id="logTool">
+                <div class="left">
+                    <vc-search vc-model="params.queryKey" vc-change="search()"></vc-search>
+                    <ul>
+                        <li class="time unit">
+                            <label>时间</label>
+                            <input id="log_start_time" type="text" ng-model="params._starTime" vc-date-picker
+                                   other-conf="startDateConf">
+                            <label for="log_start_time" class="icon_calendar"></label>
+                        </li>
+                        <li class="time unit">
+                            <label>-</label>
+                            <input id="log_end_time" type="text" ng-model="params._endTime" vc-date-picker
+                                   other-conf="endDateConf">
+                            <label for="log_end_time" class="icon_calendar"></label>
+                        </li>
+                        <li class="select">
+                            <label>操作人</label>
+                            <select ng-model="params.rid" ng-options="op.id as op.nickname for op in op_users"></select>
+                        </li>
+                    </ul>
+                </div>
+                <ul class="right">
+                    <li>
+                        <a href="javascript:;" class="icon_export" ng-click="export()">导出</a>
+                    </li>
+                </ul>
+            </section>
+            <table class="list_table">
+                <thead>
+                <tr>
+                    <th width="100">操作人</th>
+                    <th width="130">日期</th>
+                    <th>操作项目</th>
+                    <th>标题</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="log in data.content">
+                    <td ng-bind="::log.__user_name"></td>
+                    <td ng-bind="::log.createTime|date:'yyyy-MM-dd HH:mm:ss'"></td>
+                    <td ng-bind="::log.desc"></td>
+                    <td ng-bind="::log.title"></td>
+                </tr>
+                </tbody>
+            </table>
+            <open-page data="data" show-page-num="10" go-page="go(num)"></open-page>
+        </section>
+    </section>
+</div>

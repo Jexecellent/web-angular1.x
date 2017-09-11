@@ -1,0 +1,194 @@
+<style>
+    ._show_select {
+        height: 100%;
+    }
+</style>
+<div class="cnt_box cnt_Ypaging mCustomScrollbar ec_order_info">
+    <section class="tool fixedTool">
+        <div class="left">
+            <button class="screening_btn icon_pushpin_1" ng-class="{open:showSelect}"
+                    ng-click="toggerSelect()">筛选
+            </button>
+            <!--活动搜索-->
+            <vc-search vc-model="params.keyWord" placeholder="请输入关键词" vc-change="loadData(1)"></vc-search>
+
+            <div class="c_screening" sub-title="当前筛选条件：" ng-show="showSelectView()">
+                <ul>
+                    <li ng-show="params.indentUid">订单号:{{params.indentUid}}</li>
+                    <li ng-show="params.transportNumber">运单号:{{params.transportNumber}}</li>
+                    <li ng-show="params.transportCompany">快递公司:{{params.transportCompany}}</li>
+                    <li ng-show="params.name">收货人:{{params.name}}</li>
+                    <li ng-show="params.phone">联系电话:{{params.phone}}</li>
+                    <li ng-show="params.province || params.city ||params.county">
+                        收货地址:{{params.province + params.city + params.county}}
+                    </li>
+                    <li ng-show="params.nickname">买家昵称:{{params.nickname}}</li>
+                    <li ng-show="params.startTime">开始时间:{{params.startTime}}</li>
+                    <li ng-show="params.endTime">结束时间:{{params.endTime}}</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="screening_box order_screening" ng-class="{_show_select:showSelect}">
+            <ul>
+                <li sub-title="订单号">
+                    <input type="text" ng-model="params.indentUid">
+                </li>
+                <li sub-title="运单号">
+                    <input type="text" ng-model="params.transportNumber">
+                </li>
+                <li sub-title="快递公司">
+                    <select ng-model="params.transportCompany" ng-options="op as op for op in companys">
+                        <option value="">全部</option>
+                    </select>
+                </li>
+            </ul>
+            <ul>
+                <li sub-title="收货人">
+                    <input type="text" ng-model="params.name">
+                </li>
+                <li sub-title="联系电话">
+                    <input type="number" ng-model="params.phone" ng-pattern="/^[0-9]*[1-9][0-9]*$/">
+                </li>
+                <li sub-title="收货地址">
+                    <select ng-model="_select_province" ng-options="op as op.name for op in _province"
+                            ng-change="changeCity('province')">
+                        <option value="">全部</option>
+                    </select>
+                    <select ng-model="_select_city" ng-options="op as op.name for op in _city"
+                            ng-change="changeCity('city')">
+                        <option value="">全部</option>
+                    </select>
+                    <select ng-model="params.county" ng-options="op.name as op.name for op in _county">
+                        <option value="">全部</option>
+                    </select>
+                </li>
+            </ul>
+            <ul>
+                <li sub-title="买家昵称">
+                    <input type="text" ng-model="params.nickname">
+                </li>
+                <li sub-title="下单时间">
+                    <input type="text" ng-model="params.startTime" vc-date-picker
+                           date-fmt="yyyy-MM-dd" readonly="readonly">
+                    <span>至</span>
+                    <input type="text" ng-model="params.endTime" vc-date-picker
+                           date-fmt="yyyy-MM-dd" readonly="readonly">
+                </li>
+            </ul>
+            <ul class="ec_gm_filtAct">
+                <li>
+                    <button ng-click="loadData(1)">确定</button>
+                    <button ng-click="clearParams()">清空条件</button>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <table class="table_box">
+        <thead>
+        <tr>
+            <th>商品信息</th>
+            <th>规格</th>
+            <th>售价</th>
+            <th>数量</th>
+            <th>实收款</th>
+            <th>买家</th>
+            <th>收货人/联系方式</th>
+            <th>买家备注</th>
+            <th>交易状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody ng-repeat="order in data">
+        <!--分隔用-->
+        <tr class="table_occupied" ng-show="$index != 0">
+            <td colspan="999"><p></p></td>
+        </tr>
+        <!--订单信息-->
+        <tr>
+            <td colspan="999">
+                <div class="orderInfo">
+                    <p>订单编号：{{order.indentUid}}</p>
+
+                    <p>下单时间：{{order.createTime|date:'yyyy-MM-dd HH:mm:ss'}}</p>
+
+                    <p ng-show="status != 1">付款时间：{{order.payTime|date:'yyyy-MM-dd HH:mm:ss'}}</p>
+
+                    <p>订单内包含商品 {{order.totalNum}} 件</p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:0;"></td>
+            <td style="padding:0;"></td>
+            <td style="padding:0;"></td>
+            <td style="padding:0;"></td>
+
+            <td rowspan="999">
+                <p>{{order.totalPrice}}元</p>
+                <span>(含运费:{{order.carriage}})</span>
+            </td>
+            <td rowspan="999">
+                {{order.nickname}}
+            </td>
+            <td rowspan="999">
+                <p>{{order.name}}</p>
+
+                <p>{{order.phone}}</p>
+            </td>
+            <td rowspan="999">
+                <p>{{order.remark}}</p>
+            </td>
+            <td rowspan="999">{{order.status | statusFilter}}</td>
+            <td rowspan="999">
+                <div class="operate">
+                    <ul>
+                        <li ng-show="status === 2 && hasPermission('transport:add')">
+                            <a href="#" class="deliver_red_line_btn" ng-click="sendClick(order)">发货</a>
+                        </li>
+                        <li ng-show="status === 3 || status === 4"><a href="#" class="order_details"
+                                                                      ng-click="showLogistics(order)">物流跟踪</a></li>
+                        <li ng-show="status === 1 && hasPermission('order:cancel')">
+                            <a href="#" class="order_details" ng-click="cancelOrder(order.id)">取消订单</a>
+                        </li>
+                        <li><a href="#" class="order_details" ng-click="showDetail('detail',order.id)">订单详情</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+
+        <tr ng-repeat="goods in order.p">
+            <td>
+                <div class="orderGoods">
+                    <div class="tag">
+                        <!--<div class="tag" ng-show="order.status != 1 && order.status !=5">-->
+                        <button class="grey_btn" ng-if="goods.status === 2">已退款</button>
+                        <button class="refund_red_btn"
+                                ng-if="goods.status != 2 && hasPermission('order:refund') &&params.status != 1 && params.status != 11"
+                                ng-click="refund(order.id,goods)">
+                            退款
+                        </button>
+                    </div>
+
+                    <img ng-src="{{goods.image}}" height="40px;" width="40px;">
+
+                    <h3>{{goods.goodsName}}</h3>
+
+                    <p class="code">商品编码：{{goods.goodsUid}}</p>
+                </div>
+            </td>
+            <td>
+                <p ng-repeat="property in goods.property">{{property}}</p>
+            </td>
+            <td>
+                <p>{{goods.realPrice}}元</p>
+                <span class="t_tline">原价：{{goods.price}}元</span>
+            </td>
+            <td>{{goods.num}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <open-page data="page" params="params" show-page-num="10" go-page="loadData(num)"></open-page>
+</div>

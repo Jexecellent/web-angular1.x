@@ -1,0 +1,22 @@
+<div class="ec_module_edit disableSelect mCustomScrollbar">
+    <div class="setContent">
+        <h3>配置内容</h3>
+        <section class="sh_mod_banner">
+            <ul>
+                <li class="ec_sh_imgManage" ng-repeat="data in upList">
+                    <nav class="tool">
+                        <ul>
+                            <li><a href="#" class="icon_link">添加链接</a></li>
+                            <li><a href="#" class="icon_close_2">删除</a></li>
+                        </ul>
+                    </nav>
+                    <div class="ec_sh_imgContainer">
+                        <vc-uploader default-image="http://imgcache.varicom.im/images/site/open_v3.1/occupied_1080_540.gif" vc-picture="data.img"></vc-uploader>
+                    </div>
+                </li>
+            </ul>
+            <button class="icon_plus_2 blue_btn" ng-click="addUpList()">添加图片</button>
+            <button ng-click="getUpList()">获取返回值</button>
+        </section>
+    </div>
+</div>

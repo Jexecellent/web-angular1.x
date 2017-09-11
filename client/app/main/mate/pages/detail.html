@@ -1,0 +1,57 @@
+<section class="tool fixedTool">
+  <div class="left">
+    <li>
+      <a class="icon_return red_btn" ng-click="gotoList(1)">返回</a>
+    </li>
+  </div>
+  <div class="right"></div>
+</section>
+<div>
+  <ul>
+    <li class="text">
+      <label for="">活动名称</label>
+
+      <p class="input_content" ng-bind="mate.title"></p>
+    </li>
+    <li class="banner">
+      <label for="">活动海报</label>
+
+      <p class="images">
+        <img ng-src="{{mate.poster}}" alt=""></p>
+    </li>
+    <li class="text">
+      <label for="">时间</label>
+
+      <p class="input_content" ng-bind="mate.startTime|date:'yyyy-MM-dd'"></p>
+    </li>
+    <li class="leader">
+      <label for="">领队</label>
+      <span ng-bind="mate.leaderName"></span>
+    </li>
+    <li class="text">
+      <label for="">领队手机号</label>
+
+      <p class="input_content" ng-bind="mate.leaderPhone"></p>
+    </li>
+    <li class="text">
+      <label for="">地点</label>
+
+      <p class="input_content" ng-bind="mate.address"></p>
+    </li>
+    <li class="text">
+      <label for="">人数</label>
+
+      <p class="input_content" ng-bind="mate.mateNum|mateNum"></p>
+    </li>
+    <li class="text">
+      <label for="">费用</label>
+
+      <p class="input_content" ng-bind="mate.costType|mateCost"></p>
+    </li>
+    <li class="text">
+      <label for="">约伴详情</label>
+
+      <p class="input_content" ng-bind="mate.introduce">出发时间出发时间出发时间出发时间</p>
+    </li>
+  </ul>
+</div>

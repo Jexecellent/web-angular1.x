@@ -1,0 +1,16 @@
+{
+    "apps": [
+    {
+        "name": "open-front-local-server",
+        "script": "app.js",
+        "args": "[]",
+        "watch": "false",
+        "merge_logs": true,
+        "cwd": "/Users/wayky/Documents/varicomWorks/dev/open_varicom_im/trunk/dist/server/",
+        "exec_mode": "fork_mode",
+        "env":{
+            "NODE_ENV":"production"
+        }
+    }
+]
+}

@@ -1,0 +1,29 @@
+<section class="banner_preview">
+    <div class="title">
+        <h3>{{$currentAppName}}</h3>
+    </div>
+    <div class="app_banner_p">
+        <img ng-src="{{banner.bannerimage}}" alt="" ng-show="banner.bannerimage"/>
+        <p>{{banner.bannername}}</p>
+    </div>
+</section>
+<section class="banner_set">
+    <ul class="form_box">
+        <li class="upload">
+            <label>广告位图片</label>
+            <div id="bannerImgPicker">上传图片</div>
+            <p>（图片建议尺寸1080像素*405像素</p>
+            <p ng-if="imgError" style="color:red">请上传广告位图片</p>
+        </li>
+        <li class="text">
+            <label for="bannerName">标题</label>
+            <input id="bannerName" type="text" placeholder="标题（选填）" ng-model="banner.bannername" maxlength="80" />
+        </li>
+        <li class="link unit">
+            <label for="bannerLink">广告位跳转链接</label>
+            <input id="bannerLink" type="text" placeholder="点击右侧按钮，选择资讯作为链接" ng-model="banner.bannerclick" ng-change="linkChange()"/>
+            <button class="icon_link" ng-click="selectLink()"></button>
+            <p ng-if="linkError" style="color:red">请选择(输入)正确的跳转链接</p>
+        </li>
+    </ul>
+</section>

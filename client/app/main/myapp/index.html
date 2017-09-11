@@ -1,0 +1,12 @@
+<div class="structure" vc-tabs="1" id="MyAppTabs" style="height: 100%">
+    <section class="page_tab">
+        <ul>
+            <li vc-tab-head tag="list"><a href="#">APP信息</a></li>
+        </ul>
+    </section>
+    <section class="page_content">
+        <!-- APP信息 -->
+        <div vc-tab-body tag="list" ctrl="MyAppInfoController" tpl-url="app/main/myapp/pages/list.html"></div>
+        <div class="o_loading" ng-show="loading"></div>
+    </section>
+</div>

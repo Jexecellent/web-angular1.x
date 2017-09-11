@@ -1,0 +1,264 @@
+<div class="ec_gp_gpWrap">
+  <div class="cnt_box mCustomScrollbar">
+    <form name="goodsForm" novalidate ng-submit="saveGoods(goodsForm.$valid)" style="height:100%">
+      <section class="tool fixedTool">
+        <div class="left">
+          <a href="#" class="icon_return red_btn" ng-click="gotoBack()" ng-show="show.op !=='add'">返回</a>
+        </div>
+        <ul class="right">
+          <li ng-show="show.op ==='editDraft' || show.op === 'add'">
+            <a class="icon_box" ng-click="saveDraft()">保存草稿</a>
+          </li>
+          <li>
+            <input ng-disabled="goodsForm.$invalid" class="icon_eye" type="button" ng-click="preview()" value="预览" />
+          </li>
+          <li ng-show="hasPermission('goods:add')">
+            <input ng-disabled="goodsForm.$invalid" type="submit" value="发布"/> <i class="icon_release"></i>
+          </li>
+          <li ng-show="!hasPermission('goods:add')">
+            <input ng-disabled="goodsForm.$invalid" type="submit" value="提交审核"/> <i class="icon_release"></i>
+          </li>
+          <li ng-show="show.op ==='editDraft' || show.op === 'add'">
+            <a ng-click="clearGoodsForm()" class="icon_brush red_txt">清空</a>
+          </li>
+
+        </ul>
+      </section>
+      <ul class="ec_gp_main">
+        <li>
+          <div class="ec_gp_gdTitle">
+            <p>商品分类*</p>
+          </div>
+          <div>
+            <div vc-drop-down-list value="show.typeId" select-list="parentLevel" select-name="parentLevel" required on-change="changeParentLevel" default-show="请选择一级分类"></div>
+          </div>
+          <div>
+            <div vc-drop-down-list value="show.childTypeId" select-list="childLevel" select-name="childLevel" required></div>
+          </div>
+          <p ng-show="goodsForm.parentLevel.$error.required">请选择商品分类</p>
+          <p ng-show="goodsForm.childLevel.$error.required">请选择二级商品分类</p>
+          <p ng-show="show.level">请移步至-商品分类，先添加商品分类信息</p>
+        </li>
+
+        <li>
+          <div class="ec_gp_gdTitle">
+            <p>商品品牌*</p>
+          </div>
+          <div>
+            <div vc-drop-down-list value="goods.brandId" select-list="brandList" select-name="brand" required default-show="请选择品牌"></div>
+            <p ng-show="goodsForm.brand.$error.required">请选择商品品牌</p>
+            <p ng-show="show.brand">请移步至-商品分类，先添加品牌信息</p>
+          </div>
+
+        </li>
+        <li>
+          <div class="ec_gp_gdTitle">
+            <p>商品名称*</p>
+          </div>
+          <div class="ec_gp_gdName">
+            <input type="text" name="goodsName" placeholder="请输入商品名称" ng-model="goods.name" maxlength="30" required/>
+            <p ng-show="goodsForm.goodsName.$dirty && goodsForm.goodsName.$invalid">请输入商品名称</p>
+          </div>
+        </li>
+        <li>
+          <div class="ec_gp_gdTitle">
+            <p>商品描述*</p>
+          </div>
+          <div class="ec_gp_gdDesc" >
+            <textarea ng-model="goods.desc" name="desc" maxlength="50" required></textarea>
+          </div>
+          <p ng-show="goodsForm.desc.$dirty && goodsForm.desc.$invalid">请输入商品描述</p>
+        </li>
+        <li>
+          <div class="ec_gp_gdTitle">
+            <p>
+              商品关键字
+              <span class="ec_gp_gdTips">（用逗号隔开）</span>
+            </p>
+          </div>
+          <div class="ec_gp_gdKeywords">
+            <input type="text" placeholder="请输入商品关键字" ng-model="goods.keyWord"/>
+          </div>
+        </li>
+        <li>
+          <div class="ec_gp_gdTitle">
+            <p>提供佣金*</p>
+          </div>
+          <div class="ec_gp_gdComs">
+            <input type="number" name="commission" ng-model="goods.commission" str-to-num  ng-pattern="/^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/" maxlength="6" required/>
+            <span>元</span>
+          </div>
+          <p ng-show="goodsForm.commission.$dirty && goodsForm.commission.$invalid">请输入6位数的佣金</p>
+
+        </li>
+
+        <li>
+          <div class="ec_gp_gdTitle">
+            <input class="icon_plus_2 red_btn ec_gp_chosSpec" type="button" ng-click="editGoodsSpecPlus()" value="添加规格"/>
+          </div>
+          <div class="ec_gp_gdSpec">
+            <table class="list_table">
+              <thead>
+                <tr>
+                  <th ng-repeat="th in spec.th">{{th.key}}{{th.require?'*':''}}</th>
+                  <th ng-if="spec.th.length >3">示意图*</th>
+                  <th ng-if="spec.td.length >1">操作</th>
+                </tr>
+              </thead>
+              <tbody class="drag_container">
+                <tr ng-repeat="td in spec.td track by $index">
+                  <td ng-repeat="data in td.data">
+                    <input ng-if="data.type=='price'" type="number" placeholder="输入{{data.key}}" ng-model="data.value" ng-required="data.require" str-to-num  ng-pattern="/^\d{0,8}\.{0,1}(\d{1,2})?$/"/>
+                    <input ng-if="data.type=='number'" type="number" placeholder="输入{{data.key}}" ng-model="data.value" ng-required="data.require" str-to-num ng-pattern="/^[0-9]*[1-9][0-9]*$/"/>
+                    <input ng-if="data.type=='text'" type="text" placeholder="输入{{data.key}}" ng-model="data.value" ng-required="data.require" />
+                  </td>
+                  <td ng-if="spec.th.length >
+                    3" class="ec_gp_gdCoverImg">
+                    <img ng-src="{{td.image}}" style="width: 100px;height: 100px;" ng-if="td.image"ng-click="beginToUpload('specImage',$parent.$index)"/>
+                    <br/>
+
+                    <p class="blue_btn" ng-if="!td.image" ng-click="beginToUpload('specImage',$parent.$index)">上传示意图</p>
+                    <br/>
+                    <span class="ec_gp_tips" ng-if="!td.image" >（用于选择规格展示）</span>
+                  </td>
+                  <td ng-if="spec.td.length >
+                    1">
+                    <a ng-click="removeSpec($index)">删除</a>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+            <div class="ec_gp_delSpec" ng-if="spec.th.length >
+              3">
+              <input type="button" class="icon_plus_2 red_btn" ng-click="addSpecGroup()" value="添加一组"></div>
+          </div>
+        </li>
+
+        <li>
+          <div class="ec_gp_gdTitle">
+            <p>物流费用*</p>
+          </div>
+          <div class="ec_gp_gdPosg">
+
+            <span>
+              <input type="radio" value="1" id="ec_gp_free" name="ec_gp_gdPosg" ng-model="show.carriageType" required/>
+              <label for="ec_gp_free">包邮</label>
+            </span>
+
+            <span>
+              <input type="radio" value="2" id="ec_gp_charge" name="ec_gp_gdPosg" ng-model="show.carriageType" required/>
+              <label for="ec_gp_charge">收取邮费</label>
+              <span ng-class="{true: 'ec_gp_chgNum', false: 'ec_gp_chgNum hidden'}[show.carriageType]" ng-if="show.carriageType == 2">
+                <input type="number" ng-model="goods.carriage" str-to-num ng-pattern="/^[1-9]+.[0-9]*$/"/>
+                <span>元</span>
+              </span>
+            </span>
+          </div>
+        </li>
+        <li>
+          <div class="ec_gp_gdTitle" id="attributes">
+            <p>
+              商品信息
+              <span class="ec_gp_gdTips">（例如：重量，材质，宽度，高度等信息）</span>
+            </p>
+          </div>
+          <div class="ec_gp_gdInfo">
+            <div class="ec_gp_gdProf">
+              <ul>
+                <li ng-repeat="gInfo in show.attributes track by $index">
+                  <span>
+                    标题
+                    <input type="text" ng-model="gInfo.name" maxlength="20" />
+                  </span>
+                  <span>
+                    属性
+                    <input type="text"  ng-model="gInfo.attr" maxlength="30"/>
+                  </span>
+                  <input type="button" class="red_btn" ng-click="operateAttributes(show.attributes,$index)"  value="{{show.attributes.length-1 ==$index ? '添加一组' : '删除本组'}}"/>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="ec_gp_gdTitle">
+            <p>
+              商品封面图
+              <span class="ec_gp_gdTips">（用于首页、商品列表展示）*</span>
+            </p>
+          </div>
+
+          <div class="ec_gp_gdCoverImg">
+            <img ng-src="{{goods.image|origImg:'.338x338'}}" ng-if="goods.image" ng-click="beginToUpload('image')" class="ec_gp_gdCoverImg">
+            <img src="http://imgcache.varicom.im/images/site/open_v3.1/occupied_800_800.gif" ng-click="beginToUpload('image')" ng-if="!goods.image"></div>
+        </li>
+
+        <li>
+          <div class="ec_gp_gdTitle">
+            <p>
+              瀑布流图标
+              <span class="ec_gp_gdTips">*</span>
+            </p>
+          </div>
+          <div class="ec_gp_gdCoverImg">
+            <img ng-src="{{goods.posterImg}}" ng-if="goods.posterImg" ng-click="beginToUpload('posterImg')">
+            <span class="blue_btn" ng-if="!goods.posterImg" ng-click="beginToUpload('posterImg')">上传瀑布流图标</span>
+          </div>
+        </li>
+        <li>
+          <div class="ec_gp_gdTitle">
+            <p>
+              商品展示图
+              <span class="ec_gp_gdTips">（用于商品详情顶部展示，最少添加一张）</span>
+            </p>
+          </div>
+
+          <div class="ec_gp_gdExhImg">
+            <ul>
+              <li ng-repeat="detail in show.ImgDetail">
+                <img ng-src="{{detail.img|origImg:'.548x548'}}">
+                <input class="red_btn ec_gp_delImg" ng-click="removeImg(detail.img)" type="button" value="删除图片"></li>
+
+              <li>
+                <!--添加按钮-->
+                <div class="ec_gp_addImg">
+                  <img src="http://imgcache.varicom.im/images/site/open_v3.1/occupied_800_800.gif" ng-click="beginToUpload('detail')" ng-if="show.ImgDetail.length <6"/>
+                  <div id="gImgDetail" style="display: none"></div>
+                </div>
+              </li>
+            </ul>
+
+          </div>
+        </li>
+        <li>
+          <div class="ec_gp_gdTitle">
+            <p>商品详情</p>
+          </div>
+          <div class="ec_gp_gdDetail" style="width:100%;">
+            <div style="height:300px;width:100%;" ng-model="goods.detailinfo" id="{{ueditorId}}"  name="detailinfo" class="ueditor" required></div>
+          </div>
+        </li>
+        <li>
+          <div class="ec_gp_gdTitle">
+            <p>推荐商品</p>
+            <label for="ec_gp_isRecm">
+              设为推荐商品
+              <span class="ec_gp_gdTips">（推荐的商品会显示在所有商品详情下的店家推荐中）</span>
+            </label>
+          </div>
+          <div class="ec_gp_gdRecm">
+            <span>
+              <input type="radio" value="0" id="101" ng-model="goods.isRecommend" >
+              <label for="101">不推荐</label>
+              <input type="radio" value="1" id="102" ng-model="goods.isRecommend" >
+              <label for="102">推荐</label>
+            </span>
+
+          </div>
+        </li>
+      </ul>
+    </form>
+  </div>
+</div>

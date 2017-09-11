@@ -1,0 +1,45 @@
+<div class="o_pop_content">
+    <div class="union_pop">
+        <ul class="form_box">
+            <li class="group">
+                <label>集合地和领队</label>
+
+                <div class="subGroup" ng-repeat="group in subGroup ">
+                    <ul>
+                        <li class="add">
+                            <label for="">地址</label>
+                            <input type="text" placeholder="请输入集合地址" ng-model="group.address">
+                        </li>
+                        <li class="time unit">
+                            <label for="">时间</label>
+                            <input type="text" id="_group_union_time_{{$index}}" placeholder="请选择集合时间" ng-model="group.time" vc-date-picker other-conf="dateConf">
+                            <label class="icon_calendar" for="_group_union_time_{{$index}}"></label>
+                        </li>
+                    </ul>
+                    <button class="icon_reduce_1" ng-show="!$first" ng-click="removeSubGroup(group)"></button>
+                    <button class="icon_plus" ng-click="addSubGroup()"></button>
+                    <div class="tag">
+                        <label for="">领队</label>
+                        <ul>
+                            <li class="current" ng-repeat="leader in group.leaders">
+                                {{leader.nickname||leader.name}}
+                                <i class="icon_close_2" ng-click="removeUser(leader, group)"></i>
+                            </li>
+                        </ul>
+                        <button class="icon_plus" ng-click="choiceUser(2,group)">管理领队</button>
+                    </div>
+                </div>
+            </li>
+            <li class="tag">
+                <label>活动咨询</label>
+                <ul>
+                    <li class="current" ng-repeat="an in agent">
+                        {{an.nickname||an.name}}
+                        <i class="icon_close_2" ng-click="removeAgent(an)"></i>
+                    </li>
+                </ul>
+                <button class="icon_plus" ng-click="choiceUser()">管理咨询</button>
+            </li>
+        </ul>
+    </div>
+</div>

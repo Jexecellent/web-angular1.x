@@ -1,0 +1,98 @@
+<form name="demoForm" novalidate>
+<ul class="form_box">
+    <li>
+        <!--<label>UEditor输入</label>-->
+        <!--<div class="ueditor" ng-model="note.ueditorContent" style="width: 70%" id="{{ueditorId}}" name="demoContent" required></div>-->
+        <!--<button ng-click="getUeditorContent()">获取UEditor的内容</button>-->
+        <button ng-click="goToTab2()">返回Tab2</button>
+        <button ng-click="goToTabWithTab4()">返回Banner-Tab1</button>
+    </li>
+    <li class="upload">
+        <img ng-src="{{imageData}}" alt=""/>
+        <label>图片上传</label>
+        <div id="filePicker">点此上传</div>
+        <p ng-bind="imageMessage"></p>
+        <p>添加封面图，仅限一张，支持jpg，jpeg，bmp，png，gif格式图片，大小不得超过2M</p>
+    </li>
+    <li><label>我是直接嵌入进来的Tab1页面</label></li>
+    <li>
+        <label>页面Reload计数：{{reloadTimes}}，接收到的参数：{{paramsModel}}</label>
+    </li>
+    <li>
+        <label>Tab的通知更新</label>
+        <button ng-click="newNext()">点我通知Banner已下线列表更新并跳转</button>
+    </li>
+    <li>
+        <label>Tab的广播</label>
+        <button ng-click="goToTab2()">点我切换到Tab2</button>
+        <br/>
+        <button ng-click="goToTabWithTab()">点我切换到Tab-With-Tab</button>
+        <br/>
+        <button ng-click="goToTabNoIndex()">点我跳转到隐藏的Tab-No-Index</button>
+    </li>
+    <li class="tag">
+        <label>SweetAlert对话框</label>
+        <ul>
+            <li ng-click='alert()'>Alert对话框</li>
+            <li ng-click='confirm()'>Confirm对话框</li>
+        </ul>
+    </li>
+    <li>
+        <label>Tips提示</label>
+        <button ng-click="addTips()">点击出现Tips</button>
+    </li>
+    <li class="tag">
+        <label>模式窗口</label>
+        <ul>
+            <li ng-click='toggleModal(1)'>打开单个对话框</li>
+            <li ng-click='toggleModal(4)'>对话框内再打开对话框</li>
+            <li ng-click='toggleModal(2)'>打开选择用户</li>
+            <li ng-click='toggleModal(3)'>打开选择资讯</li>
+            <li ng-click='toggleModal(5)'>打开滚动加载分页对话框</li>
+            <li ng-click='toggleModal(6)'>打开选择组织架构用户</li>
+        </ul>
+    </li>
+    <li class="text">
+        <label>已选的用户</label>
+        <input ng-model="selectedUsers" type="text" />
+    </li>
+    <li class="text">
+        <label>权限控制显示 <span ng-show="hasPermission(myPermission)">[如果有权限会显示]</span></label>
+        <input ng-model="myPermission" type="text" placeholder="请输入权限ID" />
+    </li>
+    <li class="select">
+        <label>下拉列表 <span>选中的下拉值：{{demo.type}}</span></label>
+        <!--select-list和select-url 二选一 -->
+        <!--参数说明：
+                value: '=',  /*ng-model*/
+                selectList:'=',  /*列表静态数据*/
+                selectName:'@',  /*select元素的name*/
+                selectUrl:'=',   /*列表动态获取数据的url*/
+                id:'@',  /*遍历的id，后台参数*/
+                dis:'@'  /*遍历的页面显示值*/
+        -->
+        <div vc-drop-down-list value="demo.type" select-list="types"></div>
+        <div vc-drop-down-list value="demo.role" select-url="user/roleList" id="roleId" dis="roleName"></div>
+    </li>
+    <li class="time unit">
+        <label>日期时间插件</label>
+        <input type="text" placeholder="请选择时间" ng-model="selectDate" vc-date-picker date-fmt="yyyy-MM-dd HH:mm" />
+        <button class="icon_calendar"></button>
+    </li>
+    <!--<li>-->
+    <!--<label>上传图片</label>-->
+    <!--<div id="uploader-demo">-->
+    <!--&lt;!&ndash;用来存放item&ndash;&gt;-->
+    <!--<img ng-src="{{imageData}}" />-->
+    <!--<div id="fileList" class="uploader-list"></div>-->
+    <!--<div id="filePicker"></div>-->
+    <!--<span>{{imageMessage}}</span>-->
+    <!--</div>-->
+    <!--</li>-->
+
+    <li>
+        <label>End Of the Page</label>
+    </li>
+</ul>
+</form>
+<open-page data="pgData" params="params" url="audit/list" show-page-num="10"></open-page>

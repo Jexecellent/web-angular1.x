@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <!--头部文件-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="format-detection" content="telephone=no, email=no"/>
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <title>校园活动</title>
+    <link rel="stylesheet" href="http://imgcache.varicom.im/css/varicom/common/component.css">
+    <link rel="stylesheet" href="http://imgcache.varicom.im/css/site/app/activity/activity_3.css?v=<%=version%>">
+</head>
+<body ng-app="previewApp">
+<div class="index_box activity_page" ng-controller="CollegesActivityPreviewController as colleges">
+    <header class="page_head">
+        <div class="cost_tag">
+            <p ng-bind="colleges.activity.costV2"></p>
+        </div>
+        <div class="banner" style="max-height: 250px;">
+            <img id="banner_img" ng-src="{{colleges.activity.poster}}" alt="">
+        </div>
+    </header>
+
+    <section class="activity_info">
+        <dl>
+            <dd class="activity_initiator">
+                <p class="tag">联系人：</p>
+
+                <p class="photo" style="z-index:2;">
+                    <a href="" id="leaderHeadBtn">
+                        <img ng-src="{{colleges.activity.leaderHead}}">
+                    </a>
+                </p>
+
+                <div class="initiator_info">
+                    <a href="javascript:;" ng-bind="colleges.activity.leaderName">
+                    </a>
+                </div>
+                <div class="initiator_tel">
+                    <p>
+                        <a ng-bind="colleges.activity.leaderPhone">
+                        </a>
+                    </p>
+                </div>
+            </dd>
+            <dd class="activity_time">
+                <p id="actStartTime" ng-bind="colleges.activity.startTime|date:'yyyy-MM-dd HH:mm'">
+                </p>
+            </dd>
+            <dd class="activity_address">
+                <p ng-bind="colleges.activity.address">
+                </p>
+            </dd>
+            <dd class="activity_peopleNumber">
+                <p>名额{{colleges.activity.number}}人
+                    <span ng-if="colleges.activity.joinNumber">/已报<span style="color:red;">{{colleges.activity.joinNumber}}</span>人</span>
+                    <span ng-if="!colleges.activity.joinNumber">/暂时没有人报名</span>
+                </p>
+            </dd>
+        </dl>
+    </section>
+
+    <section class="activity_intro">
+        <div class="title">
+            <h3>活动详情</h3>
+        </div>
+        <div class="content" id="actContent">
+            <p ng-bind-html="colleges.activity.introduce">暂无介绍</p>
+        </div>
+    </section>
+
+    <section class="activity_people">
+        <div class="title">
+            <h3>Ta们和你同去</h3>
+        </div>
+        <ul id="peopleWithUl">
+            <li><p class="more_button">更多</p></li>
+        </ul>
+    </section>
+
+    <footer>
+        <div class="button_box">
+            <a id="interest" class="enroll_button">感兴趣</a>
+            <a class="enroll_button" id="iwantjoin">我要报名</a>
+        </div>
+    </footer>
+</div>
+</body>
+<script type="text/javascript" src="http://imgcache.varicom.im/js/lib/angular.min.js"></script>
+<script type="text/javascript" src="http://imgcache.varicom.im/js/lib/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="http://imgcache.varicom.im/js/lib/store.min.js"></script>
+<script type="text/javascript" src="http://imgcache.varicom.im/js/lib/moment.min.js"></script>
+<script type="text/javascript" src="./colleges_activity.js"></script>
+</html>

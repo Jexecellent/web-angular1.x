@@ -1,0 +1,35 @@
+<section class="tool fixedTool">
+    <ul class="left">
+        <li><a class="green_btn icon_plus_2" ng-click="goToTab('edit',{operate:'add'})">新增资讯</a></li>
+    </ul>
+</section>
+<table class="list_table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th width="100px">封面</th>
+        <th>资讯标题</th>
+        <th width="140px">上线时间</th>
+        <th width="100px">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="article in data">
+        <td ng-bind="$index+1+(params.pageNumber-1)*10"></td>
+        <td><img ng-src="{{article.thumbnail | cutImg40}}"/></td>
+        <td align="left"><p><a href="#" ng-bind="article.title" ng-click="preview(article)"></a></p></td>
+        <td ng-bind="article.createTime|date:'yyyy-MM-dd HH:mm:ss'"></td>
+        <td>
+            <div class="operate">
+                <ul>
+                    <li><a ng-click="goToTab('edit',{operate:'edit',dataId:article.id})">修改</a></li>
+                    <li><a ng-click="deleteArticle(article)" ng-show="article.status!=3">删除</a></li>
+                    <li ng-show="article.status===3" ng-show="offlinePermission"><a ng-click="offline(article)">下线</a>
+                    </li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<open-page data="page" params="params" show-page-num="10" go-page="loadData(num)"></open-page>

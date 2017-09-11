@@ -1,0 +1,31 @@
+<div vc-tabs="1" id="manage" style="height: 100%">
+    <nav class="state">
+        <ul>
+            <li vc-tab-head tag="online"><a href="#">等待发送</a></li>
+            <li vc-tab-head tag="audit" ng-show="hasPermission('groupmsg:add')"><a href="#">等待审核</a></li>
+            <li vc-tab-head tag="myaudit" ng-show="!hasPermission('groupmsg:add')"><a href="#">我的审核</a></li>
+            <li vc-tab-head tag="offline"><a href="#">已经发送</a></li>
+        </ul>
+    </nav>
+    <div class="cnt_box cnt_Ystate cnt_Ypaging mCustomScrollbar">
+        <!-- 等待发送列表 -->
+        <div vc-tab-body tag="online" ctrl="GroupMsgListController" tpl-url="app/main/groupmsg/pages/list.html">
+            
+        </div>
+
+        <!-- 待审核列表 -->
+        <div vc-tab-body tag="audit" ctrl="AuditController" tpl-url="app/common/audit/index.html" locals="{bizType:6,auditStatuses:'1'}">
+            
+        </div>
+
+        <!-- 审核中列表 -->
+        <div vc-tab-body tag="myaudit" ctrl="AuditController" tpl-url="app/common/audit/index.html" locals="{bizType:6,applyRid:$currentRid}">
+           
+        </div>
+
+        <!-- 发送成功 -->
+        <div vc-tab-body tag="offline" ctrl="GroupMsgListController" tpl-url="app/main/groupmsg/pages/list.html" locals="{status:'4,5'}"></div>
+
+    </div>
+    <div class="o_loading" ng-show="loading"></div>
+</div>

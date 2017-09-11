@@ -1,0 +1,85 @@
+<div class="cnt_box cnt_Ypaging mCustomScrollbar">
+    <section class="tool fixedTool">
+    <div class="left">
+        <button class="screening_btn icon_pushpin_1" ng-class="{'open':opt_show}" ng-click="showOpts()">筛选
+        </button>
+        <!--活动搜索
+        <div class="search_box">
+            <i class="icon_search" ng-click="_search()"></i>
+            <input type="text" placeholder="请输入关键词" ng-model="query_key"
+                   ng-keypress="searchByTitle($event)">
+        </div>
+        -->
+        <vc-search vc-model="query_key" vc-change="goPage(1)"></vc-search>
+        <!--活动搜索筛选-->
+        <span ng-bind="search_text_show_"></span>
+    </div>
+    <div class="screening_box" id="act-union-screening_box">
+        <ul sub-title="活动方式">
+            <li ng-repeat="sub in _act_sub_type" ng-click="checkSubType(sub)" ng-class="{current:sub.opt}">
+                <a href="javascript:;">{{sub.name}}</a>
+            </li>
+        </ul>
+        <ul sub-title="活动类型">
+            <li ng-repeat="type in _type" ng-click="checkType(type)" ng-class="{current:type.opt}">
+                <a href="#">{{type.name}}</a>
+            </li>
+        </ul>
+        <ul sub-title="联盟方式">
+            <li ng-repeat="uType in _union_type" ng-click="checkuType(uType)" ng-class="{current:uType.opt}">
+                <a href="#">{{uType.name}}</a>
+            </li>
+        </ul>
+        <ul sub-title="发布时间">
+            <li ng-repeat="date in _search_date" ng-click="checkDate(date)" ng-class="{current:date.opt}">
+                <a href="#">{{date.name}}</a>
+            </li>
+        </ul>
+    </div>
+</section>
+    <table class="list_table">
+        <thead>
+        <tr>
+            <th width="50px">ID</th>
+            <th width="100px">封面</th>
+            <th>活动名称</th>
+            <th width="60px">价格</th>
+            <th width="120px">返利</th>
+            <th width="60px">行程天数</th>
+            <th width="70px">发布时间</th>
+            <th width="60px">分类</th>
+            <th width="100px">联盟状态</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="union in data.content">
+            <td ng-bind="$index+1+(params.pageNumber-1)*10"></td>
+            <td>
+                <img ng-src="{{union.poster | cutImg40}}"/>
+            </td>
+            <td>
+                {{union.title}}
+            </td>
+            <td>
+                ￥{{union.cost}}
+            </td>
+            <td ng-bind-html="union.unionInfo|union_info_repay_for_list"></td>
+            <td>{{union.tripDur}}天</td>
+            <td>{{union.createTime|date:'yyyy-MM-dd'}}</td>
+            <td>{{union.subType|subType}}</td>
+            <td>
+                <div class="union_switch" ng-click="enterUnion(union)">
+                    <input id="act_{{activity.id}}" type="checkbox"
+                           ng-checked="activity.unionState == 1">
+                    <label before-title="未联盟" after-title="已联盟">
+                        <b></b>
+                    </label>
+
+                    <p>来自:{{union.iname}}</p>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <open-page data="data" params="params" url="activity/union_list" show-page-num="10" go-page="goPage(num)"></open-page>
+</div>

@@ -1,0 +1,40 @@
+<table class="list_table">
+    <thead>
+    <tr>
+        <th width="50px">ID</th>
+        <th width="100px">封面</th>
+        <th>活动名称</th>
+        <th width="60px">人数</th>
+        <th width="60px">价格</th>
+        <th width="70px">下线时间</th>
+        <th width="100px">操作</th>
+    </tr>
+    </thead>
+    <tbody class="drag_container">
+    <tr ng-repeat="activity in data.content" sort-id="{{activity.id}}" drag-drop type="tr"
+        top="-215"
+        left="-245" callback="dragSuccess(cur,prev, next)" able="activity.activityStatus == 1">
+
+        <td ng-bind="$index+1+(sparams.pageNumber-1)*10"></td>
+        <td>
+            <img ng-src="{{activity.poster | cutImg40}}"/>
+        </td>
+        <!--<td><a href="#" ng-click="showDetail(activity.id)">{{activity.title}}</a>-->
+        <td>
+            <a href="#" ng-click="preview(activity)">{{activity.title}}</a>
+        </td>
+        <td>{{activity.joinNumber}}/{{activity.number}}</td>
+        <td>￥{{activity.cost}}</td>
+        <td>{{activity.updateTime|date:'yyyy-MM-dd'}}</td>
+        <td>
+            <div class="operate">
+                <ul>
+                    <li ng-show="pms.update"><a href="#" ng-click="toEdit(activity)">编辑</a></li>
+                    <li ng-show="pms.join"><a href="#" ng-click="activityJoin(activity)">名单管理</a></li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<open-page data="data" show-page-num="10" go-page="goPage(num)"></open-page>
